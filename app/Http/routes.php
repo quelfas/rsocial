@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/somos',function(){
+  return view('somos');
+});
 //rutas al front
 
 
