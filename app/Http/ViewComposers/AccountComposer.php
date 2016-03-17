@@ -1,0 +1,42 @@
+<?php namespace App\Http\ViewComposer;
+
+use Illuminate\Contracts\View\View;
+use Auth;
+/**
+ *
+ */
+class AccountComposer
+{
+
+  public function compose(View $view)
+  {
+    if (Auth::check()) {
+      //dd(Auth::user()->profile);
+      /*----------------------------------------------------------------------/*
+      | Se verifica que el usuario este logeado
+      | luego se envian los datos basico de cuenta
+      | Se envia el Rol
+      ------------------------------------------------------------------------*/
+      $userId       = Auth::user()->id;
+      $userName     = (Auth::user()->role == "user") ? "". Auth::user()->name : "[" . strtoupper(Auth::user()->role) . "]" . Auth::user()->name;
+      $userEmail    = Auth::user()->email;
+      $useActivo    = True;
+      $userRole     = strtoupper(Auth::user()->role);
+    } else {
+      $userId     = null;
+      $userName   = null;
+      $userEmail  = null;
+      $useActivo  = null;
+      $userRole   = null;
+    }
+
+    $view->with([
+      'userId'      => $userId,
+      'userName'    => $userName,
+      'userEmail'   => $userEmail,
+      'useActivo'   => $useActivo,
+      'userRole'    => $userRole
+    ]);
+
+  }
+}
