@@ -50,7 +50,7 @@
 
         </div>
         <div class="form-group">
-
+          {{-- espacio para recapcha --}}
           <button type="submit" class="btn btn-default btn-sm">Enviar</button>
 
         </div>
