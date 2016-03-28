@@ -1,6 +1,6 @@
 @extends('front.master')
 
-@section('title','Quienes Somos')
+@section('title','Contactanos')
 
 @section('breadcrumbs')
 <ol class="breadcrumb">
