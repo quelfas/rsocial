@@ -44,7 +44,6 @@
             <input class="form-control" type="text" name="asunto" placeholder="Asunto">
           </div>
           <div class="form-group">
-
             <textarea class="conteo" name="mensaje" id="post" cols="82" rows="10"></textarea>
             {{-- contador de caracteres --}}
             <span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span>
@@ -65,7 +64,6 @@
           <div class="form-group">
             {{-- espacio para recapcha --}}
             <button type="submit" class="btn btn-default btn-sm">Enviar</button>
-
           </div>
         </form>
       </div>
