@@ -49,7 +49,7 @@
             {{-- contador de caracteres --}}
             <span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span>
               <script>
-              {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar el fragmento de codigo --}}
+              {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar este fragmento de codigo --}}
                 $(".conteo").keyUp(function(){
                   var cmax = $("#rem_" + $(this).attr("id")).attr("title");
                   if($(this).val().lenght >= cmax){
