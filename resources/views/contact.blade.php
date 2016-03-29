@@ -18,45 +18,44 @@
 
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estamos Ubicados</a></li>
-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Formulario de Contacto</a></li>
-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Redes Sociales</a></li>
+    <li role="presentation" class="active"><a href="#ubicanos" aria-controls="ubicanos" role="tab" data-toggle="tab">Estamos Ubicados</a></li>
+    <li role="presentation"><a href="#contactanos" aria-controls="contactanos" role="tab" data-toggle="tab">Formulario de Contacto</a></li>
+    <li role="presentation"><a href="#social" aria-controls="social" role="tab" data-toggle="tab">Redes Sociales</a></li>
   </ul>
 
   <!-- Tab panes -->
   <div class="tab-content">
-    <div role="tabpanel" class="tab-pane active" id="home">
-      Estamos ubicados en Maracaibo Estado Zulia [mayor informacion]
+    <div role="tabpanel" class="tab-pane active" id="ubicanos">
+      <br>
+      <div class="well">
+        Estamos ubicados en Maracaibo Estado Zulia [mayor informacion]
+      </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="profile">
-      <form action="">
-        {!! csrf_field() !!}
-        <div class="form-group">
+    <div role="tabpanel" class="tab-pane" id="contactanos">
+      <br>
+      <div class="well">
+        <h4>Deja tu mensaje</h4>
+        <form action="">
+          {!! csrf_field() !!}
+          <div class="form-group">
+            <input class="form-control" type="text" name="email" placeholder="Tu Email">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="asunto" placeholder="Asunto">
+          </div>
+          <div class="form-group">
 
-          <label class="form-control">Su Email</label>
-          <input type="text" name="email">
+            <textarea name="mensaje" id="" cols="82" rows="10"></textarea>
+          </div>
+          <div class="form-group">
+            {{-- espacio para recapcha --}}
+            <button type="submit" class="btn btn-default btn-sm">Enviar</button>
 
-        </div>
-        <div class="form-group">
-
-          <label class="form-control">Asunto</label>
-          <input type="text" name="asunto">
-
-        </div>
-        <div class="form-group">
-
-          <label class="form-control">Mensaje</label>
-          <textarea name="mensaje" id="" cols="30" rows="10"></textarea>
-
-        </div>
-        <div class="form-group">
-          {{-- espacio para recapcha --}}
-          <button type="submit" class="btn btn-default btn-sm">Enviar</button>
-
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="messages">...</div>
+    <div role="tabpanel" class="tab-pane" id="social">...</div>
   </div>
 
 </div>
