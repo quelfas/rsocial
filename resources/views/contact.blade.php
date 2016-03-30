@@ -51,11 +51,11 @@
               {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar este fragmento de codigo --}}
                 $(".conteo").keyUp(function(){
                   var cmax = $("#rem_" + $(this).attr("id")).attr("title");
-                  if($(this).val().lenght >= cmax){
+                  if($(this).val().length >= cmax){
                     $(this).val($(this).val().substr(0, cmax));
                   }
 
-                  $("#rem_" + $(this).attr("id")).text(cmax - $(this).val().lenght);
+                  $("#rem_" + $(this).attr("id")).text(cmax - $(this).val().length);
                 });
               </script>
             {{-- contador de caracteres --}}
