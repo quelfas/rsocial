@@ -12,7 +12,7 @@
 @section('content')
 
 {{-- inicio de seccion de contato --}}
-{{-- secciones agrupadas en tabs [direccion] [formulario] --}}
+{{-- secciones agrupadas en tabs [direccion] [formulario] [redes sociales] --}}
   {{-- inicio de tabs --}}
     <div>
 
@@ -46,6 +46,7 @@
           <div class="form-group">
             <textarea class="conteo" name="mensaje" id="post" cols="82" rows="10"></textarea>
             {{-- contador de caracteres --}}
+            <br>
             <span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span>
               <script>
               {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar este fragmento de codigo --}}
@@ -68,7 +69,11 @@
         </form>
       </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="social">...</div>
+    <div role="tabpanel" class="tab-pane" id="social">
+      <p>
+        Espacio para Redes Sociales
+      </p>
+    </div>
   </div>
 
 </div>
