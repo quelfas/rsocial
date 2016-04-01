@@ -47,7 +47,8 @@
 
             <textarea class="conteo" name="mensaje" id="post" cols="82" rows="10"></textarea>
             {{-- contador de caracteres --}}
-            <span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span>
+            <br>
+            <small><span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span></small>
               <script>
               {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar el fragmento de codigo --}}
                 $(".conteo").keyup(function(){
