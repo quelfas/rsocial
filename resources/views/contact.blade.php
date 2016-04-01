@@ -29,11 +29,7 @@
       <br>
       <div class="well">
         <iframe width="600" height="450" frameborder="0" style="border:0"
-        https://www.google.com/maps/embed/v1/view
-          ?key=AIzaSyCE-XNRgXPVLvJrhuOapp8ZhKPYUyIZZOQ
-          &center=10.661111,71.6475000
-          &zoom=18
-          &maptype=satellite
+          src="https://www.google.com/maps/embed/v1/view?key=AIzaSyCE-XNRgXPVLvJrhuOapp8ZhKPYUyIZZOQ&center=10.661111,71.6475000&zoom=18&maptype=satellite"
         </iframe>
         <br>
         <address>
