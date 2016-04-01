@@ -28,6 +28,14 @@
     <div role="tabpanel" class="tab-pane active" id="ubicanos">
       <br>
       <div class="well">
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+        https://www.google.com/maps/embed/v1/view
+          ?key=AIzaSyCE-XNRgXPVLvJrhuOapp8ZhKPYUyIZZOQ
+          &center=10.661111,71.6475000
+          &zoom=18
+          &maptype=satellite
+        </iframe>
+        <br>
         <address>
           <strong>Una Vida Sobre Rueda.</strong><br>
           Sector Amparo, Avenida 29, 57B-382, Diagonal a la Iglesia Divino Niño<br>
