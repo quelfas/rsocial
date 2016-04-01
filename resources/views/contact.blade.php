@@ -28,7 +28,18 @@
     <div role="tabpanel" class="tab-pane active" id="ubicanos">
       <br>
       <div class="well">
-        Estamos ubicados en Maracaibo Estado Zulia [mayor informacion]
+        <address>
+          <strong>Una Vida Sobre Rueda.</strong><br>
+          Sector Amparo, Avenida 29, 57B-382, Diagonal a la Iglesia Divino Niño<br>
+          Edificio Venezuela Import Piso 1 Oficina 1 <br>
+          Maracaibo, ZU. 4001<br>
+          <abbr title="Telefono">TLF:</abbr> +58 (0261) 7325662
+        </address>
+
+        <address>
+          <strong>UVSR</strong><br>
+          <a href="mailto:#">first.last@example.com</a>
+        </address>
       </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="contactanos">
