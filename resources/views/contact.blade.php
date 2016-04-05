@@ -95,3 +95,14 @@
 {{-- fin de seccion de contacto --}}
 
 @stop
+
+@section('sidebar')
+  @parent
+  @unless(Auth::check())
+    No conectado <br>
+  @else
+    @include('utility.notifySideBar')
+    @include('utility.listUsers')
+  @endunless
+
+@endsection
