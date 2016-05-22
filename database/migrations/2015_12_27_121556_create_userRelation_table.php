@@ -14,6 +14,7 @@ class CreateUserRelationTable extends Migration
     {
         //
         Schema::create('UserRelation', function(Blueprint $table){
+          $table->increments('id');
           $table->integer('user_id1');
           $table->integer('user_id2');
           $table->enum('are_friends',['Si','No','StBy'])->default('StBy');

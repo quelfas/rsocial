@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
+use App\UserRelation;
 
 class ProfileController extends Controller
 {
@@ -111,9 +112,51 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
+        $user_id = Auth::user()->id;
+
         //paso 1. Determinar si el $ID es Publico o Privado
-        $perfile = Profile::where('id',$id)->get();
-        return view('profile')->with('UserProfiles',$perfile);
+        $perfile = Profile::where('user_id',$id)->get();
+
+        //paso 2. Determinar si son amigos por medio de 2-way search
+        $Recibidos      = UserRelation::where('user_id1',$id)
+                              ->where('user_id2',$user_id)
+                              ->where('are_friends','Si')
+                              ->get();
+        $Solicitados    = UserRelation::where('user_id2',$id)
+                              ->where('user_id1',$user_id)
+                              ->where('are_friends','Si')
+                              ->get();
+
+        $a          = $Solicitados->count();
+        $b          = $Recibidos->count();
+        $ResultSum  = $a + $b;
+
+        if($ResultSum == 0){
+
+            $RelationOn = 'No';
+
+            $infoRelation = '';
+        }else{
+
+            $RelationOn = 'Si';
+
+            if ($a == 0) {
+                $infoRelation = $Recibidos;
+            }
+
+            if ($b == 0) {
+                $infoRelation = $Solicitados;
+            }
+        }
+
+
+
+        return view('profile')->with(
+            [
+                'UserProfiles'  => $perfile,
+                'UserRelations' => $RelationOn,
+                'InfoRelations' => $infoRelation
+            ]);
     }
 
     /**

@@ -18,7 +18,7 @@ class ListUserComposer
     /*------------------------------------------------*/
     $id = Auth::user()->id;
 
-    $UserPerfil = Profile::where('id',$id)->get();
+    $UserPerfil = Profile::where('user_id',$id)->get();
     $ShowCount = $UserPerfil->count(); //verificar si el perfil esta creado
 
     if ($UserPerfil->count() == 0) {
@@ -41,7 +41,7 @@ class ListUserComposer
 
       $array1     = array();
       foreach ($LtR as $value) {
-        $array1   = [$value->user_id2];
+        $array1[] = $value->user_id2;
       }
 
       $RtL = UserRelation::where('user_id2',$id)
@@ -49,7 +49,7 @@ class ListUserComposer
 
       $array2     = array();
       foreach ($RtL as $value) {
-        $array2   = [$value->user_id1];
+        $array2[] = $value->user_id1;
       }
 
       $array0     = [$id];

@@ -6,12 +6,15 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
   	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
   	<meta name="csrf-token" content="{{ csrf_token() }}" />
   	<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}" />
   	<link rel="stylesheet" href="{{asset('assets/css/footer.css')}}" />
   	<link rel="stylesheet" href="{{asset('assets/css/bootstrap-datepicker3.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
@@ -23,11 +26,11 @@
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('assets/js/locale/bootstrap-datepicker.es.min.js')}}"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <script src="{{asset('assets/js/idle.js')}}"></script>
+    <script src="{{asset('assets/js/vue/vue.js')}}"></script>
     <link rel="stylesheet" media="screen" src="{{asset('assets/bootstrap2/bootstrap3.css')}}">
     <script src="{{asset('assets/bootstrap2/bootstrap3.js')}}"></script>
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// bootstrap-datepicker3.standalone.min-->
 	    <!--[if lt IE 9]>

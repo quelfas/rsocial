@@ -16,7 +16,7 @@ class ProfileComposer
     | consulta de la informacion del perfil de usuario
     /*------------------------------------------------*/
     $id = Auth::user()->id;
-    $perfile = Profile::where('id',$id)->get();
+    $perfile = Profile::where('user_id',$id)->get();
     $view->with('UserProfiles',$perfile);
   }
 }

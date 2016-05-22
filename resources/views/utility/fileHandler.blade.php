@@ -1,4 +1,19 @@
 <style>
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+}
+.embed-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
 .example {
   padding: 10px;
   border: 1px solid #ccc;
@@ -93,3 +108,50 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   dropZone.addEventListener('dragover', handleDragOver, false);
   dropZone.addEventListener('drop', handleFileSelect, false);
 </script>
+
+    <hr>
+
+    <h3>Inserte un Video</h3>
+
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-youtube fa-1x" aria-hidden="true"></i></div>
+          <input v-model="message" type="text" class="form-control" placeholder="Pega tu video">
+          <input type="hidden" v-bind:value="message | youtube" name="source">
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+      
+      <hr>
+      <div class="embed-container">
+        <iframe v-show="message" width="560" height="315" v-bind:src="message | youtube" frameborder="0" allowfullscreen></iframe>
+      </div>
+        
+        <p> @{{ message | youtube}} </p>
+    </form>
+
+  <script>
+  
+  Vue.filter('youtube', function(url){
+    //var separo =  value.split('watch?v=');
+    //return separo.join('embed/');
+    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    var youtube = 'https://www.youtube.com/embed';
+    if (match && match[2].length == 11) {
+      return youtube +'/'+ match[2];
+    } else {
+      //error
+      //return false;
+    }
+
+  })
+
+    new Vue({
+      el: "body",
+      data: {
+        message: ''
+      }
+    });
+  </script>

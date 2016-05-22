@@ -73,7 +73,7 @@ class RelationController extends Controller
         }
 
         $mensajeSalida = array(
-              'mensaje' => 'Solicitu de Amistad enviada a '.$user,
+              'mensaje' => 'Solicitud de Amistad enviada a '.$user,
               'class'   => 'alert-success'
           );
 
@@ -113,13 +113,13 @@ class RelationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request->all());
+        //dd($request->input("solicitud-".$request->input("_id")));
 
         $user = Auth::user()->id;
         DB::table('UserRelation')
             ->where('user_id2', $user)
             ->where('user_id1', $request->input("_id"))
-            ->update(['are_friends'=>$request->input("solicitud-3")]);
+            ->update(['are_friends'=>$request->input("solicitud-".$request->input("_id"))]);
 
       if ($request->input("solicitud-3")=="SI") {
         $respuesta  = "aceptada";
@@ -130,13 +130,13 @@ class RelationController extends Controller
       }
 
         $mensajeSalida = array(
-              'mensaje' => 'Solicitu de Amistad '.$respuesta,
+              'mensaje' => 'Solicitud de Amistad '.$respuesta,
               'class'   => 'alert-'.$style
           );
 
 
 
-        return view('relations')->with('mensaje',$mensajeSalida);
+        return view('relations')->with(['recibidos'=>"",'mensaje'=>$mensajeSalida]);
     }
 
     /**

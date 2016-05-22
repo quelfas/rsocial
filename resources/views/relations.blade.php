@@ -11,6 +11,9 @@
 @endsection
 
 @section('content')
+@unless($recibidos)
+nada para mostrar
+@else
 <h4>Solicitudes de Amistad</h4>
     <table class="table table-striped">
       <tr>
@@ -62,7 +65,7 @@
       </script>
       @endforeach
     </table>
-
+    @endunless
 @stop
 
 @section('sidebar')
