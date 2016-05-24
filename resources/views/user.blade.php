@@ -26,8 +26,9 @@
       <div class="panel-body">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h4>Galeria de Imagenes</h4>
+
               @include('utility.fileHandler')
+              
           </div>
         </div>
       </div>

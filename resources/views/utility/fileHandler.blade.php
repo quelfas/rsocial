@@ -74,7 +74,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 </script>
 
 
-
+<h3>Galeria de Imagenes</h3>
 
 <div id="drop_zone">Suelte los archivos aqui</div>
 <output id="list"></output>
@@ -116,42 +116,38 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     <form class="form-inline">
       <div class="form-group">
         <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-youtube fa-1x" aria-hidden="true"></i></div>
+
+          <div class="input-group-addon">
+            <i class="fa fa-youtube fa-1x" aria-hidden="true"></i>
+          </div>
+
           <input v-model="message" type="text" class="form-control" placeholder="Pega tu video">
           <input type="hidden" v-bind:value="message | youtube" name="source">
+
         </div>
-        <button type="submit" class="btn btn-primary">Upload</button>
-      </div>
-      
-      <hr>
-      <div class="embed-container">
-        <iframe v-show="message" width="560" height="315" v-bind:src="message | youtube" frameborder="0" allowfullscreen></iframe>
-      </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button v-on:click="limpiarForm" type="reset" class="btn btn-danger">Limpiar</button>
         
-        <p> @{{ message | youtube}} </p>
+      </div>
+      <hr>
+
+        <label for="publico" data-toggle="tooltip" data-placement="top" title="(On) Solo sera visible para ti">Privado:&nbsp;</label>
+        <input type="checkbox" name="publico">
+
+        <label for="restringido" data-toggle="tooltip" data-placement="top" title="(On) No apto para menores o personas suceptibles">Control Parental:&nbsp;</label>
+        <input type="checkbox" name="restringido">
+
+      <hr>
+
+      <div v-show="message" class="embed-container">
+
+        <iframe v-show="message" width="560" height="315" v-bind:src="message | youtube" frameborder="0" allowfullscreen></iframe>
+
+      </div>
+
+        <p> @{{ message | youtube }} </p>
+
     </form>
 
-  <script>
-  
-  Vue.filter('youtube', function(url){
-    //var separo =  value.split('watch?v=');
-    //return separo.join('embed/');
-    var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-    var youtube = 'https://www.youtube.com/embed';
-    if (match && match[2].length == 11) {
-      return youtube +'/'+ match[2];
-    } else {
-      //error
-      //return false;
-    }
-
-  })
-
-    new Vue({
-      el: "body",
-      data: {
-        message: ''
-      }
-    });
-  </script>
+    <script src="{{asset('assets/js/vue/yb.js')}}"></script>
