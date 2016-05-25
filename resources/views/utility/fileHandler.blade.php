@@ -1,19 +1,4 @@
 <style>
-.embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-}
-.embed-container iframe {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-
 .example {
   padding: 10px;
   border: 1px solid #ccc;
@@ -113,7 +98,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
     <h3>Inserte un Video</h3>
 
-    <form class="form-inline">
+    <form class="form-inline" action="/video" method="POST">
+      {!! csrf_field() !!}
       <div class="form-group">
         <div class="input-group">
 
@@ -128,7 +114,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
         <button type="submit" class="btn btn-primary">Guardar</button>
         <button v-on:click="limpiarForm" type="reset" class="btn btn-danger">Limpiar</button>
-        
+
       </div>
       <hr>
 
@@ -137,6 +123,9 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
         <label for="restringido" data-toggle="tooltip" data-placement="top" title="(On) No apto para menores o personas suceptibles">Control Parental:&nbsp;</label>
         <input type="checkbox" name="restringido">
+        <br>
+        <br>
+        <input type="text" name="tags" placeholder="Etiquetas" class="form-control">
 
       <hr>
 

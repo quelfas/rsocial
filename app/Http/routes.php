@@ -28,6 +28,7 @@ Route::get('/contacto',function(){
 
 Route::get('/crear','Auth\AuthController@create');
 Route::get('/accesar','Auth\AuthController@getlogin');
+Route::get('/auth/login','Auth\AuthController@getlogin');
 Route::post('/user-create',[
     'as'=>'user-create',
     'uses'=>'Auth\AuthController@store'
@@ -48,5 +49,6 @@ Route::group(['middleware'=>'auth'],function($id){
   Route::resource('user','UserController');
   Route::resource('profile','ProfileController');
   Route::resource('relation','RelationController');
+  Route::resource('videos','VideoController');
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });
