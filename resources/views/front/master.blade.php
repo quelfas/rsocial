@@ -30,7 +30,7 @@
     <script src="{{asset('assets/js/vue/vue.js')}}"></script>
     <link rel="stylesheet" media="screen" src="{{asset('assets/bootstrap2/bootstrap3.css')}}">
     <script src="{{asset('assets/bootstrap2/bootstrap3.js')}}"></script>
-    
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// bootstrap-datepicker3.standalone.min-->
 	    <!--[if lt IE 9]>
@@ -117,6 +117,10 @@
 		$(function () {
 			$('[data-toggle="tooltip"]').tooltip()
 		})
+
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
 		</script>
   </body>
 </html>

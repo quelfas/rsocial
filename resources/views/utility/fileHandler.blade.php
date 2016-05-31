@@ -58,85 +58,127 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 </script>
 
+    <div>
 
-<h3>Galeria de Imagenes</h3>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Tu estado</a></li>
+    <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Videos</a></li>
+    <li role="presentation"><a href="#imagenes" aria-controls="imagenes" role="tab" data-toggle="tab">Imagenes</a></li>
+    <li role="presentation"><a href="#mensajes" aria-controls="mensajes" role="tab" data-toggle="tab">Mensajes</a></li>
+  </ul>
 
-<div id="drop_zone">Suelte los archivos aqui</div>
-<output id="list"></output>
+  <!-- Tab panes -->
+  <div class="tab-content">
 
-<script>
-  function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+    <div role="tabpanel" class="tab-pane active" id="home">
 
-    var files = evt.dataTransfer.files; // FileList object.
+    <h3>Actualiza tu estado</h3>
 
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                  '</li>');
-    }
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
-
-  function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
-
-  // Setup the dnd listeners.
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.addEventListener('dragover', handleDragOver, false);
-  dropZone.addEventListener('drop', handleFileSelect, false);
-</script>
-
-    <hr>
-
-    <h3>Inserte un Video</h3>
-
-    <form class="form-inline" action="/video" method="POST">
+    <form class="form-inline" action="" method="post">
       {!! csrf_field() !!}
       <div class="form-group">
         <div class="input-group">
-
           <div class="input-group-addon">
-            <i class="fa fa-youtube fa-1x" aria-hidden="true"></i>
+            <i class="fa fa-comment-o fa-1x" aria-hidden="true"></i>
           </div>
-
-          <input v-model="message" type="text" class="form-control" placeholder="Pega tu video">
-          <input type="hidden" v-bind:value="message | youtube" name="source">
-
+          <input type="text" v-model="status" name="status" class="form-control" placeholder="Que estas pensando?">
         </div>
-
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <button v-on:click="limpiarForm" type="reset" class="btn btn-danger">Limpiar</button>
-
+        <button v-on:click="limpiarFormStatus()" type="reset" class="btn btn-danger">Limpiar</button>
       </div>
-      <hr>
-
-        <label for="publico" data-toggle="tooltip" data-placement="top" title="(On) Solo sera visible para ti">Privado:&nbsp;</label>
-        <input type="checkbox" name="publico">
-
-        <label for="restringido" data-toggle="tooltip" data-placement="top" title="(On) No apto para menores o personas suceptibles">Control Parental:&nbsp;</label>
-        <input type="checkbox" name="restringido">
-        <br>
-        <br>
-        <input type="text" name="tags" placeholder="Etiquetas" class="form-control">
-
-      <hr>
-
-      <div v-show="message" class="embed-container">
-
-        <iframe v-show="message" width="560" height="315" v-bind:src="message | youtube" frameborder="0" allowfullscreen></iframe>
-
-      </div>
-
-        <p> @{{ message | youtube }} </p>
-
+      <h4 v-show="status">@{{ status | textoCapital }}</h4>
     </form>
 
-    <script src="{{asset('assets/js/vue/yb.js')}}"></script>
+    </div>
+
+
+
+    <div role="tabpanel" class="tab-pane" id="videos">
+
+      <h3>Inserte un Video</h3>
+
+      <form class="form-inline" action="/videos" method="POST">
+        {!! csrf_field() !!}
+        <div class="form-group">
+          <div class="input-group">
+
+            <div class="input-group-addon">
+              <i class="fa fa-youtube fa-1x" aria-hidden="true"></i>
+            </div>
+
+            <input name="link" v-model="link" type="text" class="form-control" placeholder="Pega tu video">
+            <input type="hidden" v-bind:value="link | youtube" name="source">
+
+          </div>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button v-on:click="limpiarFormVideo()" type="reset" class="btn btn-danger">Limpiar</button>
+
+        </div>
+        <hr>
+
+          <label for="publico" data-toggle="tooltip" data-placement="top" title="(On) Solo sera visible para ti">Privado:&nbsp;</label>
+          <input type="checkbox" name="publico">
+
+          <label for="restringido" data-toggle="tooltip" data-placement="top" title="(On) No apto para menores o personas suceptibles">Control Parental:&nbsp;</label>
+          <input type="checkbox" name="restringido">
+          <br>
+          <br>
+          <input type="text" name="tags" placeholder="Etiquetas" class="form-control">
+
+        <hr>
+
+        <div v-show="link | youtube" class="embed-container">
+
+          <iframe width="560" height="315" v-bind:src="link | youtube" frameborder="0" allowfullscreen></iframe>
+
+        </div>
+          <hr>
+          <button v-show="link | youtube" type="button" class="btn btn-danger" name="button" data-toggle="popover" title="URL" v-bind:data-content="link"><i v-show="link | youtube" class="fa fa-code fa-fw fa-lg" aria-hidden="true"></i></button>
+      </form>
+
+      <script src="{{asset('assets/js/vue/yb.js')}}"></script>
+
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="imagenes">
+      <h3>Galeria de Imagenes</h3>
+
+      <div id="drop_zone">Suelte los archivos aqui</div>
+      <output id="list"></output>
+
+      <script>
+        function handleFileSelect(evt) {
+          evt.stopPropagation();
+          evt.preventDefault();
+
+          var files = evt.dataTransfer.files; // FileList object.
+
+          // files is a FileList of File objects. List some properties.
+          var output = [];
+          for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                        f.size, ' bytes, last modified: ',
+                        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                        '</li>');
+          }
+          document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+        }
+
+        function handleDragOver(evt) {
+          evt.stopPropagation();
+          evt.preventDefault();
+          evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        }
+
+        // Setup the dnd listeners.
+        var dropZone = document.getElementById('drop_zone');
+        dropZone.addEventListener('dragover', handleDragOver, false);
+        dropZone.addEventListener('drop', handleFileSelect, false);
+      </script>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="mensajes">...</div>
+  </div>
+
+</div>

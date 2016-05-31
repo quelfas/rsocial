@@ -1,11 +1,11 @@
 @extends('front.master')
 @section('title','Bienvenido '.$userName)
-
+@forelse ($UserProfiles as $UserProfile)
 @section('breadcrumbs')
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
   <li><a href="/salir">Desconectar</a></li>
-  <li class="active">Perfil</li>
+  <li><a href="/profile/{{ $UserProfile->user_id }}">Perfil</a></li>
 </ol>
 @endsection
 
@@ -28,7 +28,7 @@
           <div class="panel-body">
 
               @include('utility.fileHandler')
-              
+
           </div>
         </div>
       </div>
@@ -60,7 +60,6 @@
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
         <div class="well">
-          @forelse ($UserProfiles as $UserProfile)
               <div class="media">
               <div class="media-left">
 

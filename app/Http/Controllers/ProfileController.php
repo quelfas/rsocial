@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
 use App\UserRelation;
+use App\Videos;
 
 class ProfileController extends Controller
 {
@@ -98,7 +99,7 @@ class ProfileController extends Controller
 
 
 
-          return view('user')->with('mensaje',$mensajeSalida);
+          return redirect('user')->with('mensaje',$mensajeSalida);
         }
 
     }
@@ -112,51 +113,69 @@ class ProfileController extends Controller
     public function show($id)
     {
         //
-        $user_id = Auth::user()->id;
 
+        $user_id = Auth::user()->id;
         //paso 1. Determinar si el $ID es Publico o Privado
         $perfile = Profile::where('user_id',$id)->get();
 
-        //paso 2. Determinar si son amigos por medio de 2-way search
-        $Recibidos      = UserRelation::where('user_id1',$id)
-                              ->where('user_id2',$user_id)
-                              ->where('are_friends','Si')
-                              ->get();
-        $Solicitados    = UserRelation::where('user_id2',$id)
-                              ->where('user_id1',$user_id)
-                              ->where('are_friends','Si')
-                              ->get();
+        //es requerido una tabla de contenido para llevar control cronologico del contenido creado
+        $videos = Videos::where('user_id',$id)
+                            ->where('active','Si')
+                            ->take(5)
+                            ->get();
 
-        $a          = $Solicitados->count();
-        $b          = $Recibidos->count();
-        $ResultSum  = $a + $b;
+        if ($id == $user_id) {
 
-        if($ResultSum == 0){
+          return view('myprofile')->with(
+              [
+                  'UserProfiles'  => $perfile,
+                  'VideoContents' => $videos
+              ]);
 
-            $RelationOn = 'No';
+        } else {
 
-            $infoRelation = '';
-        }else{
 
-            $RelationOn = 'Si';
+            //paso 2. Determinar si son amigos por medio de 2-way search
+            $Recibidos      = UserRelation::where('user_id1',$id)
+                                  ->where('user_id2',$user_id)
+                                  ->where('are_friends','Si')
+                                  ->get();
+            $Solicitados    = UserRelation::where('user_id2',$id)
+                                  ->where('user_id1',$user_id)
+                                  ->where('are_friends','Si')
+                                  ->get();
 
-            if ($a == 0) {
-                $infoRelation = $Recibidos;
+            $a          = $Solicitados->count();
+            $b          = $Recibidos->count();
+            $ResultSum  = $a + $b;
+
+            if($ResultSum == 0){
+
+                $RelationOn = 'No';
+
+                $infoRelation = '';
+            }else{
+
+                $RelationOn = 'Si';
+
+                if ($a == 0) {
+                    $infoRelation = $Recibidos;
+                }
+
+                if ($b == 0) {
+                    $infoRelation = $Solicitados;
+                }
             }
 
-            if ($b == 0) {
-                $infoRelation = $Solicitados;
-            }
+            return view('profile')->with(
+                [
+                    'UserProfiles'  => $perfile,
+                    'UserRelations' => $RelationOn,
+                    'InfoRelations' => $infoRelation,
+                    'VideoContents' => $videos
+                ]);
         }
 
-
-
-        return view('profile')->with(
-            [
-                'UserProfiles'  => $perfile,
-                'UserRelations' => $RelationOn,
-                'InfoRelations' => $infoRelation
-            ]);
     }
 
     /**

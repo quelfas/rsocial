@@ -53,7 +53,7 @@ class AuthController extends Controller
               Una Vida Sobre Ruedas.',
               'class'=>'alert-info'
       ];
-        return view('users')->with('mensaje',$mensajeSalida);
+        return redirect('user')->with('mensaje',$mensajeSalida);
     }
 
     protected function store(Request $request)
@@ -84,7 +84,7 @@ class AuthController extends Controller
                 luego Ingrese su usuario y su clave para acceder',
     				 		'class'=>'alert-success'
     		];
-        return view('users')->with('mensaje',$mensajeSalida);
+        return redirect('user')->with('mensaje',$mensajeSalida);
     }
 
     protected function getLogin()
@@ -121,7 +121,7 @@ class AuthController extends Controller
     						'mensaje'=>'Credenciales correctas. Bienvenido '. $user['name'],
     						'class'=>'alert-success'
     				];
-        return view('user')->with('mensaje',$mensajeSalida);
+        return redirect('user')->with('mensaje',$mensajeSalida);
       }else {
         $mensajeSalida = [
                 'mensaje'=>'Usuario o Clave no coinciden, revise los datos ingresados. Verifique que activo su cuenta',

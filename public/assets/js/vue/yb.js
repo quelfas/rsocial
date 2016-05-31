@@ -1,3 +1,4 @@
+var match = null;
 Vue.filter('youtube', function(url){
   //var separo =  value.split('watch?v=');
   //return separo.join('embed/');
@@ -8,18 +9,28 @@ Vue.filter('youtube', function(url){
     return youtube +'/'+ match[2];
   } else {
     //error
+    return null;
   }
 
+}),
+
+Vue.filter('textoCapital',function(texto){
+  return texto && texto[0].toUpperCase() + texto.slice(1).toLowerCase();
 })
 
   new Vue({
     el: "body",
     data: {
-      message: ''
+      link: '',
+      status:''
+
     },
     methods:{
-      limpiarForm: function(event){
-        this.message ='';
+      limpiarFormVideo: function(){
+        this.link     ='';
+      },
+      limpiarFormStatus: function(){
+        this.status   ='';
       }
     }
   });

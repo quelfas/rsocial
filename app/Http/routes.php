@@ -30,11 +30,11 @@ Route::get('/crear','Auth\AuthController@create');
 Route::get('/accesar','Auth\AuthController@getlogin');
 Route::get('/auth/login','Auth\AuthController@getlogin');
 Route::post('/user-create',[
-    'as'=>'user-create',
+    'as'  =>'user-create',
     'uses'=>'Auth\AuthController@store'
   ]);
   Route::post('/accesar',[
-      'as'=>'accesar',
+      'as'  =>'accesar',
       'uses'=>'Auth\AuthController@postLogin'
     ]);
 
