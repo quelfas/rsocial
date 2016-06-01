@@ -107,7 +107,8 @@
 
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Una vida sobre Ruedas es un desarrollo de CristalMedia</p>
+        <p class="text-muted">Una vida sobre Ruedas. It is a development CristalMedia</p>
+        <p class "text-muted">Proudly Developed in Laravel</p>
       </div>
     </footer>
 

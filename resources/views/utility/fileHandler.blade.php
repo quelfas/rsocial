@@ -180,6 +180,9 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
       <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
       <div class="table table-striped" class="files" id="previews">
+        
+        <label for="galeria">Nombre de la Galeria:</label>
+        <input type="text" class="form-control" name="galeria">
 
       <div id="template" class="file-row">
         <!-- This is used as the file preview template -->
