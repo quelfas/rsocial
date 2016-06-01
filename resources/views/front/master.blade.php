@@ -14,7 +14,6 @@
   	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
   	<meta name="csrf-token" content="{{ csrf_token() }}" />
   	<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.min.css')}}" />
   	<link rel="stylesheet" href="{{asset('assets/css/footer.css')}}" />
   	<link rel="stylesheet" href="{{asset('assets/css/bootstrap-datepicker3.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}" />
@@ -22,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap-switch.css')}}" />
   	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://use.fontawesome.com/f4157ac849.js"></script><!-- CDN font-Awesome ty <3 -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
