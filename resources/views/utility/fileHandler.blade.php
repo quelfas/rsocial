@@ -154,15 +154,15 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           <!-- The fileinput-button span is used to style the file input field as button -->
           <span class="btn btn-success fileinput-button">
               <i class="glyphicon glyphicon-plus"></i>
-              <span>Add files...</span>
+              <span>Agregar Archivo</span>
           </span>
           <button type="submit" class="btn btn-primary start">
               <i class="glyphicon glyphicon-upload"></i>
-              <span>Start upload</span>
+              <span>Iniciar Carga</span>
           </button>
           <button type="reset" class="btn btn-warning cancel">
               <i class="glyphicon glyphicon-ban-circle"></i>
-              <span>Cancel upload</span>
+              <span>Cancelar Carga</span>
           </button>
         </div>
 
@@ -199,15 +199,15 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
         <div>
           <button class="btn btn-primary start">
               <i class="glyphicon glyphicon-upload"></i>
-              <span>Start</span>
+              <span>Iniciar</span>
           </button>
           <button data-dz-remove class="btn btn-warning cancel">
               <i class="glyphicon glyphicon-ban-circle"></i>
-              <span>Cancel</span>
+              <span>Cancelar</span>
           </button>
           <button data-dz-remove class="btn btn-danger delete">
             <i class="glyphicon glyphicon-trash"></i>
-            <span>Delete</span>
+            <span>Eliminar</span>
           </button>
         </div>
       </div>
