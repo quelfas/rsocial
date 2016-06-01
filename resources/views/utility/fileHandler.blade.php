@@ -152,18 +152,24 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
         <div class="col-lg-7">
           <!-- The fileinput-button span is used to style the file input field as button -->
-          <span class="btn btn-success fileinput-button">
+          <label for="galeria">Nombre de la Galeria:</label>
+          <input type="text" class="form-control" name="galeria">
+
+          <hr>
+
+          <span class="btn btn-success btn-sm fileinput-button">
               <i class="glyphicon glyphicon-plus"></i>
               <span>Agregar Archivo</span>
           </span>
-          <button type="submit" class="btn btn-primary start">
+          <button type="submit" class="btn btn-primary start btn-sm">
               <i class="glyphicon glyphicon-upload"></i>
               <span>Iniciar Carga</span>
           </button>
-          <button type="reset" class="btn btn-warning cancel">
+          <button type="reset" class="btn btn-warning cancel btn-sm">
               <i class="glyphicon glyphicon-ban-circle"></i>
               <span>Cancelar Carga</span>
           </button>
+
         </div>
 
         <div class="col-lg-5">
@@ -177,15 +183,13 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
       </div>
 
-
+      
       <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
       <div class="table table-striped" class="files" id="previews">
-        
-        <label for="galeria">Nombre de la Galeria:</label>
-        <input type="text" class="form-control" name="galeria">
 
       <div id="template" class="file-row">
         <!-- This is used as the file preview template -->
+        <hr>
         <div>
             <span class="preview"><img data-dz-thumbnail /></span>
         </div>
@@ -200,15 +204,15 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
             </div>
         </div>
         <div>
-          <button class="btn btn-primary start">
+          <button class="btn btn-primary btn-sm start">
               <i class="glyphicon glyphicon-upload"></i>
               <span>Iniciar</span>
           </button>
-          <button data-dz-remove class="btn btn-warning cancel">
+          <button data-dz-remove class="btn btn-warning btn-sm cancel">
               <i class="glyphicon glyphicon-ban-circle"></i>
               <span>Cancelar</span>
           </button>
-          <button data-dz-remove class="btn btn-danger delete">
+          <button data-dz-remove class="btn btn-danger btn-sm delete">
             <i class="glyphicon glyphicon-trash"></i>
             <span>Eliminar</span>
           </button>
