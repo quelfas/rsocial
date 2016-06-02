@@ -46,9 +46,10 @@ Route::post('/user-create',[
 |
 */
 Route::group(['middleware'=>'auth'],function($id){
-  Route::resource('user','UserController');
-  Route::resource('profile','ProfileController');
-  Route::resource('relation','RelationController');
-  Route::resource('videos','VideoController');
+  Route::resource('user', 'UserController');
+  Route::resource('profile', 'ProfileController');
+  Route::resource('relation', 'RelationController');
+  Route::resource('videos', 'VideoController');
+  Route::resource('upload', 'FileController');
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });

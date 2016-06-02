@@ -3,3 +3,7 @@
 /tests
 .env
 .env.example
+
+*.jpg
+*.gif
+*.png
