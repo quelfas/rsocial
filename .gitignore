@@ -1,9 +1,6 @@
 /public/assets/img/png/**/*
+/public/assets/upload/**/*
 /vendor
 /tests
 .env
 .env.example
-
-*.jpg
-*.gif
-*.png
