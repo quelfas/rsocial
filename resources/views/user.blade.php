@@ -172,7 +172,7 @@
 @stop
 @section('sidebar')
   @parent
-    @include('utility.friendSideBar');
+    @include('utility.friendSideBar')
     @include('utility.notifySideBar')
     @include('utility.listUsers')
 @endsection

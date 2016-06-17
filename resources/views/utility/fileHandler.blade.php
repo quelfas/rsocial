@@ -138,8 +138,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           <button v-show="link | youtube" type="button" class="btn btn-danger" name="button" data-toggle="popover" title="URL" v-bind:data-content="link"><i v-show="link | youtube" class="fa fa-code fa-fw fa-lg" aria-hidden="true"></i></button>
       </form>
 
-      <script src="{{asset('assets/js/vue/yb.js')}}"></script>
-
 
     </div>
 
@@ -147,14 +145,15 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     <div role="tabpanel" class="tab-pane" id="imagenes">
       <script type="text/javascript" src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>
       <link rel="stylesheet" href="{{asset('assets/css/dropzone.css')}}" />
-
+      <span data-dz-name></span>
       <h3>Galeria de Imagenes</h3>
           <!-- INICIO DROPZONE -->
           <form action="/upload" method="POST" id="my-dropzone" class="dropzone" enctype="multipart/form-data">
             {!! csrf_field() !!}
-            <input type="text" name="galeria" class="form-control" placeholder="Nombre de la Galeria">
+            <input type="text" v-model="count" name="mascara" class="form-control" placeholder="Nombre de la Galeria">
             <br>
             <input type="text" name="tags" class="form-control" placeholder="Etiquetas">
+            <input name="galeria" type="hidden" :value="count">
             <br>
             <label for="privacy">Privacidad: </label> <input type="checkbox" name="privacy">
             <hr>
@@ -162,38 +161,70 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
               Arrastra tus imagenes aqui
             </div>
             <div class="dropzone-preview"></div>
-             <button type="submit" class="btn btn-success" id="submit"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Subir</button>
+             <button type="submit" :disabled="count == ''" class="btn btn-success" id="submit"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Subir</button>
           </form>
+          <p class="text-right"><small id="count"></small></p>
           <!--script -->
           <script>
+          var archivos = 0;
             Dropzone.options.myDropzone = {
             autoProcessQueue: false,
             uploadMultiple: true,
-            maxFilezise: 10,
+            maxFilezise: 3,
             maxFiles: 15,
-            
+            addRemoveLinks: true,
+
             init: function() {
                     var submitBtn = document.querySelector("#submit");
                     myDropzone = this;
-                    
+
                     submitBtn.addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
                         myDropzone.processQueue();
                     });
-                    /*this.on("addedfile", function(file) {
-                        alert("file uploaded");
-                    });*/
-                    
+                    this.on("addedfile", function(file) {
+                        //alert("file uploaded");
+                        //cuenta de eventos addedfiles disparados
+
+                        if (archivos === 0) {
+                          archivos = 1;
+                        }else{
+                          archivos++;
+                        }
+
+                        $("#count").text('Cantidad de archivos: ' + archivos);
+
+                    });
+
                     this.on("complete", function(file) {
                         myDropzone.removeFile(file);
+                        $("#count").text('');
+                        $(".form-control").val('');
+
                     });
-     
-                    this.on("success", 
-                        myDropzone.processQueue.bind(myDropzone)
-                      );
+
+                    this.on("success", myDropzone.processQueue.bind(myDropzone));
+
+                    this.on("success", function(file, response){
+                      //$(file.previewElement).find('[data-dz-name]').html(response.message);
+                      //
+                      //obj.forEach(function(item, index, array){
+                        //console.log(item);
+                      //});
+                      $.each(response, function(clave,valor){
+                      // 
+                        if(clave == 'message'){
+                          console.log(valor.relace("/[\"/",""));
+                        }
+
+                      });
+
+                    });
+
                   }
               };
+
           </script>
         <!--script -->
           <!-- FIN DROPZONE -->
@@ -204,3 +235,4 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   </div>
 
 </div>
+<script src="{{asset('assets/js/vue/yb.js')}}"></script>

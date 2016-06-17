@@ -9,7 +9,5 @@
 @endsection
 
 @section('content')
-  <p>
-    Bienvenido a Laravel
-  </p>
+  <h1>Bienvenido a Laravel</h1>
 @stop

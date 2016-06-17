@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('welcome');
+});
+
 Route::get('/somos',function(){
   return view('somos');
 });
@@ -50,6 +54,7 @@ Route::group(['middleware'=>'auth'],function($id){
   Route::resource('profile', 'ProfileController');
   Route::resource('relation', 'RelationController');
   Route::resource('videos', 'VideoController');
-  Route::resource('upload', 'FileController');
+  Route::resource('upload', 'FileController',
+    ['only' =>['store']]);
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });

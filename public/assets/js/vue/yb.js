@@ -1,7 +1,6 @@
 var match = null;
 Vue.filter('youtube', function(url){
-  //var separo =  value.split('watch?v=');
-  //return separo.join('embed/');
+   
   var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   var match = url.match(regExp);
   var youtube = 'https://www.youtube.com/embed';
@@ -22,15 +21,16 @@ Vue.filter('textoCapital',function(texto){
     el: "body",
     data: {
       link: '',
-      status:''
+      status:'',
+      count:''
 
     },
     methods:{
       limpiarFormVideo: function(){
-        this.link     ='';
+        this.link         ='';
       },
       limpiarFormStatus: function(){
-        this.status   ='';
+        this.status       ='';
       }
     }
   });

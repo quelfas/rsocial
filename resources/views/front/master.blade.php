@@ -107,8 +107,7 @@
 
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">Una vida sobre Ruedas. It is a development CristalMedia</p>
-        <p class "text-muted">Proudly Developed in Laravel</p>
+        <p class="text-muted">Una vida sobre Ruedas. It is a development CristalMedia - Proudly Developed in Laravel <span style="color: red;" class="glyphicon glyphicon-heart" aria-hidden="true"></span></p>
       </div>
     </footer>
 

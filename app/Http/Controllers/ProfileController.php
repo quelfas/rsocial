@@ -118,6 +118,10 @@ class ProfileController extends Controller
         //paso 1. Determinar si el $ID es Publico o Privado
         $perfile = Profile::where('user_id',$id)->get();
 
+        if ($perfile === NULL) {
+            return view('errors.404');
+        }
+
         //es requerido una tabla de contenido para llevar control cronologico del contenido creado
         $videos = Videos::where('user_id',$id)
                             ->where('active','Si')
