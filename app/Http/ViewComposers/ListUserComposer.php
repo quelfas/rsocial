@@ -2,23 +2,24 @@
 
 use Illuminate\Contracts\View\View;
 use Auth;
+
+//Models
 use App\Profile;
 use App\UserRelation;
 
-/**
- *
- */
+
 class ListUserComposer
 {
 
   function compose(View $view)
   {
-    /*-------------------------------------------------
-    | consulta de la informacion del perfil de usuario
-    /*------------------------------------------------*/
+    /**
+     * consulta de la informacion del perfil de usuario
+     */
     $id = Auth::user()->id;
 
-    $UserPerfil = Profile::where('user_id',$id)->get();
+    $UserPerfil = Profile::where('user_id',$id)
+                  ->get();
     $ShowCount = $UserPerfil->count(); //verificar si el perfil esta creado
 
     if ($UserPerfil->count() == 0) {
@@ -28,14 +29,20 @@ class ListUserComposer
         "flag"      =>false
       ];
     } else {
-      //Perfil creado!
-      // consultando en funcion del pais
+
+      /**
+       * Perfil creado!
+       * consultando en funcion del pais
+       */
+
       foreach ($UserPerfil as $UserDetail) {
         $pais = $UserDetail->country;
       }
-      /*-
-      Consulta de la lista de amigos para no ser incluidos en la lista para nuevos amigos
-      -*/
+
+      /**
+       * Consulta de la lista de amigos para no ser incluidos en la lista para nuevos amigos
+       */
+
       $LtR = UserRelation::where('user_id1',$id)
                   ->get();
 
@@ -55,8 +62,8 @@ class ListUserComposer
       $array0     = [$id];
       $arrayId    = array_merge($array0,$array1,$array2);
       $UsersList  = Profile::where('country',$pais)
-                  ->whereNotIn('user_id',$arrayId)
-                  ->get();
+                      ->whereNotIn('user_id',$arrayId)
+                      ->get();
 
       if ($UsersList->count() == 0) {
         $ContentSalida = [
@@ -64,6 +71,7 @@ class ListUserComposer
           "Contenido" =>"Ayudamos donando y haciendole publicidad a este proyecto",
           "flag"      =>false
         ];
+        
       } else {
         $ContentSalida = [
           "Titulo"    =>"Personas para Conectar",
@@ -76,7 +84,10 @@ class ListUserComposer
 
     }
 
-    //$perfile = 'lista de usuarios desde el proveedor de servicios';
+    /**
+     * $perfile = 'lista de usuarios desde el proveedor de servicios';
+     */
+
     $view->with('UsersList',$ContentSalida);
   }
 }

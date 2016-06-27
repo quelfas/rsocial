@@ -140,18 +140,37 @@ class ProfileController extends Controller
 
 
             //paso 2. Determinar si son amigos por medio de 2-way search
-            $Recibidos      = UserRelation::where('user_id1',$id)
-                                  ->where('user_id2',$user_id)
-                                  ->where('are_friends','Si')
-                                  ->get();
-            $Solicitados    = UserRelation::where('user_id2',$id)
-                                  ->where('user_id1',$user_id)
-                                  ->where('are_friends','Si')
-                                  ->get();
+            /**
+             * $Recibidos      = UserRelation::where('user_id1',$id)
+             *                     ->where('user_id2',$user_id)
+             *                     ->where('are_friends','Si')
+             *                     ->get();
+             * $Solicitados    = UserRelation::where('user_id2',$id)
+             *                     ->where('user_id1',$user_id)
+             *                     ->where('are_friends','Si')
+             *                     ->get();
+             *
+             *
+             * $a          = $Solicitados->count();
+             * $b          = $Recibidos->count();
+             * $ResultSum  = $a + $b;
+             *   
+             **/
 
-            $a          = $Solicitados->count();
-            $b          = $Recibidos->count();
-            $ResultSum  = $a + $b;
+            /**
+             * Prueba con modelo avanzado con clausula where
+             * 
+             */
+
+            $newModel = DB::table('UserRelation')
+                        ->where('are_friends','=','Si')
+                        ->orWhere(function($query){
+                            $query->where('user_id1','=',$user_id)
+                                  ->where('user_id2','=',$user_id)
+                        })
+                        ->get();
+
+            $ResultSum = $newModel->count();
 
             if($ResultSum == 0){
 

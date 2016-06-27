@@ -9,10 +9,10 @@ use App\Subscription;
 use App\Contents;
 
 /**
- * Cargar los id de Subscripciones con condicion 'active = Si'
- * Contar la cantidad de subscripciones activas
- * contar la cantidad de contenido existente
- * Cargar contenido desde modelo Contents
+ * Debemos cargar los id de Subscripciones con condicion 'active = Si'
+ * Debemos contar la cantidad de subscripciones activas
+ * Debemos contar la cantidad de contenido existente
+ * Debemos cargar contenido desde modelo Contents
  */
 class ActivityContentComposer
 {
@@ -21,8 +21,8 @@ class ActivityContentComposer
 
 		$id = Auth::user()->id;
 		$subscripciones = Subscription::where('user_id', $id)
-																	->where('active',"Si")
-																	->get();
+									->where('active',"Si")
+									->get();
 
 		//cuenta de subscripciones
 		if ($subscripciones->count() == 0) {
@@ -38,17 +38,17 @@ class ActivityContentComposer
 
 			$subscribe_id = array();
 			foreach ($subscripciones as $subscription) {
+
 				$subscribe_id[] = $subscription->subscribe_id;
 			}
 
 			foreach ($subscribe_id as $key => $value) {
-				# code...
 
 				$contenido[] = Contents::where('user_id', $value)
-															->where('privacy','publico')
-															->orderBy('created_at','desc')
-															->take(1)
-															->get();
+									->where('privacy','publico')
+									->orderBy('created_at','desc')
+									->take(1)
+									->get();
 			}
 
 			$SubsSalida = [

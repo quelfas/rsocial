@@ -2,12 +2,11 @@
 
 use Illuminate\Contracts\View\View;
 use Auth;
+
 //Models
 use App\UserRelation;
 use App\Profile;
-/**
- *
- */
+
 class RelationComposer
 {
 
@@ -19,7 +18,6 @@ class RelationComposer
 
     /**
      * Verificamos si se han confirmado amistad
-     *
      */
     $userRelv = array();
     $Relations = UserRelation::where('user_id2','=',$id)

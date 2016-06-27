@@ -47,7 +47,7 @@ class NewContent
             $content = new Contents;
 
             $content->user_id       = $event->video->user_id;
-            $content->content_type  = 'video';
+            $content->content_type  = 'videos';
             $content->content_id    = $event->video->id;
             $content->privacy       = $event->video->privacy;
             $content->message       = $name.' '.$last_name.' publico un nuevo Video';
