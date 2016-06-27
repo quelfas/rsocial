@@ -6,14 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Videos;
-use Auth;
 
-//facades
-use Event;
-use App\Events\NewVideo;
-
-class VideoController extends Controller
+class ContentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -43,51 +37,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //Falta validar Request
-        $id = Auth::user()->id;
-
-        $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
-        $restringido  = ($request->input('restringido') == "on") ? "Si" : "No";
-        //ToDo diccionario de palabras reservadas para evitar abusos
-        $tags         = $request->tags;
-
-        $video = new Videos;
-
-        $video->user_id   = $id;
-        $video->url_frame = $request->source;
-        $video->url_link  = $request->link;
-        $video->privacy   = $privacy;
-        $video->parental  = $restringido;
-        $video->tags      = $tags;
-
-        $video->save();
-
-        //Fire event
-        Event::fire(new NewVideo($video));
-
-        $mensajeSalida = array(
-              'mensaje' => 'Nuevo contenido guardado',
-              'class'   => 'alert-success'
-          );
-
-        $videos = Videos::where('user_id',$id)
-                              ->where('active','Si')
-                              ->take(2)
-                              ->get();
-
-        if ($videos->count() == 0) {
-          $videoSalida = "";
-        } else {
-          $videoSalida = $videos;
-        }
-
-
-        return redirect('user')->with(
-        [
-          'mensaje'=>$mensajeSalida,
-          'VideoContents' => $videoSalida
-        ]
-      );
+        //
     }
 
     /**

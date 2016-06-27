@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -28,6 +30,17 @@ Route::get('/contacto',function(){
 });
 //rutas al front
 
+//ruta de prueba para servicio de push
+
+/*get('/bridge', function() {
+    $pusher = App::make('pusher');
+
+    $pusher->trigger( 'test-channel',
+                      'test-event', 
+                      array('text' => 'Preparing the Pusher Laracon.eu workshop!'));
+
+    return view('welcome');
+});*/
 
 
 Route::get('/crear','Auth\AuthController@create');
@@ -55,6 +68,7 @@ Route::group(['middleware'=>'auth'],function($id){
   Route::resource('relation', 'RelationController');
   Route::resource('videos', 'VideoController');
   Route::resource('upload', 'FileController',
-    ['only' =>['store']]);
+    ['only' => ['store']]);
+  Route::resource('content', 'ContentController');
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });

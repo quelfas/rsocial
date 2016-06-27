@@ -44,7 +44,7 @@ class FriendComposer
         'Cabecera'  =>  'Amistades',
         'Contenido' =>  '0'
       ];
-      $detalle ="";
+      $detalle[] = "S/I";
     } else {
       /*
       * Suma de amistades como cabecera de la lista de amistades

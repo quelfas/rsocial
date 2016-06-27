@@ -174,5 +174,6 @@
   @parent
     @include('utility.friendSideBar')
     @include('utility.notifySideBar')
+    @include('utility.activityContent')
     @include('utility.listUsers')
 @endsection

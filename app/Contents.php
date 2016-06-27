@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Videos extends Model
+class Contents extends Model
 {
     //
-    protected $table = 'Videos';
+    protected $table ='Contents';
 
     protected $fillable = [
     	'id',
     	'user_id',
-    	'url_frame',
-    	'url_link',
+    	'content_type',
+    	'content_id',
     	'privacy',
-    	'parental',
+    	'message',
     	'tags',
     	'active'
     ];

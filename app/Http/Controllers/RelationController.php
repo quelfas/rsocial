@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\UserRelation;
-use App\Profile;
+use DB;
+
+//Facedes
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use DB;
+
+//Models
+use App\UserRelation;
+use App\Profile;
+use App\Subscription;
 
 class RelationController extends Controller
 {
@@ -66,6 +71,23 @@ class RelationController extends Controller
           'are_friends' =>'StBy'
         ]);
 
+        /*
+        * Estableciendo la subscripcion a los eventos
+        * Convencion de consultas
+        * 'id', -> id de registro
+        * 'user_id', -> usuario que solicita la subscripcion
+        * 'subscribe_id', -> usuario al que se le consultara su canal o canales
+        * 'active', -> No hasta que se acepte la solicitud
+        */
+
+        $subscribe = new Subscription;
+
+        $subscribe->user_id       = $this->id;
+        $subscribe->subscribe_id  = $request->input('user_id2');
+        $subscribe->active        = "No";
+
+        $subscribe->save();
+
         $users = Profile::where('user_id',$request->input('user_id2'))->get();
 
         foreach ($users as $user) {
@@ -115,15 +137,45 @@ class RelationController extends Controller
     {
         //dd($request->input("solicitud-".$request->input("_id")));
 
-        $user = Auth::user()->id;
-        DB::table('UserRelation')
-            ->where('user_id2', $user)
-            ->where('user_id1', $request->input("_id"))
-            ->update(['are_friends'=>$request->input("solicitud-".$request->input("_id"))]);
+        $this->id = Auth::user()->id;
+        DB::table( 'UserRelation' )
+            ->where( 'user_id2', $this->id )
+            ->where( 'user_id1', $request->input("_id") )
+            ->update([
+              'are_friends' => $request->input("solicitud-".$request->input("_id"))
+            ]);
 
-      if ($request->input("solicitud-3")=="SI") {
+      if ($request->input( "solicitud-".$request->input("_id") ) == "SI") {
         $respuesta  = "aceptada";
         $style      = "success";
+
+        /*
+        * Actualizando la subscripcion generada
+        * cuando se creo la solicitud de amistad
+        */
+
+        DB::table( 'Subscription' )
+            ->where( 'user_id', $request->input("_id") )
+            ->update([
+              'active' => "Si"
+            ]);
+
+        /*
+        * Estableciendo la subscripcion a los eventos
+        * Convencion de consultas
+        * 'id', -> id de registro
+        * 'user_id', -> usuario que solicita la subscripcion
+        * 'subscribe_id', -> usuario al que se le consultara su canal o canales
+        * 'active', -> por defecto SI
+        */
+
+        $subscribe = new Subscription;
+
+        $subscribe->user_id       = $this->id;
+        $subscribe->subscribe_id  = $request->input("_id");
+
+        $subscribe->save();
+
       }else {
         $respuesta  = "rechazada";
         $style      = "warning";

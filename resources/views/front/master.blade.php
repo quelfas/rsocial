@@ -7,7 +7,6 @@
   <head>
     <meta charset="utf-8">
     <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,6 +22,7 @@
   	<link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://use.fontawesome.com/f4157ac849.js"></script><!-- CDN font-Awesome ty <3 -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//js.pusher.com/3.0/pusher.min.js"></script><!-- CDN PushServices-->
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('assets/js/locale/bootstrap-datepicker.es.min.js')}}"></script>
