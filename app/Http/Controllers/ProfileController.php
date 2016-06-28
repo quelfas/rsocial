@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Profile;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
+use DB;
+
+//Model
+use App\Profile;
 use App\UserRelation;
 use App\Videos;
 
@@ -140,37 +143,19 @@ class ProfileController extends Controller
 
 
             //paso 2. Determinar si son amigos por medio de 2-way search
-            /**
-             * $Recibidos      = UserRelation::where('user_id1',$id)
-             *                     ->where('user_id2',$user_id)
-             *                     ->where('are_friends','Si')
-             *                     ->get();
-             * $Solicitados    = UserRelation::where('user_id2',$id)
-             *                     ->where('user_id1',$user_id)
-             *                     ->where('are_friends','Si')
-             *                     ->get();
-             *
-             *
-             * $a          = $Solicitados->count();
-             * $b          = $Recibidos->count();
-             * $ResultSum  = $a + $b;
-             *   
-             **/
+            /**/
+             $Recibidos      = UserRelation::where('user_id1',$id)
+                                 ->where('user_id2',$user_id)
+                                 ->where('are_friends','Si')
+                                 ->get();
+             $Solicitados    = UserRelation::where('user_id2',$id)
+                                  ->where('user_id1',$user_id)
+                                  ->where('are_friends','Si')
+                                  ->get();
 
-            /**
-             * Prueba con modelo avanzado con clausula where
-             * 
-             */
-
-            $newModel = DB::table('UserRelation')
-                        ->where('are_friends','=','Si')
-                        ->orWhere(function($query){
-                            $query->where('user_id1','=',$user_id)
-                                  ->where('user_id2','=',$user_id)
-                        })
-                        ->get();
-
-            $ResultSum = $newModel->count();
+             $a          = $Solicitados->count();
+             $b          = $Recibidos->count();
+             $ResultSum  = $a + $b;
 
             if($ResultSum == 0){
 
