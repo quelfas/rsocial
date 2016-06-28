@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Videos;
 use Auth;
 
-//facades
+//Facades
 use Event;
+
+//Evento
 use App\Events\NewVideo;
+
+//Models
+use App\Videos;
 
 class VideoController extends Controller
 {

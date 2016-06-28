@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Auth;
 use Validator;
-use App\Galery;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+//Models
+use App\Galery;
 
 class FileController extends Controller
 {
@@ -54,7 +55,7 @@ class FileController extends Controller
           if ($v->fails()) {
                 // mis vacaciones en holanda 2015
                 //$errores    = $v->errors();
-                $message[]  = "El campo Galeria es obligatorio y el tamaño maximo es de 50 caracteres"
+                $message[]  = "El campo Galeria es obligatorio y el tamaño maximo es de 50 caracteres";
                 $errores    = json_encode($message);
 
             return response()->json([
@@ -64,24 +65,29 @@ class FileController extends Controller
 
           }
 
-        //dd($request->file('file'));
         $message    = array();
         $path       = public_path().'/assets/upload/';
         $files      = $request->file('file');
         $galeria    = $request->input('galeria');
         $user       = Auth::user()->id;
         $privacy    = ($request->input('privacy') == "on") ? "privado" : "publico";
+
         foreach($files as $file){
             $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
             $fileRealName   = $file->getClientOriginalName();
             $fileSize       = $file->getSize();
             $fileMime       = $file->getMimeType();
-            //faltan las comprobaciones y validaciones
-            //validando las imagenes
-            //*tipo de archivo imagen
-            //*tamanio no mayor a 3mb
 
-            //validando en el bucle foreach tamanio y mime antes de guardar y mover
+            /**
+             * ToDo
+             * Faltan las comprobaciones y validaciones (Validate)
+             * Done!!!
+             * validando las imagenes (via mime)
+             * tipo de archivo imagen
+             * tamanio no mayor a 3mb
+             * validacion en el bucle foreach tamanio y mime antes de guardar y mover
+             */
+
             switch ($fileMime) {
                 case 'image/jpeg':
                     $paso = true;
@@ -135,6 +141,7 @@ class FileController extends Controller
 
 
         }
+
         $errores    = json_encode($message);
         return response()->json([
             'success'       =>true,

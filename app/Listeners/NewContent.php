@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\App;
 use Log;
 
 //Models
-//use Auth;
 use App\Contents;
 use App\Profile;
 
@@ -57,19 +56,36 @@ class NewContent
 
         Log::info('funciona el Listener con el registro numero '. $content->id);
 
-        //if content is private silence trigger
+        /**
+         * Comprobando si el nuevo contenido es publico o privado
+         * De ser privado no habra propagacion
+         **/
 
         if($event->video->privacy == 'privado'){
-            //no propagation
+            /**
+             * El contenido es privado no habra propagacion
+             **/
         }else{
+
+            /**
+             * Nueva instancia de Pusher
+             **/
             $pusher = App::make('pusher');
+
+            /**
+             * Se dispara evento hacia Pusher con lo siguiente:
+             * 'emiter'   = Emisor que sera filtrado en el front para que solo los suscritos reciban la emision
+             * 'event'    = Evento "mensaje emitido"
+             * 'payLoad'  = carga util del evento
+             **/
 
             $pusher->trigger( 
                         'Notify',
                         'NewContent', 
                       array(
-                        'emiter' => $event->video->user_id,
-                        'event'  => $name.' '.$last_name.' publico un nuevo Video',
+                        'emiter'  => $event->video->user_id,
+                        'event'   => $name . ' ' . $last_name.' publico un nuevo Video',
+                        'payLoad' => 'videos/' . $event->video->id,
                         ));
         }
 
