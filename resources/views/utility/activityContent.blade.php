@@ -4,12 +4,27 @@
   </div>
   <div class="panel-body">
 
+    <?php
+    //  $list = implode(",",$Canales['Subscribed']);
+
+    ?>
+
     <script>
-  		var pusher = new Pusher("{{env("PUSHER_KEY")}}");
+  		var pusher  = new Pusher("{{env("PUSHER_KEY")}}");
   		var channel = pusher.subscribe('Notify');
   		channel.bind('NewContent', function(data){
-  			//console.log('nuevo evento '+ data.message);
-  			$("#events ul").prepend('<li>' + data.event + '</li>');
+
+        var list      = <?php echo json_encode($Canales['Subscribed']); ?>;
+        var selfUser  = <?php echo Auth::user()->id; ?>;
+
+        for(i = 0; i < list.length; i++){
+          if(list[i] = selfUser){
+            $("#events ul").prepend('<li>' + data.event + '</li>');
+          }else{
+            console.log(selfUser);
+          }
+        }
+
   		});
 
   	</script>

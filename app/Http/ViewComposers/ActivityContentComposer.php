@@ -29,8 +29,9 @@ class ActivityContentComposer
 			//no existen subscripciones activas
 
 			$SubsSalida = [
-				'Cabecera'	=> 'Canales',
-				'Contenido' => []
+				'Cabecera'		=> 'Canales',
+				'Contenido' 	=> [],
+				'Subscribed' 	=> []
 			];
 
 		}else {
@@ -52,8 +53,9 @@ class ActivityContentComposer
 			}
 
 			$SubsSalida = [
-				'Cabecera'	=> 'Canales',
-				'Contenido' => $contenido
+				'Cabecera'		=> 'Canales',
+				'Contenido' 	=> $contenido,
+				'Subscribed' 	=> $subscribe_id
 			];
 		}
 
