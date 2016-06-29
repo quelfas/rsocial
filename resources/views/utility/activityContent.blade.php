@@ -4,11 +4,6 @@
   </div>
   <div class="panel-body">
 
-    <?php
-    //  $list = implode(",",$Canales['Subscribed']);
-
-    ?>
-
     <script>
   		var pusher  = new Pusher("{{env("PUSHER_KEY")}}");
   		var channel = pusher.subscribe('Notify');
