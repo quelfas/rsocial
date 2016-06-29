@@ -19,9 +19,10 @@
 
         for(i = 0; i < list.length; i++){
           if(list[i] = selfUser){
-            $("#events ul").prepend('<li>' + data.event + '</li>');
+            $("#events ul").prepend('<li class="text-success"><small>' + data.event + '</small></li>');
+            break;
           }else{
-            console.log(selfUser);
+            //console.log(selfUser);
           }
         }
 
@@ -33,7 +34,7 @@
   		<ul>
         @forelse($Canales['Contenido'] as $contenido)
           @foreach($contenido as $contenido)
-            <li><small><a href="/{{ $contenido->content_type}}/{{ $contenido->content_id }}">{{ $contenido->message }}</a></small></li>
+            <li class="text-info"><small><a href="/{{ $contenido->content_type}}/{{ $contenido->content_id }}">{{ $contenido->message }}</a></small></li>
           @endforeach
         @empty
         @endforelse
