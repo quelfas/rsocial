@@ -207,13 +207,9 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                     this.on("success", myDropzone.processQueue.bind(myDropzone));
 
                     this.on("success", function(file, response){
-                      //$(file.previewElement).find('[data-dz-name]').html(response.message);
-                      //
-                      //obj.forEach(function(item, index, array){
-                        //console.log(item);
-                      //});
+                      
                       $.each(response, function(clave,valor){
-                      // 
+
                         if(clave == 'message'){
                           console.log(valor.relace("/[\"/",""));
                         }
