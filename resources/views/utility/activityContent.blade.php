@@ -5,7 +5,7 @@
   <div class="panel-body">
 
     <script>
-  		var pusher = new Pusher('10a2c2c5c95d816e54cf');
+  		var pusher = new Pusher("{{env("PUSHER_KEY")}}");
   		var channel = pusher.subscribe('Notify');
   		channel.bind('NewContent', function(data){
   			//console.log('nuevo evento '+ data.message);
