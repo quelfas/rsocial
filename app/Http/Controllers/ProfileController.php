@@ -57,7 +57,9 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         //
-        //dd($request->all());
+
+        $this->id_u = Auth::user()->id
+
         $rules = [
           'name'      =>'required|min:3|max:80',
           'last_name' =>'required|min:3|max:80',
@@ -66,8 +68,8 @@ class ProfileController extends Controller
           'country'   =>'required',
           'locale'    =>'required|max:100',
           'phone'     =>'required|max:12',
-          //'privacy'   =>'required', Comentado por efectos del control
-          //'connections'   =>'required',Comentado por efectos del control
+          //'privacy'   =>'required', //Comentado por efectos del control
+          //'connections'   =>'required', //Comentado por efectos del control
           'bio'       =>'required|max:1000'
         ];
 
@@ -84,7 +86,7 @@ class ProfileController extends Controller
           $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
           $connections  = ($request->input('connections') == "on") ? "Si" : "No";
           Profile::create([
-            'user_id'     => Auth::user()->id,
+            'user_id'     => $this->id_u,
             'name'        => ucfirst($request->input('name')),
             'last_name'   => ucfirst($request->input('last_name')),
             'birthdate'   => $birthdate,
@@ -119,7 +121,7 @@ class ProfileController extends Controller
     {
         //
 
-        $this->id = Auth::user()->id;
+        $this->id_u = Auth::user()->id;
         //paso 1. Determinar si el $ID es Publico o Privado
         $perfile = Profile::where('user_id',$id)->get();
 
@@ -133,7 +135,7 @@ class ProfileController extends Controller
                             ->take(5)
                             ->get();
 
-        if ($id == $this->id) {
+        if ($id == $this->id_u) {
 
           return view('myprofile')->with(
               [
@@ -147,11 +149,11 @@ class ProfileController extends Controller
             //paso 2. Determinar si son amigos por medio de 2-way search
             /**/
              $Recibidos      = UserRelation::where('user_id1',$id)
-                                 ->where('user_id2',$this->id)
+                                 ->where('user_id2',$this->id_u)
                                  ->where('are_friends','Si')
                                  ->get();
              $Solicitados    = UserRelation::where('user_id2',$id)
-                                  ->where('user_id1',$this->id)
+                                  ->where('user_id1',$this->id_u)
                                   ->where('are_friends','Si')
                                   ->get();
 

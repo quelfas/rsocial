@@ -47,8 +47,11 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        var $id_u;
+
         //Falta validar Request
-        $id = Auth::user()->id;
+
+        $this->id_u = Auth::user()->id;
 
         $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
         $restringido  = ($request->input('restringido') == "on") ? "Si" : "No";
@@ -57,7 +60,7 @@ class VideoController extends Controller
 
         $video = new Videos;
 
-        $video->user_id   = $id;
+        $video->user_id   = $this->id_u;
         $video->url_frame = $request->source;
         $video->url_link  = $request->link;
         $video->privacy   = $privacy;
@@ -74,7 +77,7 @@ class VideoController extends Controller
               'class'   => 'alert-success'
           );
 
-        $videos = Videos::where('user_id',$id)
+        $videos = Videos::where('user_id', $this->id_u)
                               ->where('active','Si')
                               ->take(2)
                               ->get();
@@ -103,6 +106,7 @@ class VideoController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -114,6 +118,7 @@ class VideoController extends Controller
     public function edit($id)
     {
         //
+        
     }
 
     /**
