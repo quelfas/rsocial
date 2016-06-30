@@ -16,6 +16,8 @@ use App\Videos;
 
 class ProfileController extends Controller
 {
+  var $id_u;
+
     /**
      * Display a listing of the resource.
      *
@@ -117,7 +119,7 @@ class ProfileController extends Controller
     {
         //
 
-        $user_id = Auth::user()->id;
+        $this->id = Auth::user()->id;
         //paso 1. Determinar si el $ID es Publico o Privado
         $perfile = Profile::where('user_id',$id)->get();
 
@@ -131,7 +133,7 @@ class ProfileController extends Controller
                             ->take(5)
                             ->get();
 
-        if ($id == $user_id) {
+        if ($id == $this->id) {
 
           return view('myprofile')->with(
               [
@@ -145,11 +147,11 @@ class ProfileController extends Controller
             //paso 2. Determinar si son amigos por medio de 2-way search
             /**/
              $Recibidos      = UserRelation::where('user_id1',$id)
-                                 ->where('user_id2',$user_id)
+                                 ->where('user_id2',$this->id)
                                  ->where('are_friends','Si')
                                  ->get();
              $Solicitados    = UserRelation::where('user_id2',$id)
-                                  ->where('user_id1',$user_id)
+                                  ->where('user_id1',$this->id)
                                   ->where('are_friends','Si')
                                   ->get();
 

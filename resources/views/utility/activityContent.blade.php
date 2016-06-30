@@ -14,7 +14,7 @@
 
         for(i = 0; i < list.length; i++){
           if(list[i] = selfUser){
-            $("#events ul").prepend('<li class="text-success"><small>' + data.event + '</small></li>');
+            $("#events ul").prepend('<li class="text-success"><small><a href="/' + data.payLoad + '">' + data.event + '</a></small></li>');
             break;
           }else{
             //console.log(selfUser);

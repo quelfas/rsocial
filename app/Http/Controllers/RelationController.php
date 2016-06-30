@@ -18,6 +18,8 @@ use App\Subscription;
 class RelationController extends Controller
 {
     var $id;
+    $this->id = Auth::user()->id;
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +28,6 @@ class RelationController extends Controller
     public function index()
     {
         //consultamos los user_id2 ya que esta columna es de Solicitudos
-        $this->id = Auth::user()->id;
 
         $solicitudesRecibidas = DB::table('profiles')
         ->join('UserRelation', function($join){
@@ -160,14 +161,14 @@ class RelationController extends Controller
               'active' => "Si"
             ]);
 
-        /*
+        /**
         * Estableciendo la subscripcion a los eventos
         * Convencion de consultas
         * 'id', -> id de registro
         * 'user_id', -> usuario que solicita la subscripcion
         * 'subscribe_id', -> usuario al que se le consultara su canal o canales
         * 'active', -> por defecto SI
-        */
+        **/
 
         $subscribe = new Subscription;
 
