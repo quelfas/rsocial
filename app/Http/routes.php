@@ -37,6 +37,12 @@ Route::post('/user-create',[
       'as'  =>'accesar',
       'uses'=>'Auth\AuthController@postLogin'
     ]);
+  
+/**
+ * Route Pattern
+ **/
+
+Route::pattern('id', '\d+');
 
 /**
  * Rutas bajo Auth 
