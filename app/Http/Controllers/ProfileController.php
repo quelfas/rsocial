@@ -58,7 +58,7 @@ class ProfileController extends Controller
     {
         //
 
-        $this->id_u = Auth::user()->id
+        $this->id_u = Auth::user()->id;
 
         $rules = [
           'name'      =>'required|min:3|max:80',
@@ -119,14 +119,23 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        // volverlo reutilizable
+        if (preg_match("/[\D]/",$id)) {
+          abort(406, 'Not Acceptable');
+        }
 
         $this->id_u = Auth::user()->id;
-        //paso 1. Determinar si el $ID es Publico o Privado
+
+        /**
+        * Verificar si el perfil es visible
+        * Verificar si el usuario que pide el perfil esta vinculado
+        **/
+
         $perfile = Profile::where('user_id',$id)->get();
 
-        if ($perfile === NULL) {
-            return view('errors.404');
+        //volverlo reutilizable
+        if ($perfile->isEmpty()) {
+            abort(404, 'Not Found');
         }
 
         //es requerido una tabla de contenido para llevar control cronologico del contenido creado

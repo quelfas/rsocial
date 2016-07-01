@@ -105,8 +105,13 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        //
-        
+      if (!preg_match("/[0-9]/",$id)) {
+        abort(406, 'Not Acceptable');
+      }
+      var $id_u;
+
+      $this->id_u = Auth::user()->id;
+
     }
 
     /**
@@ -118,7 +123,7 @@ class VideoController extends Controller
     public function edit($id)
     {
         //
-        
+
     }
 
     /**
