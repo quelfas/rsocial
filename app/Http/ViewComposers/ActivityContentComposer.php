@@ -45,6 +45,8 @@ class ActivityContentComposer
 
 /**
  * Consulta de contenido publico creado a traves de las suscripciones
+ * Uso de la Clausula avanzada whereIn para procesar el arreglo
+ * $subscribe_id[]
  **/
 
 			$contenido = Contents::whereIn('user_id',$subscribe_id)
