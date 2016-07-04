@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\App;
 /**
  * Rutas al Front
  **/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,7 +24,6 @@ Route::get('/contacto',function(){
 /**
  * Rutas para acceso
  **/
-
 Route::get('/crear','Auth\AuthController@create');
 Route::get('/accesar','Auth\AuthController@getlogin');
 Route::get('/auth/login','Auth\AuthController@getlogin');
@@ -37,15 +35,36 @@ Route::post('/user-create',[
       'as'  =>'accesar',
       'uses'=>'Auth\AuthController@postLogin'
     ]);
-  
+
 /**
- * Route Pattern
+ * Route Control
  **/
+Route::get('profile/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
 
-Route::pattern('id', '\d+');
+Route::get('user/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
+
+Route::get('relation/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
+
+Route::get('videos/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
+
+Route::get('upload/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
+
+Route::get('content/{id}', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
 
 /**
- * Rutas bajo Auth 
+ * Rutas bajo Auth
  **/
 Route::group(['middleware'=>'auth'], function($id){
   Route::resource('user', 'UserController');

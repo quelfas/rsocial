@@ -35,22 +35,28 @@ class ActivityContentComposer
 			];
 
 		}else {
-			//
 
 			$subscribe_id = array();
 			foreach ($subscripciones as $subscription) {
 
 				$subscribe_id[] = $subscription->subscribe_id;
+
 			}
 
-			foreach ($subscribe_id as $key => $value) {
+/**
+ * Consulta de contenido publico creado a traves de las suscripciones
+ **/
 
-				$contenido[] = Contents::where('user_id', $value)
-									->where('privacy','publico')
-									->orderBy('created_at','desc')
-									->take(1)
-									->get();
-			}
+			$contenido = Contents::whereIn('user_id',$subscribe_id)
+								->where('privacy','publico')
+								->orderBy('created_at','desc')
+								->take(10)
+								->get();
+
+/**
+ * Preparando la informacion para enviarla via injeccion de dependencias
+ * a la vista "utility.activityContentBlade"
+ **/
 
 			$SubsSalida = [
 				'Cabecera'		=> 'Canales',

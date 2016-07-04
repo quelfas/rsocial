@@ -120,10 +120,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         // volverlo reutilizable
-        if (preg_match("/[\D]/",$id)) {
-          abort(406, 'Not Acceptable');
-        }
-
+      
         $this->id_u = Auth::user()->id;
 
         /**

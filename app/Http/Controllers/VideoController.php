@@ -16,9 +16,12 @@ use App\Events\NewVideo;
 
 //Models
 use App\Videos;
+use App\Profile;
+use App\UserRelation;
 
 class VideoController extends Controller
 {
+  var $id_u;
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +50,7 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        var $id_u;
+
 
         //Falta validar Request
 
@@ -105,12 +108,67 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-      if (!preg_match("/[0-9]/",$id)) {
-        abort(406, 'Not Acceptable');
-      }
-      var $id_u;
+
 
       $this->id_u = Auth::user()->id;
+
+      $videos = Videos::where('id',$id)->get();
+
+      //volverlo reutilizable
+      if ($videos->isEmpty()) {
+          abort(404, 'Not Found');
+      }
+
+      //cargando el perfil de usuario propietario del Recurso
+
+      foreach ($videos as $video) {
+        $propietario = $video->user_id;
+      }
+
+      $perfile = Profile::where('user_id',$propietario)->get();
+
+      //Determinar si son amigos por medio de 2-way search
+      /**/
+       $Recibidos      = UserRelation::where('user_id1',$propietario)
+                           ->where('user_id2',$this->id_u)
+                           ->where('are_friends','Si')
+                           ->get();
+       $Solicitados    = UserRelation::where('user_id2',$propietario)
+                            ->where('user_id1',$this->id_u)
+                            ->where('are_friends','Si')
+                            ->get();
+
+       $a          = $Solicitados->count();
+       $b          = $Recibidos->count();
+       $ResultSum  = $a + $b;
+
+       if($ResultSum == 0){
+
+           $RelationOn = 'No';
+
+           $infoRelation = '';
+       }else{
+
+           $RelationOn = 'Si';
+
+           if ($a == 0) {
+               $infoRelation = $Recibidos;
+           }
+
+           if ($b == 0) {
+               $infoRelation = $Solicitados;
+           }
+       }
+
+       return view('video_view')->with(
+           [
+               'UserProfiles'  => $perfile,
+               'UserRelations' => $RelationOn,
+               'InfoRelations' => $infoRelation,
+               'VideoContents' => $videos
+           ]);
+
+
 
     }
 

@@ -28,9 +28,7 @@
   	<div id="events">
   		<ul>
         @forelse($Canales['Contenido'] as $contenido)
-          @foreach($contenido as $contenido)
-            <li class="text-info"><small><a href="/{{ $contenido->content_type}}/{{ $contenido->content_id }}">{{ $contenido->message }}</a></small></li>
-          @endforeach
+          <li class="text-info"><small><a href="/{{ $contenido->content_type}}/{{ $contenido->content_id }}">{{ $contenido->message }}</a></small></li>
         @empty
         @endforelse
   			<li><small>Acceso Correcto</small></li>
