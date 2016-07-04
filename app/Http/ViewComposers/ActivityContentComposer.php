@@ -4,15 +4,12 @@ use Illuminate\Contracts\View\View;
 use Auth;
 
 //Models
-use App\UserRelation;
 use App\Subscription;
 use App\Contents;
 
 /**
- * Debemos cargar los id de Subscripciones con condicion 'active = Si'
- * Debemos contar la cantidad de subscripciones activas
- * Debemos contar la cantidad de contenido existente
- * Debemos cargar contenido desde modelo Contents
+ * Debemos cargar los id de Suscripciones con condicion 'active = Si'
+ * Debemos cargar contenido a partir de las suscripcios activas
  */
 class ActivityContentComposer
 {
