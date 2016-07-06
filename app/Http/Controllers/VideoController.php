@@ -31,7 +31,59 @@ class VideoController extends Controller
   public function listVideo(Request $request)
   {
       //
-      echo'listamos video';
+      //echo'listamos video';
+
+    /**
+     * Lista de videos de $request->input(user)
+     * Si el requiriente es el propio autor o es el administrador
+     * se cargaran todos los videos
+     * Si el requiriente no es auto o no psee riles se cargan solo los publicos
+     *
+     * Determinar si el requiriente tiene relacion con el autor
+     * 
+     */
+
+      $relaciones = UserRelation::where('user_id1', $this->id_u)
+                            ->orWhere('user_id2', $this->id_u)
+                            ->where('are_friends', 'Si')
+                            ->get();
+
+      if($relaciones->isEmpty()){
+        /*----------  El modelo regreso vacio  ----------*/
+        /**
+         * Salida a la vista correspondiente
+         *
+         */
+        
+      }else{
+
+          foreach ($relaciones as $relacion) {
+
+          if($relacion->user_id1 == $request->input('user')){
+            /*----------  Subsection comment block  ----------*/
+
+            $id_perfiles[] = $relacion->user_id2;
+            
+          }elseif($relacion->user_id2 == $request->input('user')){
+            /*----------  Subsection comment block  ----------*/
+
+            $id_perfiles[] = $relacion->user_id1;
+            
+          }
+        }
+
+        /**
+          *
+          *  TODO:
+          *  - cargar los videos de $request->input('user')
+          *  - paginar resultados
+          *
+         **/
+        
+
+      }
+
+    
   }
 
 
@@ -140,38 +192,26 @@ class VideoController extends Controller
 
       $perfile = Profile::where('user_id',$propietario)->get();
 
-      //Determinar si son amigos por medio de 2-way search
-      /**/
-       $Recibidos      = UserRelation::where('user_id1',$propietario)
-                           ->where('user_id2',$this->id_u)
-                           ->where('are_friends','Si')
-                           ->get();
-       $Solicitados    = UserRelation::where('user_id2',$propietario)
-                            ->where('user_id1',$this->id_u)
-                            ->where('are_friends','Si')
-                            ->get();
+      /**
+       * Uso de busqueda en base a orWhere
+       */
+      $relaciones = UserRelation::where('user_id1', $this->id_u)
+                                  ->orWhere('user_id2', $this->id_u)
+                                  ->where('are_friends', 'Si')
+                                  ->get();
 
-       $a          = $Solicitados->count();
-       $b          = $Recibidos->count();
-       $ResultSum  = $a + $b;
+      if ($relaciones->count() == 0) {
 
-       if($ResultSum == 0){
+        $RelationOn   = 'No';
+        $infoRelation = '';
 
-           $RelationOn = 'No';
+      } else {
 
-           $infoRelation = '';
-       }else{
+        $RelationOn   = 'Si';
+        $infoRelation = $relaciones;
 
-           $RelationOn = 'Si';
-
-           if ($a == 0) {
-               $infoRelation = $Recibidos;
-           }
-
-           if ($b == 0) {
-               $infoRelation = $Solicitados;
-           }
-       }
+      }
+      
 
        return view('video_view')->with(
            [
