@@ -20,9 +20,10 @@ class RelationComposer
      * Verificamos si se han confirmado amistad
      */
     $userRelv = array();
-    $Relations = UserRelation::where('user_id2','=',$id)
-                              ->where('are_friends','=','StBy')
-                              ->get();
+    $Relations = UserRelation::where('user_id1', $id)
+                      ->orWhere('user_id2', $id)
+                      ->where('are_friends', '=', 'StBy')
+                      ->get();
 
     if ($Relations->count() == 0) {
       $RelationSalida = [
@@ -30,10 +31,10 @@ class RelationComposer
         'Contenido' =>  '0'
       ];
     } else {
-      $userRelv = $Relations->count();
+      
       $RelationSalida = [
         'Cabecera'  =>  'Solicitudes Pendientes',
-        'Contenido' =>  $userRelv
+        'Contenido' =>  $Relations->count()
       ];
     }
 
