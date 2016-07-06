@@ -42,4 +42,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasOne('App\Profile');
     }
+
+    public function isAdmin()
+    {
+      return $this->role == 'admin';
+    }
 }

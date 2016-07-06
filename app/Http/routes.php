@@ -71,6 +71,10 @@ Route::group(['middleware'=>'auth'], function($id){
   Route::resource('profile', 'ProfileController');
   Route::resource('relation', 'RelationController');
   Route::resource('videos', 'VideoController');
+  Route::post('/listarVideo',[
+    'as'    => 'listarVideo',
+    'uses'  => 'VideoController@listVideo'
+  ]);
   Route::resource('upload', 'FileController',
     ['only' => ['store']]);
   Route::resource('content', 'ContentController');

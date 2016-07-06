@@ -24,9 +24,9 @@ class ListUserComposer
 
     if ($UserPerfil->count() == 0) {
       $ContentSalida = [
-        "Titulo"    =>"Actividades Pendientes",
-        "Contenido" =>"Crea un Perfil",
-        "flag"      =>false
+        "Titulo"    => "Actividades Pendientes",
+        "Contenido" => "Crea un Perfil",
+        "flag"      => false
       ];
     } else {
 
@@ -43,24 +43,32 @@ class ListUserComposer
        * Consulta de la lista de amigos para no ser incluidos en la lista para nuevos amigos
        */
 
-      $LtR = UserRelation::where('user_id1',$id)
-                  ->get();
+      $relaciones = UserRelation::where('user_id1',$id)
+                      ->orWhere('user_id2',$id)
+                      ->get();
 
-      $array1     = array();
-      foreach ($LtR as $value) {
-        $array1[] = $value->user_id2;
+      foreach ($relaciones as $relacion) {
+        /*----------  excluyendose asi mismo  ----------*/
+        if($relacion->user_id1 == $id){
+
+          $id_perfiles[] = $relacion->user_id2;
+
+        }elseif($relacion->user_id2 == $id){
+
+          $id_perfiles[] = $relacion->user_id1;
+
+        }
+       
       }
 
-      $RtL = UserRelation::where('user_id2',$id)
-                  ->get();
-
-      $array2     = array();
-      foreach ($RtL as $value) {
-        $array2[] = $value->user_id1;
-      }
+      /**
+       * Consulta de perfiles disponibles
+       * excluyendo a los amigos y a si mismo
+       */
+      
 
       $array0     = [$id];
-      $arrayId    = array_merge($array0,$array1,$array2);
+      $arrayId    = array_merge($array0, $id_perfiles);
       $UsersList  = Profile::where('country',$pais)
                       ->whereNotIn('user_id',$arrayId)
                       ->get();

@@ -11,6 +11,16 @@
   @endsection
 
   @section('content')
+
+  <form action="/listarVideo" method="post">
+    {!! csrf_field() !!}
+
+    <button type="submit" name="button" class="btn btn-info">Listar Videos de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</button>
+
+  </form>
+
+  <br>
+
     @foreach($VideoContents as $VideoContent)
       <div class="well">
         <h3>{{ $VideoContent->created_at->day }}/{{ $VideoContent->created_at->month }}/{{ $VideoContent->created_at->year }} <small>{{ $VideoContent->tags }}</small></h3>
@@ -18,6 +28,17 @@
           <iframe width="560" height="315" src="{{ $VideoContent->url_frame }}" frameborder="0" allowfullscreen></iframe>
         </div>
       </div>
+
+      <br>
+
+      @can('update-content', $VideoContent)
+        @include('utility.editorPanelSite')
+      @endcan
+
+      @can('superAdmin', $VideoContent)
+        @include('utility.adminPanelSite')
+      @endcan
+
     @endForeach
   @endsection
 

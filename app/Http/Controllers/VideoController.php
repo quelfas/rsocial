@@ -22,6 +22,19 @@ use App\UserRelation;
 class VideoController extends Controller
 {
   var $id_u;
+
+  /**
+   * Display a listing of the resource from specific User.
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function listVideo(Request $request)
+  {
+      //
+      echo'listamos video';
+  }
+
+
     /**
      * Display a listing of the resource.
      *

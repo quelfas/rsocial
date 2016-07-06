@@ -125,7 +125,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           <input type="checkbox" name="restringido">
           <br>
           <br>
-          <input type="text" name="tags" placeholder="Etiquetas" class="form-control">
+          <input type="text" name="tags" placeholder="Titulo" class="form-control">
 
         <hr>
 
@@ -207,7 +207,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                     this.on("success", myDropzone.processQueue.bind(myDropzone));
 
                     this.on("success", function(file, response){
-                      
+
                       $.each(response, function(clave,valor){
 
                         if(clave == 'message'){

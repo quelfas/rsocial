@@ -27,5 +27,15 @@ class AuthServiceProvider extends ServiceProvider
         parent::registerPolicies($gate);
 
         //
+
+        $gate->define('update-content', function($user, $content){
+          return $user->id == $content->user_id || $user->role == 'editor';
+        });
+
+        $gate->define('superAdmin', function($user, $content){
+          return $user->role == 'admin';
+        });
+
+        //$gate->define('weAreFriends', function($user){});
     }
 }
