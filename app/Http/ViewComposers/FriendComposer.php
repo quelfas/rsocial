@@ -68,7 +68,7 @@ class FriendComposer
       }
 
       /**
-       * Arreglo para salida
+       * Arreglo para salida a las vista utility.friendSideBar.blade.php
        */
       foreach ($id_perfiles as $key => $value) {
         $detalle[] = $PerfiAmigo[$key][0]['user_id']."-".$PerfiAmigo[$key][0]['name']."-".$PerfiAmigo[$key][0]['last_name']."-".$PerfiAmigo[$key][0]['gender'];
