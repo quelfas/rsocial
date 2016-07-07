@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class UserController extends Controller
 {
+
+    var $id_u;
+
     /**
      * Display a listing of the resource.
      *
@@ -99,7 +103,53 @@ class UserController extends Controller
      */
     public function listVideo($id)
     {
-        dd($id);
+        //dd($id);
+
+        $this->id_u = Auth::user()->id;
+
+        /**
+         * Paso para carga de video
+         * Verificar si el id existe
+         * Si no existe sale el abort 404
+         * Verificar si los usuarios tienen relacion establecida
+         * Carga del Recurso Video mostrando 10 videos por pagina
+         * Verificar si el visitante es el mismo id [sale la vista ampliada]
+         */
+
+        $user = User::where('id',$id)->get();
+
+        //Si el id no existe sale un abort 404
+        if ($user->isEmpty()) {
+            abort(404,'Not Found');
+        }
+
+
+        $video = App\Videos::where('user_id',id)
+                            ->paginate(10);
+
+        //
+        if($this->id_u == $id){
+            //Se carga vista ampliada
+        }else{
+            //se verifica si el visitante y el autor tienen relacion
+
+            //Verificar si tienen relacion
+            $relaciones = App\UserRelation::where('user_id1',$this->id_u)
+                                            ->orWhere('user_id1',$this->id_u)
+                                            ->get();
+            foreach ($relaciones as $relacion) {
+                /**
+                 *
+                 *   TODO:
+                 *   - cruzar los campos para colicionar $id
+                 *   - verificar si tiene relacion
+                 *   - Si la tiene verificar el estado de la relacion
+                 * 
+                 **/
+                
+            }
+        }
+        
     }
     
 }
