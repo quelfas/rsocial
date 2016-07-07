@@ -90,4 +90,16 @@ class UserController extends Controller
     {
         //
     }
+
+    /**
+     * Display all video from user
+     * 
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function listVideo($id)
+    {
+        dd($id);
+    }
+    
 }

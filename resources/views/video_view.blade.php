@@ -12,14 +12,7 @@
 
   @section('content')
 
-  <form action="/listarVideo" method="post">
-    {!! csrf_field() !!}
-
-    <input name="user" type="hidden" value="{{ $UserProfile->user_id }}">
-
-    <button type="submit" name="button" class="btn btn-info">Listar Videos de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</button>
-
-  </form>
+  <a class="btn btn-default" href="{{ url('user/' . $UserProfile->user_id . '/videos') }}" role="button">Link</a>
 
   <br>
 

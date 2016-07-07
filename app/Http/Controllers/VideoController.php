@@ -23,70 +23,7 @@ class VideoController extends Controller
 {
   var $id_u;
 
-  /**
-   * Display a listing of the resource from specific User.
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
-  public function listVideo(Request $request)
-  {
-      //
-      //echo'listamos video';
-
-    /**
-     * Lista de videos de $request->input(user)
-     * Si el requiriente es el propio autor o es el administrador
-     * se cargaran todos los videos
-     * Si el requiriente no es auto o no psee riles se cargan solo los publicos
-     *
-     * Determinar si el requiriente tiene relacion con el autor
-     * 
-     */
-
-      $relaciones = UserRelation::where('user_id1', $this->id_u)
-                            ->orWhere('user_id2', $this->id_u)
-                            ->where('are_friends', 'Si')
-                            ->get();
-
-      if($relaciones->isEmpty()){
-        /*----------  El modelo regreso vacio  ----------*/
-        /**
-         * Salida a la vista correspondiente
-         *
-         */
-        
-      }else{
-
-          foreach ($relaciones as $relacion) {
-
-          if($relacion->user_id1 == $request->input('user')){
-            /*----------  Subsection comment block  ----------*/
-
-            $id_perfiles[] = $relacion->user_id2;
-            
-          }elseif($relacion->user_id2 == $request->input('user')){
-            /*----------  Subsection comment block  ----------*/
-
-            $id_perfiles[] = $relacion->user_id1;
-            
-          }
-        }
-
-        /**
-          *
-          *  TODO:
-          *  - cargar los videos de $request->input('user')
-          *  - paginar resultados
-          *
-         **/
-        
-
-      }
-
-    
-  }
-
-
+  
     /**
      * Display a listing of the resource.
      *

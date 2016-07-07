@@ -63,18 +63,21 @@ Route::get('content/{id}', function($id){
   abort(406, 'Not Acceptable');
 })->where('id','\D+');
 
+Route::get('user/{id}/videos', function($id){
+  abort(406, 'Not Acceptable');
+})->where('id','\D+');
+
 /**
  * Rutas bajo Auth
  **/
 Route::group(['middleware'=>'auth'], function($id){
+
+  Route::get('user/{id}/videos','UserController@listVideo');
+
   Route::resource('user', 'UserController');
   Route::resource('profile', 'ProfileController');
   Route::resource('relation', 'RelationController');
   Route::resource('videos', 'VideoController');
-  Route::post('/listarVideo',[
-    'as'    => 'listarVideo',
-    'uses'  => 'VideoController@listVideo'
-  ]);
   Route::resource('upload', 'FileController',
     ['only' => ['store']]);
   Route::resource('content', 'ContentController');
