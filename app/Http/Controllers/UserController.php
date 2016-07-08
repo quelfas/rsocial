@@ -8,6 +8,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
 
+//Models
+use App\Profile;
+use App\UserRelation;
+use App\Videos;
+
 class UserController extends Controller
 {
 
@@ -116,7 +121,7 @@ class UserController extends Controller
          * Verificar si el visitante es el mismo id [sale la vista ampliada]
          */
 
-        $user = User::where('id',$id)->get();
+        $user = Profile::where('user_id',$id)->get();
 
         //Si el id no existe sale un abort 404
         if ($user->isEmpty()) {
@@ -124,19 +129,22 @@ class UserController extends Controller
         }
 
 
-        $video = App\Videos::where('user_id',id)
-                            ->paginate(10);
+        $video = Videos::where('user_id',$id)
+                            ->paginate(5);
 
         //
+       // dd($video);
         if($this->id_u == $id){
             //Se carga vista ampliada
         }else{
             //se verifica si el visitante y el autor tienen relacion
 
             //Verificar si tienen relacion
-            $relaciones = App\UserRelation::where('user_id1',$this->id_u)
-                                            ->orWhere('user_id1',$this->id_u)
+            $relaciones = UserRelation::where('user_id1',$this->id_u)
+                                            ->orWhere('user_id2',$this->id_u)
+                                            ->where('are_friends','Si')
                                             ->get();
+            //dd($relaciones);
             foreach ($relaciones as $relacion) {
                 /**
                  *
@@ -146,8 +154,22 @@ class UserController extends Controller
                  *   - Si la tiene verificar el estado de la relacion
                  * 
                  **/
+
+                if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
+                    
+                    //echo" se ha creado el ".$relacion->created_at." por parte de ".$this->id_u;
+
+                } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
+                    
+                    //echo" se ha creado el ".$relacion->created_at." por parte de ".$id;
+
+                }
+                
                 
             }
+
+            return view('videos_views')->with(['videos'=>$video,'UserProfiles'=>$user]);
+
         }
         
     }
