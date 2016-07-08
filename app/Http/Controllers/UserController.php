@@ -132,45 +132,43 @@ class UserController extends Controller
         $video = Videos::where('user_id',$id)
                             ->paginate(5);
 
-        //
-       // dd($video);
-        if($this->id_u == $id){
-            //Se carga vista ampliada
-        }else{
-            //se verifica si el visitante y el autor tienen relacion
+        //Verificar si tienen relacion
 
-            //Verificar si tienen relacion
-            $relaciones = UserRelation::where('user_id1',$this->id_u)
-                                            ->orWhere('user_id2',$this->id_u)
-                                            ->where('are_friends','Si')
-                                            ->get();
-            //dd($relaciones);
-            foreach ($relaciones as $relacion) {
-                /**
-                 *
-                 *   TODO:
-                 *   - cruzar los campos para colicionar $id
-                 *   - verificar si tiene relacion
-                 *   - Si la tiene verificar el estado de la relacion
-                 * 
-                 **/
+        $relaciones = UserRelation::where('user_id1',$this->id_u)
+                                        ->orWhere('user_id2',$this->id_u)
+                                        ->where('are_friends','Si')
+                                        ->get();
+        //dd($relaciones);
+        foreach ($relaciones as $relacion) {
+            /**
+             *
+             *   TODO:
+             *   - cruzar los campos para colicionar $id
+             *   - verificar si tiene relacion
+             *   - Si la tiene verificar el estado de la relacion
+             * 
+             **/
 
-                if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
-                    
-                    //echo" se ha creado el ".$relacion->created_at." por parte de ".$this->id_u;
-
-                } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
-                    
-                    //echo" se ha creado el ".$relacion->created_at." por parte de ".$id;
-
+            if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
+                
+                if($relacion->are_friends == 'Si'){
+                    $vista          = 'videos_view';
+                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user]
                 }
+
+            } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
                 
-                
+                if($relacion->are_friends == 'Si'){
+                    $vista          = 'videos_view';
+                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user]
+                }
+
             }
-
-            return view('videos_views')->with(['videos'=>$video,'UserProfiles'=>$user]);
-
+            
+            
         }
+
+        return view($vista)->with($arregloSalida);
         
     }
     

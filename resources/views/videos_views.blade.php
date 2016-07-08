@@ -6,6 +6,7 @@
   <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
     <li><a href="/user">tu Perfil</a></li>
+    <li><a href="/profile/{{ $UserProfile->id }}">Perfil de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</a></li>
     <li class="active">Videos de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</li>
   </ol>
   @endsection
@@ -17,17 +18,27 @@
     <table class="table table-striped">
         <tr>
           <th>Creado</th>
-          <th>Url</th>
-          <th>Ver</th>
+          <th>titulo</th>
+          @can('update-content', $UserProfile)
           <th>Opciones</th>
+          @endcan
+
+          @can('superAdmin', $UserProfile)
+          <th>Opciones de Administrador</th>
+          @endcan
         </tr>
 
       @foreach($videos as $video)
         <tr>
-          <td>{{$video->created_at}}</td>
-          <td>{{$video->url_link}}</td>
-          <td><a href="{{ url( 'videos/'. $video->id ) }}">Ver Video</a></td>
-          <td></td>
+          <td>{{ $video->created_at->day }} / {{ $video->created_at->month }} / {{ $video->created_at->year }}</td>
+          <td><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i> {{ $video->tags }}</td>
+          @can('update-content', $UserProfile)
+          <td>Editar Eliminar</td>
+          @endcan
+
+          @can('superAdmin', $UserProfile)
+          <td>Editar Eliminar Desactivar</td>
+          @endcan
         </tr>
       @endforeach
 
