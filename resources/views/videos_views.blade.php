@@ -52,9 +52,11 @@
         <script>
 
           $('#bs-{{ $video->id }}').on('hidden.bs.modal', function(e){
-            console.log('se disparo stopVideo para bs-{{ $video->id }}');
+            /*----------  Salida de la consola para prueba  ----------*/
+            //console.log('se disparo stopVideo para bs-{{ $video->id }}');
             
             $('#player-{{ $video->id }}')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+            
           });
 
         </script>
