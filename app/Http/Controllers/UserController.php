@@ -106,11 +106,28 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function listVideo($id)
+    public function listVideo($id, $ord)
     {
         //dd($id);
 
         $this->id_u = Auth::user()->id;
+
+        switch ($ord) {
+            case 'up':
+                $orderBy    = 'asc';
+                $orden      = 'up';
+                break;
+
+            case 'down':
+                $orderBy    = 'desc';
+                $orden      = 'down';
+                break;
+            
+            default:
+                $orderBy    = 'asc';
+                $orden      = 'up';
+                break;
+        }
 
         /**
          * Paso para carga de video
@@ -130,6 +147,7 @@ class UserController extends Controller
 
 
         $video = Videos::where('user_id',$id)
+                            ->orderBy('created_at',$orderBy)
                             ->paginate(5);
 
         //Verificar si tienen relacion
@@ -152,15 +170,13 @@ class UserController extends Controller
             if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
                 
                 if($relacion->are_friends == 'Si'){
-                    $vista          = 'videos_view';
-                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user]
+                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
                 }
 
             } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
                 
                 if($relacion->are_friends == 'Si'){
-                    $vista          = 'videos_view';
-                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user]
+                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
                 }
 
             }
@@ -168,7 +184,7 @@ class UserController extends Controller
             
         }
 
-        return view($vista)->with($arregloSalida);
+        return view('videos_views')->with($arregloSalida);
         
     }
     

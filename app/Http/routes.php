@@ -63,7 +63,7 @@ Route::get('content/{id}', function($id){
   abort(406, 'Not Acceptable');
 })->where('id','\D+');
 
-Route::get('user/{id}/videos', function($id){
+Route::get('user/{id}/videos/ord{slug}', function($id){
   abort(406, 'Not Acceptable');
 })->where('id','\D+');
 
@@ -72,7 +72,7 @@ Route::get('user/{id}/videos', function($id){
  **/
 Route::group(['middleware'=>'auth'], function($id){
 
-  Route::get('user/{id}/videos','UserController@listVideo');
+  Route::get('user/{id}/videos/ord/{slug}','UserController@listVideo');
 
   Route::resource('user', 'UserController');
   Route::resource('profile', 'ProfileController');

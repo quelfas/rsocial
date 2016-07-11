@@ -12,8 +12,9 @@
 
   @section('content')
 
-  <a class="btn btn-default" href="{{ url('user/' . $UserProfile->user_id . '/videos') }}" role="button">Link</a>
+  <a class="btn btn-primary btn-xs" href="{{ url('user/' . $UserProfile->user_id . '/videos/ord/up') }}" role="button">Ver videos mas de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</a>
 
+  <br>
   <br>
 
     @foreach($VideoContents as $VideoContent)
