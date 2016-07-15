@@ -63,9 +63,19 @@ Route::get('content/{id}', function($id){
   abort(406, 'Not Acceptable');
 })->where('id','\D+');
 
-Route::get('user/{id}/videos/ord{slug}', function($id){
+Route::get('user/{id}/videos/ord{name}', function($id, $name){
+  abort(406, 'Not Acceptable');
+})->where(['id'=>'\D+', 'name'=>'\W']);
+
+/*----------  usuario con condicion (con discapacidad)  ----------*/
+Route::get('user/{id}/condition', function($id){
   abort(406, 'Not Acceptable');
 })->where('id','\D+');
+
+/*----------  busqueda de condicion (con discapacidad)  ----------*/
+Route::get('condition/{name}', function($name){
+  abort(406, 'Not Acceptable');
+})->where('name','\W+');
 
 /**
  * Rutas bajo Auth
@@ -74,6 +84,8 @@ Route::group(['middleware'=>'auth'], function($id){
 
   Route::get('user/{id}/videos/ord/{slug}','UserController@listVideo');
 
+  Route::get('user/{id}/condition', 'UserController@condition');
+
   Route::resource('user', 'UserController');
   Route::resource('profile', 'ProfileController');
   Route::resource('relation', 'RelationController');
@@ -81,5 +93,6 @@ Route::group(['middleware'=>'auth'], function($id){
   Route::resource('upload', 'FileController',
     ['only' => ['store']]);
   Route::resource('content', 'ContentController');
+  Route::resource('condition', 'DiscapacidadController');
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });
