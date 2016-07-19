@@ -17,8 +17,7 @@ use App\Subscription;
 
 class RelationController extends Controller
 {
-    var $id;
-    $this->id = Auth::user()->id;
+    var $id_u;
 
     /**
      * Display a listing of the resource.
@@ -29,20 +28,24 @@ class RelationController extends Controller
     {
         //consultamos los user_id2 ya que esta columna es de Solicitudos
 
+        $this->id_u = Auth::user()->id;
+
+        $relacionesPerfil = DB::table('profiles')
+        ->join('UserRelation', function($join){
+          $join->on('profiles.user_id', '=', 'UserRelation.user_id1')
+          ->where('UserRelation.user_id2', '=', $this->id_u)
+          ->where('are_friends', '=', 'Si');
+        })->get();
+
+
         $solicitudesRecibidas = DB::table('profiles')
         ->join('UserRelation', function($join){
           $join->on('profiles.user_id', '=', 'UserRelation.user_id1')
-          ->where('UserRelation.user_id2', '=', $this->id)
+          ->where('UserRelation.user_id2', '=', $this->id_u)
           ->where('are_friends', '=', 'StBy');
         })->get();
-        //dd($solicitudesRecibidas);
-        if (!empty($solicitudesRecibidas)) {
-          return view('relations')->with('recibidos',$solicitudesRecibidas);
-        } else {
-          return redirect('/');
-        }
 
-        //dd($solicitudesRecibidas);
+        return view('relations')->with(['relaciones'=>$relacionesPerfil, 'recibidos'=>$solicitudesRecibidas]);
     }
 
     /**
@@ -64,10 +67,9 @@ class RelationController extends Controller
     public function store(Request $request)
     {
         //
-        //dd($request->input());
-        $this->id = Auth::user()->id;
+        $this->id_u = Auth::user()->id;
         UserRelation::create([
-          'user_id1'    =>$this->id,
+          'user_id1'    =>$this->id_u,
           'user_id2'    =>$request->input('user_id2'),
           'are_friends' =>'StBy'
         ]);
@@ -83,7 +85,7 @@ class RelationController extends Controller
 
         $subscribe = new Subscription;
 
-        $subscribe->user_id       = $this->id;
+        $subscribe->user_id       = $this->id_u;
         $subscribe->subscribe_id  = $request->input('user_id2');
         $subscribe->active        = "No";
 
@@ -138,9 +140,11 @@ class RelationController extends Controller
     {
         //dd($request->input("solicitud-".$request->input("_id")));
 
-        $this->id = Auth::user()->id;
+        
+    $this->id_u = Auth::user()->id;
+
         DB::table( 'UserRelation' )
-            ->where( 'user_id2', $this->id )
+            ->where( 'user_id2', $this->id_u )
             ->where( 'user_id1', $request->input("_id") )
             ->update([
               'are_friends' => $request->input("solicitud-".$request->input("_id"))
@@ -172,7 +176,7 @@ class RelationController extends Controller
 
         $subscribe = new Subscription;
 
-        $subscribe->user_id       = $this->id;
+        $subscribe->user_id       = $this->id_u;
         $subscribe->subscribe_id  = $request->input("_id");
 
         $subscribe->save();

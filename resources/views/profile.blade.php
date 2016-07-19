@@ -61,11 +61,13 @@
                 <strong>Amigos desde</strong> 
                 <i class="fa fa-hand-o-right"></i> 
                 {{$InfoRelation->created_at->day}}/{{$InfoRelation->created_at->month}}/{{$InfoRelation->created_at->year}}
+
                 @if($InfoRelation->created_at->age > 1)
                   {{$InfoRelation->created_at->age}} años.
                 @else
                    
                 @endif
+
               @endforeach
             @else
 
@@ -99,6 +101,15 @@
 
       </div>
     </div>
-</div>
-@stop
+  </div>
   @endforeach
+@endsection
+
+@section('sidebar')
+  @parent
+    @include('utility.perfilControl')
+    @include('utility.friendSideBar')
+    @include('utility.notifySideBar')
+    @include('utility.activityContent')
+    @include('utility.listUsers')
+@endsection

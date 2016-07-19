@@ -12,11 +12,11 @@ class CreateDiscapacidadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('discapacidad', function (Blueprint $table) {
+        Schema::create('Discapacidad', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('discapacidad');
-            $table->text('resena')->change();
+            $table->text('resena');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateDiscapacidadsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('discapacidads');
+        Schema::drop('Discapacidad');
     }
 }

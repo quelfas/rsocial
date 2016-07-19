@@ -13,8 +13,13 @@ class ProfilesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Using class based  Composer...
         View::composer('user','App\Http\ViewComposer\ProfileComposer');
+
+        //Using Closure based Composer...
+        View::composer('utility.prefilControl', function($view){
+            //
+        });
     }
 
     /**

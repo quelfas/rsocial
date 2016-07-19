@@ -84,7 +84,7 @@ class AuthController extends Controller
                 luego Ingrese su usuario y su clave para acceder',
     				 		'class'=>'alert-success'
     		];
-        return redirect('cautivo')->with('mensaje',$mensajeSalida);
+        return view('cautivo')->with('mensaje',$mensajeSalida);
     }
 
     protected function getLogin()

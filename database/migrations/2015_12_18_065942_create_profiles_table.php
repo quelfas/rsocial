@@ -15,7 +15,7 @@ class CreateProfilesTable extends Migration
         Schema::create('profiles', function(Blueprint $table){
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('name');
+            $table->string('name'); //varchar 200
             $table->string('last_name');
             $table->date('birthdate');
             $table->enum('gender',['femenino','masculino'])->default('femenino');
@@ -24,8 +24,8 @@ class CreateProfilesTable extends Migration
             $table->string('phone');
             $table->enum('privacy',['privado','publico'])->default('privado');
             $table->enum('connections',['Si','No'])->default('Si');
-            $table->text('bio');
-            $table->timestamps();
+            $table->text('bio'); //string
+            $table->timestamps(); //date mm/dd/YYYY h:m:s facade Carbon
 
         });
     }
@@ -38,5 +38,6 @@ class CreateProfilesTable extends Migration
     public function down()
     {
         //
+        Schema::drop('profiles');
     }
 }

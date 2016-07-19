@@ -13,19 +13,6 @@ class CreateGaleryTable extends Migration
     public function up()
     {
         //
-        /*
-        'id',
-        'user_id',
-        'galery_name',
-        'image_name',
-        'image_real',
-        'size',
-        'type',
-        'privacy',
-        'tags',
-        'active'
-        */
-
         Schema::create('Galery', function(Blueprint $table){
           $table->increments('id');
           $table->integer('user_id');
