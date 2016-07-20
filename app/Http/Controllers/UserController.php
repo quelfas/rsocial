@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use Validator;
 
 //Models
 use App\Profile;
 use App\UserRelation;
 use App\Videos;
+use App\Discapacidad;
 
 class UserController extends Controller
 {
@@ -186,6 +188,57 @@ class UserController extends Controller
 
         return view('videos_views')->with($arregloSalida);
         
+    }
+
+    /**
+     * New Condition (disability).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    
+
+    public function storeCondition(Request $request)
+    {
+        /**
+         * Estableciendo reglas de validacion
+         * 
+         *
+         */
+        
+        $rules = [
+            'condition'             => 'required|min:3|max:200',
+            'condition_extended'    => 'required|max:5000',
+        ];
+
+
+        /*=============================================
+        =            Validacion de los Inputs         =
+        =============================================*/
+
+        $v = Validator::make($request->input(),$rules);
+        
+        if ($v->fails()) {
+            return redirect()->back()->withErrors($v->errors());
+        }
+        
+        /*===== Final de la validacion de inputs ======*/
+        
+
+        /*----------  Creamos el modelo  ----------*/
+        
+        Discapacidad::create([
+            'condition'             => $request->input('condition'),
+            'condition_extended'    => $request->input('condition_extended'),
+            ]);
+
+        $mensajeSalida = array(
+                        'mensaje' => 'Condicion especial agregada a tu perfil',
+                        'class'   => 'alert-success'
+                );
+
+          return redirect('user')->with('mensaje',$mensajeSalida);
+
     }
     
 }
