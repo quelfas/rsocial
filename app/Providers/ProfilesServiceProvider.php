@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
+
 class ProfilesServiceProvider extends ServiceProvider
 {
     /**
@@ -13,8 +13,13 @@ class ProfilesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-        View::composer('user','App\Http\ViewComposer\ProfileComposer');
+        //Using class based  Composer...
+        view()->composer('user','App\Http\ViewComposer\ProfileComposer');
+
+        //Using Closure based Composer...
+        view()->composer('utility.prefilControl', function($view){
+            //
+        });
     }
 
     /**

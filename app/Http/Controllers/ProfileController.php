@@ -119,7 +119,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        // volverlo reutilizable
+        
       
         $this->id_u = Auth::user()->id;
 

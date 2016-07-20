@@ -22,3 +22,12 @@
   @endsection
 
 @endforeach
+
+@section('sidebar')
+  @parent
+    @include('utility.perfilControl')
+    @include('utility.friendSideBar')
+    @include('utility.notifySideBar')
+    @include('utility.activityContent')
+    @include('utility.listUsers')
+@endsection

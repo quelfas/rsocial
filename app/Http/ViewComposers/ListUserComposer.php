@@ -47,6 +47,8 @@ class ListUserComposer
                       ->orWhere('user_id2',$id)
                       ->get();
 
+      $id_perfiles = array();
+
       foreach ($relaciones as $relacion) {
         /*----------  excluyendose asi mismo  ----------*/
         if($relacion->user_id1 == $id){
@@ -57,6 +59,8 @@ class ListUserComposer
 
           $id_perfiles[] = $relacion->user_id1;
 
+        }else{
+          $id_perfiles[] = null;
         }
        
       }

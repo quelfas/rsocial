@@ -31,5 +31,6 @@ class CreateUserRelationTable extends Migration
     public function down()
     {
         //
+        Schema::drop('UserRelation');
     }
 }

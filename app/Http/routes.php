@@ -93,6 +93,5 @@ Route::group(['middleware'=>'auth'], function($id){
   Route::resource('upload', 'FileController',
     ['only' => ['store']]);
   Route::resource('content', 'ContentController');
-  Route::resource('condition', 'DiscapacidadController');
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });

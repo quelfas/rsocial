@@ -11,10 +11,35 @@
 @endsection
 
 @section('content')
-@unless($recibidos)
-nada para mostrar
+
+<h4>Amistades</h4>
+@unless($relaciones)
+<h5>Nada para mostrar</h5>
 @else
+    <table class="table table-striped">
+      <tr>
+        <th>Nombre</th>
+        <th>Localidad</th>
+        <th>Desde</th>
+      </tr>
+      @foreach($relaciones as $relacion)
+      <tr>
+        <td>{{$relacion->name}} {{$relacion->last_name}}</td>
+        <td>{{$relacion->locale}}</td>
+        <td>{{$relacion->created_at}}</td>
+      </tr>
+      @endforeach
+    </table>
+@endunless
+
+
+<hr>
+
+
 <h4>Solicitudes de Amistad</h4>
+@unless($recibidos)
+<h5>Nada para mostrar</h5>
+@else
     <table class="table table-striped">
       <tr>
         <td>
@@ -70,6 +95,9 @@ nada para mostrar
 
 @section('sidebar')
   @parent
+    @include('utility.perfilControl')
+    @include('utility.friendSideBar')
     @include('utility.notifySideBar')
+    @include('utility.activityContent')
     @include('utility.listUsers')
 @endsection

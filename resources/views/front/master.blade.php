@@ -88,6 +88,7 @@
         <p>
           barra lateral
         </p>
+
           @section('sidebar')
           @show
 
