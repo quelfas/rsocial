@@ -169,7 +169,8 @@
 			language: "es"
 		});
 	</script>
-@stop
+@endsection
+
 @section('sidebar')
   @parent
     @include('utility.friendSideBar')

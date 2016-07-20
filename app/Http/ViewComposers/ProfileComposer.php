@@ -18,6 +18,7 @@ class ProfileComposer
     $id = Auth::user()->id;
     $perfile = Profile::where('user_id',$id)->get();
     
-    $view->with('UserProfiles',$perfile);
+    $view->with('UserProfiles',$perfile);    
+
   }
 }

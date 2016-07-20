@@ -53,16 +53,16 @@ class AuthController extends Controller
               Una Vida Sobre Ruedas.',
               'class'=>'alert-info'
       ];
-        return redirect('user')->with('mensaje',$mensajeSalida);
+        return view('users')->with('mensaje',$mensajeSalida);
     }
 
     protected function store(Request $request)
     {
       //
       $rules = [
-          'name' => 'required|max:255',
-          'email' => 'required|email|max:255|unique:users',
-          'password' => 'required|confirmed|min:6',
+          'name'      => 'required|max:255',
+          'email'     => 'required|email|max:255|unique:users',
+          'password'  => 'required|confirmed|min:6',
       ];
 
       $v = Validator::make($request->all(),$rules);
@@ -73,9 +73,9 @@ class AuthController extends Controller
       }
 
         User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'name'      => $request->input('name'),
+            'email'     => $request->input('email'),
+            'password'  => bcrypt($request->input('password')),
         ]);
         $mensajeSalida = [
     				 		'mensaje'=>'Se ha creado con exito el usuario:
@@ -84,7 +84,7 @@ class AuthController extends Controller
                 luego Ingrese su usuario y su clave para acceder',
     				 		'class'=>'alert-success'
     		];
-        return redirect('user')->with('mensaje',$mensajeSalida);
+        return redirect('cautivo')->with('mensaje',$mensajeSalida);
     }
 
     protected function getLogin()
