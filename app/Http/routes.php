@@ -84,6 +84,11 @@ Route::group(['middleware'=>'auth'], function($id){
 
   Route::get('user/{id}/videos/ord/{slug}','UserController@listVideo');
 
+  Route::post('/condition',[
+      'as'  =>'condition',
+      'uses'=>'UserController@storeCondition'
+    ]);
+
   Route::get('user/{id}/condition', 'UserController@condition');
 
   Route::resource('user', 'UserController');

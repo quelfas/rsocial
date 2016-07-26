@@ -200,6 +200,7 @@ class UserController extends Controller
 
     public function storeCondition(Request $request)
     {
+        $this->id_u = Auth::user()->id;
         /**
          * Estableciendo reglas de validacion
          * 
@@ -228,8 +229,9 @@ class UserController extends Controller
         /*----------  Creamos el modelo  ----------*/
         
         Discapacidad::create([
-            'condition'             => $request->input('condition'),
-            'condition_extended'    => $request->input('condition_extended'),
+            'user_id'       => $this->id_u,
+            'discapacidad'  => $request->input('condition'),
+            'resena'        => $request->input('condition_extended'),
             ]);
 
         $mensajeSalida = array(

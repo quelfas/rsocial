@@ -80,6 +80,22 @@
                 <blockquote>
                   <p>{{ $UserProfile->bio }}</p>
                 </blockquote>
+
+                <hr>
+                @forelse ($conditions as $condition)
+
+                    <p>Condicion: {{ $condition->discapacidad }}</p>
+
+                    <p>Reseña:</p>
+                    <p>{{ $condition->resena }}</p>
+
+                @empty
+
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#conditionForm">
+                      Ingrese su discapacidad <i class="fa fa-wheelchair" aria-hidden="true"></i>
+                    </button>
+
+                @endforelse
               </div>
             </div>
             </div>
@@ -111,4 +127,5 @@
     @include('utility.notifySideBar')
     @include('utility.activityContent')
     @include('utility.listUsers')
+    @include('utility.formCondition')
 @endsection

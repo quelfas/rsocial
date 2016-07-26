@@ -30,13 +30,6 @@ class RelationController extends Controller
 
         $this->id_u = Auth::user()->id;
 
-        $relacionesPerfil = DB::table('profiles')
-        ->join('UserRelation', function($join){
-          $join->on('profiles.user_id', '=', 'UserRelation.user_id1')
-          ->where('UserRelation.user_id2', '=', $this->id_u)
-          ->where('are_friends', '=', 'Si');
-        })->get();
-
 
         $solicitudesRecibidas = DB::table('profiles')
         ->join('UserRelation', function($join){
@@ -45,7 +38,24 @@ class RelationController extends Controller
           ->where('are_friends', '=', 'StBy');
         })->get();
 
-        return view('relations')->with(['relaciones'=>$relacionesPerfil, 'recibidos'=>$solicitudesRecibidas]);
+        /**
+         * Solicitudes enviadas renderiza en tabla
+         * 
+         *
+         */
+        
+
+        $solicitudesEnviadas = DB::table('profiles')
+        ->join('UserRelation', function($join){
+          $join->on('profiles.user_id', '=', 'UserRelation.user_id2')
+          ->where('UserRelation.user_id1', '=', $this->id_u)
+          ->where('are_friends', '=', 'StBy');
+        })->get();
+
+        return view('relations')->with([ 
+            'recibidos'     => $solicitudesRecibidas, 
+            'enviados'      => $solicitudesEnviadas
+            ]);
     }
 
     /**

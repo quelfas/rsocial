@@ -1,7 +1,11 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-  
-  {{ isset($UserProfile) ? "Usuario: ". $UserProfile->name ." ".$UserProfile->last_name : "Crea u Prefil" }}
+
+  @forelse($UserProfiles as $UserProfile)
+    {{ $UserProfile->name }} {{ $UserProfile->last_name }}
+  @empty
+    Crea un Prefil
+  @endforelse
 
   </div>
   <div class="panel-body">
@@ -18,7 +22,7 @@
     	<li class="list-group-item"><a href="#">Asistencia Tecnica</a></li>
     	<li class="list-group-item"><a href="#">Ayuda Especializada</a></li>
     </ul>
-
+    
 	<p class="text-right"><a href="/salir">Salir</a></p>
 
   </div>

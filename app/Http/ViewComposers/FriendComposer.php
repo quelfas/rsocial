@@ -25,9 +25,10 @@ class FriendComposer
     
     $relaciones = UserRelation::where('user_id1',$id)
                       ->orWhere('user_id2',$id)
-                      ->where('are_friends','Si')
                       ->get();
-   
+
+    
+  
 
     if ($relaciones->count() == 0) {
       $RelationSalida = [
@@ -43,14 +44,17 @@ class FriendComposer
       * La miniatura es circular
       * Debe cargarse en stack
       */
-
+//dd($relaciones);
+      $id_perfiles = array();
       foreach ($relaciones as $relacion) {
+
         /*----------  excluyendose asi mismo  ----------*/
-        if($relacion->user_id1 == $id){
+
+        if($relacion->user_id1 == $id && $relacion->are_friends == 'Si'){
 
           $id_perfiles[] = $relacion->user_id2;
 
-        }elseif($relacion->user_id2 == $id){
+        }elseif($relacion->user_id2 == $id && $relacion->are_friends == 'Si'){
 
           $id_perfiles[] = $relacion->user_id1;
           
@@ -58,26 +62,37 @@ class FriendComposer
        
       }
 
-      /**
-       * Consultando perfiles
-       */
+      //dd($id_perfiles);
 
-      foreach ($id_perfiles as $value) {
-        $PerfiAmigo[] = Profile::where('user_id',$value)
-                            ->get();
+      if (count($id_perfiles) == 0) {
+        $RelationSalida = [
+          'Cabecera'  =>  'Amistades',
+          'Contenido' =>  '0'
+        ];
+      $detalle[] = "S/I";
+      } else {
+        /**
+         * Consultando perfiles
+         */
+
+        foreach ($id_perfiles as $value) {
+          $PerfiAmigo[] = Profile::where('user_id',$value)
+                              ->get();
+        }
+
+        /**
+         * Arreglo para salida a las vista utility.friendSideBar.blade.php
+         */
+        foreach ($id_perfiles as $key => $value) {
+          $detalle[] = $PerfiAmigo[$key][0]['user_id']."-".$PerfiAmigo[$key][0]['name']."-".$PerfiAmigo[$key][0]['last_name']."-".$PerfiAmigo[$key][0]['gender'];
+        }
+
+        $RelationSalida = [
+          'Cabecera'  =>  'Amistades',
+          'Contenido' =>  count($id_perfiles)
+        ];
       }
-
-      /**
-       * Arreglo para salida a las vista utility.friendSideBar.blade.php
-       */
-      foreach ($id_perfiles as $key => $value) {
-        $detalle[] = $PerfiAmigo[$key][0]['user_id']."-".$PerfiAmigo[$key][0]['name']."-".$PerfiAmigo[$key][0]['last_name']."-".$PerfiAmigo[$key][0]['gender'];
-      }
-
-      $RelationSalida = [
-        'Cabecera'  =>  'Amistades',
-        'Contenido' =>  $relaciones->count()
-      ];
+      
     }
 
     $view->with(['UserFriends'=>$RelationSalida,'friendDetail'=>$detalle]);
