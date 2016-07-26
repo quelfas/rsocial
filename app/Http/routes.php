@@ -28,12 +28,12 @@ Route::get('/crear','Auth\AuthController@create');
 Route::get('/accesar','Auth\AuthController@getlogin');
 Route::get('/auth/login','Auth\AuthController@getlogin');
 Route::post('/user-create',[
-    'as'  =>'user-create',
-    'uses'=>'Auth\AuthController@store'
+    'as'    => 'user-create',
+    'uses'  => 'Auth\AuthController@store'
   ]);
   Route::post('/accesar',[
-      'as'  =>'accesar',
-      'uses'=>'Auth\AuthController@postLogin'
+      'as'    => 'accesar',
+      'uses'  => 'Auth\AuthController@postLogin'
     ]);
 
 /**
@@ -65,7 +65,10 @@ Route::get('content/{id}', function($id){
 
 Route::get('user/{id}/videos/ord{name}', function($id, $name){
   abort(406, 'Not Acceptable');
-})->where(['id'=>'\D+', 'name'=>'\W']);
+})->where([
+  'id'    => '\D+',
+  'name'  => '\W'
+]);
 
 /*----------  usuario con condicion (con discapacidad)  ----------*/
 Route::get('user/{id}/condition', function($id){
@@ -85,8 +88,13 @@ Route::group(['middleware'=>'auth'], function($id){
   Route::get('user/{id}/videos/ord/{slug}','UserController@listVideo');
 
   Route::post('/condition',[
-      'as'  =>'condition',
-      'uses'=>'UserController@storeCondition'
+      'as'    => 'condition',
+      'uses'  => 'UserController@storeCondition'
+    ]);
+
+  Route::post('/terminate',[
+      'as'    => 'terminate',
+      'uses'  => 'RelationController@endApplication'
     ]);
 
   Route::get('user/{id}/condition', 'UserController@condition');

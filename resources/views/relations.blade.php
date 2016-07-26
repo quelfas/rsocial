@@ -23,23 +23,15 @@
   @else
       <table class="table table-striped">
         <tr>
-          <td>
-            <strong>Genero</strong>
-          </td>
-          <td>
-            <strong>Nombre</strong>
-          </td>
-          <td>
-            <strong>Localidad</strong>
-          </td>
-          <td>
-            <strong>Acci&oacute;n</strong>
-          </td>
+          <th>Pic</th>
+          <th>Nombre</th>
+          <th>Localidad</th>
+          <th>Acci&oacute;n</th>
         </tr>
         @foreach($recibidos as $recibido)
         <tr>
           <td>
-            <img class="img-circle" width="20" height="20" src="{{asset('assets/img/')}}/{{$recibido->gender}}.png" alt="...">
+            <img class="img-circle" width="20" height="20" src="{{asset('assets/img/')}}/{{$recibido->gender}}.png" alt="{{$recibido->name}} {{$recibido->last_name}}">
           </td>
           <td>
             <a href="/profile/{{$recibido->user_id}}">{{$recibido->name}} {{$recibido->last_name}}</a>
@@ -81,6 +73,7 @@
   @else
       <table class="table table-striped">
         <tr>
+          <th>Pic</th>
           <th>Nombre</th>
           <th>Localidad</th>
           <th>Solicitud enviada</th>
@@ -88,7 +81,8 @@
         </tr>
         @foreach($enviados as $enviado)
         <tr>
-          <td><a href="/perfile/{{$enviado->user_id}}">{{ $enviado->name }} {{ $enviado->last_name }}</a></td>
+          <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $recibido->gender }}.png" alt="{{ $enviado->name }} {{ $enviado->last_name }}"></td>
+          <td><a href="/perfile/{{ $enviado->user_id }}">{{ $enviado->name }} {{ $enviado->last_name }}</a></td>
           <td>{{ $enviado->locale }}</td>
           <td>
           <?php
@@ -96,7 +90,14 @@
             echo date_format($date,'d/m/Y'); 
            ?>
            </td>
-          <td>Cancelar Solicitud</td>
+          <td>
+            <form action="/terminate" method="POST">
+              {!! csrf_field() !!}
+              <input type="hidden" name="_method" value="PATCH">
+              <input type="hidden" name="user_id" value="{{ $enviado->user_id }}">
+              <input class="btn btn-default btn-xs" type="submit" value="Cancelar Solicitud">
+            </form>
+          </td>
         </tr>
         @endforeach
       </table>

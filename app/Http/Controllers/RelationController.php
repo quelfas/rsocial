@@ -216,4 +216,16 @@ class RelationController extends Controller
     {
         //
     }
+
+    /**
+     * Terminate relation ask.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function endApplication(Request $request, $id)
+    {
+        return view('relations');
+    }
 }
