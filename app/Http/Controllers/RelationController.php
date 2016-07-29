@@ -60,6 +60,8 @@ class RelationController extends Controller
       $amigos = Profile::whereIn('user_id',$id_perfiles)
              ->get();
 
+    dd($amigos);
+
         /**
          * Solicitudes enviadas render en tabla bootstrap
          * 

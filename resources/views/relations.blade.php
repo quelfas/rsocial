@@ -95,9 +95,9 @@
         </script>
         @endforeach
       </table>
-      @endunless
+  @endunless
 
-      <hr>
+  <hr>
 
   <h4>Amistades Solicitadas</h4>
   @unless($enviados)
