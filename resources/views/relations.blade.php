@@ -34,12 +34,14 @@
           <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $amistad->gender }}.png" alt="{{ $amistad->name }} {{ $amistad->last_name }}"></td>
           <td><a href="/perfile/{{ $amistad->user_id }}">{{ $amistad->name }} {{ $amistad->last_name }}</a></td>
           <td>{{ $amistad->locale }}</td>
-          <td><form action="/terminate" method="POST">
+          <td>
+            <form action="/terminate" method="POST">
               {!! csrf_field() !!}
               <input type="hidden" name="_method" value="PATCH">
               <input type="hidden" name="user_id" value="{{ $amistad->user_id }}">
               <input class="btn btn-default btn-xs" type="submit" value="Dejar de seguir">
-            </form></td>
+            </form>
+          </td>
         </tr>
         @endforeach
       </table>
@@ -132,9 +134,11 @@
         @endforeach
       </table>
   @endunless
+
+
   </div>
 </div>
-@stop
+@endsection
 
 @section('sidebar')
   @parent
