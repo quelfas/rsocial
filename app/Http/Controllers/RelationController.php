@@ -30,6 +30,41 @@ class RelationController extends Controller
 
         $this->id_u = Auth::user()->id;
 
+      /**
+       * se consultan los user_id 
+       * 
+       *
+       */
+
+      $relaciones = UserRelation::where('user_id1',$this->id_u)
+                      ->orWhere('user_id2',$this->id_u)
+                      ->get();
+      
+      $id_perfiles = array();
+      foreach ($relaciones as $relacion) {
+
+        /*----------  excluyendose asi mismo  ----------*/
+
+        if($relacion->user_id1 == $this->id_u && $relacion->are_friends == 'Si'){
+
+          $id_perfiles[] = $relacion->user_id2;
+
+        }elseif($relacion->user_id2 == $this->id_u && $relacion->are_friends == 'Si'){
+
+          $id_perfiles[] = $relacion->user_id1;
+          
+        }
+       
+      }
+
+      $amigos = Profile::whereIn('user_id',$id_perfiles)
+             ->get();
+
+        /**
+         * Solicitudes enviadas render en tabla bootstrap
+         * 
+         *
+         */
 
         $solicitudesRecibidas = DB::table('profiles')
         ->join('UserRelation', function($join){
@@ -37,13 +72,6 @@ class RelationController extends Controller
           ->where('UserRelation.user_id2', '=', $this->id_u)
           ->where('are_friends', '=', 'StBy');
         })->get();
-
-        /**
-         * Solicitudes enviadas renderiza en tabla
-         * 
-         *
-         */
-        
 
         $solicitudesEnviadas = DB::table('profiles')
         ->join('UserRelation', function($join){
@@ -53,6 +81,7 @@ class RelationController extends Controller
         })->get();
 
         return view('relations')->with([ 
+            'amistades'     => $amigos,
             'recibidos'     => $solicitudesRecibidas, 
             'enviados'      => $solicitudesEnviadas
             ]);

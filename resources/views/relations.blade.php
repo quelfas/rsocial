@@ -14,12 +14,42 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Gestion de Relaciones</h3>
+    <h3 class="panel-title">Solicitudes de Amistad</h3>
   </div>
   <div class="panel-body">
+
+  <h4>Amistades</h4>
+  @unless($amistades)
+  <h5>Aun no hay amistades</h5>
+  @else
+      <table class="table table-striped">
+        <tr>
+          <th>Pic</th>
+          <th>Nombre</th>
+          <th>Localidad</th>
+          <th></th>
+        </tr>
+        @foreach($amistades as $amistad)
+        <tr>
+          <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $amistad->gender }}.png" alt="{{ $amistad->name }} {{ $amistad->last_name }}"></td>
+          <td><a href="/perfile/{{ $amistad->user_id }}">{{ $amistad->name }} {{ $amistad->last_name }}</a></td>
+          <td>{{ $amistad->locale }}</td>
+          <td><form action="/terminate" method="POST">
+              {!! csrf_field() !!}
+              <input type="hidden" name="_method" value="PATCH">
+              <input type="hidden" name="user_id" value="{{ $amistad->user_id }}">
+              <input class="btn btn-default btn-xs" type="submit" value="Dejar de seguir">
+            </form></td>
+        </tr>
+        @endforeach
+      </table>
+  @endunless
+
+  <hr>
+
   <h4>Solicitudes de Amistad</h4>
   @unless($recibidos)
-  <h5>Nada para mostrar</h5>
+  <h5>No existen solicitudes pendientes</h5>
   @else
       <table class="table table-striped">
         <tr>
@@ -67,9 +97,9 @@
 
       <hr>
 
-      <h4>Amistades Solicitadas</h4>
+  <h4>Amistades Solicitadas</h4>
   @unless($enviados)
-  <h5>Nada para mostrar</h5>
+  <h5>No tienes solicitudes enviadas</h5>
   @else
       <table class="table table-striped">
         <tr>
@@ -81,7 +111,7 @@
         </tr>
         @foreach($enviados as $enviado)
         <tr>
-          <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $recibido->gender }}.png" alt="{{ $enviado->name }} {{ $enviado->last_name }}"></td>
+          <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $enviado->gender }}.png" alt="{{ $enviado->name }} {{ $enviado->last_name }}"></td>
           <td><a href="/perfile/{{ $enviado->user_id }}">{{ $enviado->name }} {{ $enviado->last_name }}</a></td>
           <td>{{ $enviado->locale }}</td>
           <td>
