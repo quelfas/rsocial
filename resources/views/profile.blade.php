@@ -37,7 +37,7 @@
         </ul>
 
         <address>
-          <strong>Pais</strong> 
+          <strong>Pais</strong>
           <img src="{{ asset('assets/img/png/') }}/{{ $UserProfile->country }}.png" alt="{{ $UserProfile->country }}" />
           <br>
           {{ $UserProfile->locale }}
@@ -50,6 +50,19 @@
 
         @endif
     {{-- modificando la plantilla para verificar si son amigos o no --}}
+            <hr>
+            {{-- agregada funcionalidad de discapacidad--}}
+
+            @forelse ($Discapacidad as $condicion)
+                <p>
+                   {{ $condicion->discapacidad }}
+                </p>
+
+                <hr>
+            @empty
+            @endforelse
+
+            {{-- agregada funcionalidad de discapacidad--}}
 
             @if($UserRelations == 'Si')
             {{-- Son Amigos --}}
@@ -58,14 +71,14 @@
                 <button type="button" class="btn btn-default btn-xs">Escribir en su muro <i class="fa fa-comment" aria-hidden="true"></i></button>
                 <button type="button" class="btn btn-default btn-xs">Dejar de seguir <i style="color:red" class="fa fa-times" aria-hidden="true"></i></button>
                 <hr>
-                <strong>Amigos desde</strong> 
-                <i class="fa fa-hand-o-right"></i> 
+                <strong>Amigos desde</strong>
+                <i class="fa fa-hand-o-right"></i>
                 {{$InfoRelation->created_at->day}}/{{$InfoRelation->created_at->month}}/{{$InfoRelation->created_at->year}}
 
                 @if($InfoRelation->created_at->age > 1)
                   {{$InfoRelation->created_at->age}} años.
                 @else
-                   
+
                 @endif
 
               @endforeach

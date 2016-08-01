@@ -18,10 +18,8 @@
   </div>
   <div class="panel-body">
 
-  <h4>Amistades</h4>
-  @unless($amistades)
-  <h5>Aun no hay amistades</h5>
-  @else
+    <h4>Amistades</h4>
+    @if(count($amistades) >= 1)
       <table class="table table-striped">
         <tr>
           <th>Pic</th>
@@ -45,7 +43,11 @@
         </tr>
         @endforeach
       </table>
-  @endunless
+      {{-- agregado paginado --}}
+      {!! $amistades->render() !!}
+    @else
+      <h5>Aun no hay amistades</h5>
+    @endif
 
   <hr>
 
@@ -119,7 +121,7 @@
           <td>
           <?php
             $date = new DateTime($enviado->created_at);
-            echo date_format($date,'d/m/Y'); 
+            echo date_format($date,'d/m/Y');
            ?>
            </td>
           <td>

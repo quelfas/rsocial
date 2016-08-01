@@ -13,6 +13,7 @@ use DB;
 use App\Profile;
 use App\UserRelation;
 use App\Videos;
+use App\Discapacidad;
 
 class ProfileController extends Controller
 {
@@ -119,8 +120,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        
-      
+
+
         $this->id_u = Auth::user()->id;
 
         /**
@@ -137,9 +138,12 @@ class ProfileController extends Controller
 
         //es requerido una tabla de contenido para llevar control cronologico del contenido creado
         $videos = Videos::where('user_id',$id)
-                            ->where('active','Si')
-                            ->take(5)
-                            ->get();
+                        ->where('active','Si')
+                        ->take(5)
+                        ->get();
+
+        $Discapacidad = Discapacidad::where('user_id',$id)
+                                    ->get();
 
         if ($id == $this->id_u) {
 
@@ -190,7 +194,8 @@ class ProfileController extends Controller
                     'UserProfiles'  => $perfile,
                     'UserRelations' => $RelationOn,
                     'InfoRelations' => $infoRelation,
-                    'VideoContents' => $videos
+                    'VideoContents' => $videos,
+                    'Discapacidad'  => $Discapacidad
                 ]);
         }
 
