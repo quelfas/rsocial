@@ -185,6 +185,8 @@ class UserController extends Controller
             
             
         }
+        
+        
 
         return view('videos_views')->with($arregloSalida);
         
@@ -211,7 +213,6 @@ class UserController extends Controller
             'condition'             => 'required|min:3|max:200',
             'condition_extended'    => 'required|max:5000',
         ];
-
 
         /*=============================================
         =            Validacion de los Inputs         =
