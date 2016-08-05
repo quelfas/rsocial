@@ -17,6 +17,18 @@ Route::get('/somos',function(){
   return view('somos');
 });
 
+Route::get('/donations',function(){
+  return view('donations');
+});
+
+Route::get('/gallery',function(){
+  return view('gallery');
+});
+
+Route::get('/events',function(){
+  return view('event');
+});
+
 Route::get('/contacto',function(){
   return view('contact');
 });

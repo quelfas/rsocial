@@ -55,6 +55,9 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/somos">Quienes Somos</a></li>
+            <li><a href="/donations">Donaciones</a></li>
+            <li><a href="/gallery">Galerias</a></li>
+            <li><a href="events">Eventos</a></li>
             <li><a href="/contacto">Contactanos</a></li>
             <li><a href="{{isset($useActivo) ? '/user':'/crear'}}">{{isset($useActivo)?'Bienvenido '.$userName : 'Crear una Cuenta'}}</a></li>
             <li><a href="{{isset($useActivo) ? '/salir':'/accesar'}}">{{isset($useActivo)?'Salir':'Acceder'}}</a></li>
@@ -85,16 +88,10 @@
         </div>
         <div class="col-md-3">
         {{--INICIO Barra Lateral--}}
-        <p>
-          barra lateral
-        </p>
+
 
           @section('sidebar')
           @show
-
-          <p>
-            barra lateral
-          </p>
         {{--FIN Barra Lateral--}}
         </div>
       </div>
