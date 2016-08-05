@@ -9,5 +9,11 @@
 @endsection
 
 @section('content')
-  <h1>Bienvenido a Laravel</h1>
+
+  <div class="row">
+  <h1>Bienvenidos a Vidas Sobre Ruedas</h1>
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+</div>
 @stop
