@@ -2,11 +2,6 @@
 
 @section('title','Bienvenido')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li class="active">Home</li>
-</ol>
-@endsection
 
 @section('content')
 
