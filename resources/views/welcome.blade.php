@@ -45,6 +45,7 @@
   </div>
   
   <div class="col-md-9">
+      <img src="http://placehold.it/750x50" class="img-responsive">
   </div>
   
 </div>
