@@ -41,7 +41,7 @@
   <body>
     {{--INICIO NavTop--}}
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -53,12 +53,24 @@
           <a class="navbar-brand" href="#">Vidas Sobre Ruedas</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
+
           <ul class="nav navbar-nav">
-            <li><a href="/somos">Quienes Somos</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quienes Somos <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/sponsored">Apadrinados</a></li>
+                <li><a href="/godparents">Padrinos</a></li>
+                <li><a href="/supportUs">Nos Apoyan</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/staff">El Staff</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/joinUs">Unete</a></li>
+              </ul>
+            </li>
             <li><a href="/donations">Donaciones</a></li>
             <li><a href="/gallery">Galerias</a></li>
             <li><a href="events">Eventos</a></li>
-            <li><a href="/contacto">Contactanos</a></li>
+            <li><a href="/contact">Contactanos</a></li>
             <li><a href="{{isset($useActivo) ? '/user':'/crear'}}">{{isset($useActivo)?'Bienvenido '.$userName : 'Crear una Cuenta'}}</a></li>
             <li><a href="{{isset($useActivo) ? '/salir':'/accesar'}}">{{isset($useActivo)?'Salir':'Acceder'}}</a></li>
           </ul>

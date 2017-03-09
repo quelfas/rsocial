@@ -62,7 +62,7 @@
               <div class="media-left">
 
                 <a href="#">
-                  <img class="img-circle" width="50" height="50" src="{{asset('assets/img/')}}/{{$UserProfile->gender}}.png" alt="...">
+                  <img class="img-circle" width="50" height="50" src="{{ asset('assets/img/')}}/{{$UserProfile->gender }}.png" alt="...">
                 </a>
               </div>
               <div class="media-body">
@@ -73,7 +73,7 @@
                 <li>Permite Invitaciones: <span class="label label-@if($UserProfile->connections === 'Si')success @elseif($UserProfile->connections === 'No')warning @endif">{{ $UserProfile->connections }}</span></li>
                 </ul>
                 <address>
-                  <strong>{{ $userEmail }}</strong> <img src="{{asset('assets/img/png/')}}/{{$UserProfile->country}}.png" alt="{{ $UserProfile->country }}" /><br>
+                  <strong>{{ $userEmail }}</strong> <img src="{{ asset('assets/img/png/') }}/{{ $UserProfile->country }}.png" alt="{{ $UserProfile->country }}" /><br>
                   {{ $UserProfile->locale }}<br>
                   <abbr title="Telefono">Tel:</abbr> {{ $UserProfile->phone }}
                 </address>

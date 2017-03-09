@@ -7,7 +7,7 @@
 
   <div class="row">
   <h1>Bienvenidos a Vidas Sobre Ruedas</h1>
-  <div class="col-lg-4 col-md-4 col-sm-4">
+  <div class="col-xs-6 col-sm-4">
 
     <div class="panel panel-default">
       <div class="panel-body">
@@ -19,7 +19,7 @@
     </div>
 
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-4">
+  <div class="col-xs-6 col-sm-4">
 
     <div class="panel panel-default">
       <div class="panel-body">
@@ -31,7 +31,7 @@
     </div>
 
   </div>
-  <div class="col-lg-4 col-md-4 col-sm-4">
+  <div class="col-xs-6 col-sm-4">
 
     <div class="panel panel-default">
       <div class="panel-body">

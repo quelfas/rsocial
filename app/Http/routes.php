@@ -29,8 +29,32 @@ Route::get('/events',function(){
   return view('event');
 });
 
-Route::get('/contacto',function(){
+Route::get('/contact',function(){
   return view('contact');
+});
+
+/**
+ * Rutas para quienes somos -front
+ **/
+
+Route::get('/sponsored',function(){
+  return view('us.sponsored');
+});
+
+Route::get('/godparents',function(){
+  return view('us.godparents');
+});
+
+Route::get('/supportUs',function(){
+  return view('us.supportUs');
+});
+
+Route::get('/staff',function(){
+  return view('us.staff');
+});
+
+Route::get('/joinUs',function(){
+  return view('us.joinUs');
 });
 
 /**
