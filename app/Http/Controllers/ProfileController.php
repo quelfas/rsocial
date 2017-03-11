@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Validator;
 use Auth;
 use DB;
+use Log;
 
 //Model
 use App\Profile;
@@ -209,7 +210,32 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Verificando que el id de usuario solicitado
+        //sea el mismo que esta autentificado
+        $this->id_u = Auth::user()->id;
+        if ($this->id_u == $id) {
+          //return"es correcto";
+          //cargamos la vista con la consulta de los valores
+          //para actualizar
+          $perfile = Profile::where('user_id',$this->id_u)->get();
+          //dd($perfile);
+          return view('editBio')->with(
+              [
+                  'UserProfiles'  => $perfile,
+              ]);
+        } else {
+          if (Auth::user()->role == "admin") {
+            return"Esta accediendo con derechos de Administrador";
+          } else {
+            //return"es incorrecto";
+            //retorno un recurso al log de operaciones
+            $error = "el usuario ID[".$this->id_u."] intento acceder al recurso de edicion del Usuario ID[".$id."]";
+            Log::alert($error);
+            abort(406,'Not acceptable');
+          }
+        }
+
+
     }
 
     /**

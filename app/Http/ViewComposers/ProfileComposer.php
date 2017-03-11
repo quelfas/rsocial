@@ -19,15 +19,15 @@ class ProfileComposer
      * Consulta de Condicion de Discapacidad del usuario
      */
 
-    $id = Auth::user()->id;
+    $idActive = Auth::user()->id;
     
-    $perfile = Profile::where('user_id',$id)->get();
+    $perfile = Profile::where('user_id',$idActive)->get();
 
-    $condition = Discapacidad::where('user_id',$id)->get();
+    $condition = Discapacidad::where('user_id',$idActive)->get();
     
     $view->with([
     	'UserProfiles'	=> $perfile, 
-    	'conditions' 	=> $condition
+    	'conditions' 	      => $condition
     	]);    
 
   }

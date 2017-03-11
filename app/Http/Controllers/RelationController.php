@@ -53,6 +53,7 @@ class RelationController extends Controller
 
       $amigos = Profile::whereIn('user_id',$id_perfiles)
                        ->paginate(15);
+                      // dd($amigos);
 
 
         $solicitudesRecibidas = DB::table('profiles')
@@ -214,7 +215,12 @@ class RelationController extends Controller
         $style      = "warning";
       }
 
+      $amigos = Profile::whereIn('user_id',$id_perfiles)
+                       ->paginate(15);
+      // dd($amigos);
+
         $mensajeSalida = array(
+              'amistades'  => $amigos, 
               'mensaje' => 'Solicitud de Amistad '.$respuesta,
               'class'   => 'alert-'.$style
           );
