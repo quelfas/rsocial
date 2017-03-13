@@ -133,6 +133,11 @@ Route::group(['middleware'=>'auth'], function($id){
       'uses'  => 'RelationController@endApplication'
     ]);
 
+  Route::get('/psw-update',[
+      'as'    =>'psw-update',
+      'uses'  =>'MyPasswordController@pswUpDate'
+  ]);
+
   Route::get('user/{id}/condition', 'UserController@condition');
 
   Route::resource('user', 'UserController');
