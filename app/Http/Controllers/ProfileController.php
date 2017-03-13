@@ -248,6 +248,58 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $rules = [
+          'name'      =>'required|min:3|max:80',
+          'last_name' =>'required|min:3|max:80',
+          'birthdate' =>'required',
+          'gender'    =>'required',
+          'country'   =>'required',
+          'locale'    =>'required|max:100',
+          'phone'     =>'required|max:12',
+          //'privacy'   =>'required', //Comentado por efectos del control
+          //'connections'   =>'required', //Comentado por efectos del control
+          'bio'       =>'required|max:1000'
+        ];
+
+        $v = Validator::make($request->input(),$rules);
+
+        if ($v->fails()) {
+
+          return redirect()->back()->withErrors($v->errors());
+
+        } else {
+
+          $birthdate    = explode("/",$request->input('birthdate'));
+          $birthdate    = $birthdate[2]."-".$birthdate[1]."-".$birthdate[0];
+          $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
+          $connections  = ($request->input('connections') == "on") ? "Si" : "No";
+          $this->id_u   = Auth::user()->id;
+        //
+          DB::table( 'profiles' )
+            ->where('user_id', $this->id_u)
+            ->update([
+              'name'        => ucfirst($request->input('name')),
+              'last_name'   => ucfirst($request->input('last_name')),
+              'birthdate'   => $birthdate,
+              'gender'      => $request->input('gender'),
+              'country'     => $request->input('country'),
+              'locale'      => ucfirst($request->input('locale')),
+              'phone'       => $request->input('phone'),
+              'privacy'     => $privacy,
+              'connections' => $connections,
+              'bio'         => $request->input('bio')
+            ]);
+
+            //retornamos una vista con mensaje
+            $mensajeSalida = array(
+          				'mensaje' => 'Perfil actualizado.',
+          				'class'   => 'alert-success'
+          		);
+
+
+
+            return redirect('user')->with('mensaje',$mensajeSalida);
+        }
     }
 
     /**

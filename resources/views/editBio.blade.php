@@ -1,14 +1,12 @@
 @extends('front.master')
 
-@section('title','Donaciones')
+@section('title','Edita tu perfil')
 
 @section('breadcrumbs')
 <ol class="breadcrumb">
   <li><a href="/">Home</a></li>
-  <li><a href="/">Contacto</a></li>
-  <li><a href="/">Galeria</a></li>
-  <li><a href="/">Eventos</a></li>
-  <li class="active">Donaciones</li>
+  <li><a href="/user">Perfil</a></li>
+  <li class="active">Edita tu perfil</li>
 </ol>
 @endsection
 
@@ -16,7 +14,8 @@
 <div class="well">
 <h4>Edita tu perfil</h4>
   @foreach($UserProfiles as $UserProfile)
-    <form  action="profile" method="post">
+    <form  action="/profile/{{$UserProfile->user_id}}" method="post">
+      <input type="hidden" name="_method" value="PATCH">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
       <div class="form-group">
@@ -31,18 +30,18 @@
 
       <label for="birthdate">Fecha Nacimiento</label>
       <div class="input-group date">
-			      <input type="text" name="birthdate" class="form-control" value="{{$UserProfile->birthdate}}" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+			      <input type="text" name="birthdate" class="form-control" value="{{$UserProfile->birthdate->day}}/{{$UserProfile->birthdate->month}}/{{$UserProfile->birthdate->year}}" /><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
       </div>
 
       <div class="form-group">
         <label for="gender">Genero</label>
         <select class="form-control" name="gender">
-          <option value="femenino">Femenino</option>
-          <option value="masculino">Masculino</option>
+          <option  @if($UserProfile->gender === 'femenino') selected @else @endif  value="femenino">Femenino</option>
+          <option  @if($UserProfile->gender === 'masculino') selected @else @endif  value="masculino">Masculino</option>
         </select>
       </div>
 
-      @include('utility.listCountry')
+      @include('utility.listCountry', ['pais'=>$UserProfile->country])
 
       <div class="form-group">
         <label for="locale">Localidad</label>
