@@ -15,15 +15,15 @@
 <div class="well">
 
 <h4>Gestion de Clave</h4>
-<form action="/pswUpdate" method="post">
+<form action="/psw-update" method="post">
   {!! csrf_field() !!}
   <div class="form-group" id="pwd-containerLocal">
     <label for="password">Clave Actual</label>
-    <input type="password" class="form-control" name="passwordLocal" id="passwordLocal" placeholder="Ingrese su clave Actual">
+    <input type="password" class="form-control" name="passwordOld" id="passwordOld" placeholder="Ingrese su clave Actual">
   </div>
   <div class="form-group" id="pwd-container">
     <label for="password">Nueva Clave</label>
-    <input type="password" class="form-control" name="passwordNew" id="password" placeholder="Clave entre 5 y 8 Caracteres">
+    <input type="password" class="form-control" name="password" id="password" placeholder="Clave entre 5 y 8 Caracteres">
   </div>
   <div class="form-group">
     <label for="password_confirmation">Repita la Clave</label>

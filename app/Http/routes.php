@@ -138,6 +138,18 @@ Route::group(['middleware'=>'auth'], function($id){
       'uses'  =>'MyPasswordController@pswUpDate'
   ]);
 
+  Route::post('/psw-update',[
+      'as'    =>'psw-update',
+      'uses'  =>'MyPasswordController@pswStore'
+  ]);
+
+  /**
+  * Ruta para ayudas y asistencia de cuenta
+  **/
+  Route::get('/assistance','HelpController@assistance');
+  Route::get('/help','HelpController@help');
+
+
   Route::get('user/{id}/condition', 'UserController@condition');
 
   Route::resource('user', 'UserController');
