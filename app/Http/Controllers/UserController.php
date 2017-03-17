@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -27,8 +27,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        return view('user');
+        //Check de usuario
+        /**
+        * Cargando estado de la cuenta a partir de las fechas
+        **/
+        $user = Auth::user();
+        Carbon::setLocale('es');
+        $now = Carbon::now();
+        if($user->created_at->eq($user->updated_at)){
+          //la clave nunca se ha actualizado verificamos el tiempo de la misma
+          $estadoCuenta ="Su cuenta se creo hace ". $user->created_at->diffForHumans($now);
+        }else{
+          $diasAtras = $now->diffForHumans($user->updated_at);
+          $estadoCuenta ="Su cuenta se Actualizo ". $user->updated_at->diffForHumans($user->created_at) ." <br> la ultima actualizacion fue " .$diasAtras;
+        }
+        return view('user')->with('estado',$estadoCuenta);
     }
 
     /**
@@ -104,7 +117,7 @@ class UserController extends Controller
 
     /**
      * Display all video from user
-     * 
+     *
      * @param int $id
      * @return \Illuminate\Http\Response
      */
@@ -124,7 +137,7 @@ class UserController extends Controller
                 $orderBy    = 'desc';
                 $orden      = 'down';
                 break;
-            
+
             default:
                 $orderBy    = 'asc';
                 $orden      = 'up';
@@ -166,30 +179,30 @@ class UserController extends Controller
              *   - cruzar los campos para colicionar $id
              *   - verificar si tiene relacion
              *   - Si la tiene verificar el estado de la relacion
-             * 
+             *
              **/
 
             if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
-                
+
                 if($relacion->are_friends == 'Si'){
                     $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
                 }
 
             } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
-                
+
                 if($relacion->are_friends == 'Si'){
                     $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
                 }
 
             }
-            
-            
+
+
         }
-        
-        
+
+
 
         return view('videos_views')->with($arregloSalida);
-        
+
     }
 
     /**
@@ -198,17 +211,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+
 
     public function storeCondition(Request $request)
     {
         $this->id_u = Auth::user()->id;
         /**
          * Estableciendo reglas de validacion
-         * 
+         *
          *
          */
-        
+
         $rules = [
             'condition'             => 'required|min:3|max:200',
             'condition_extended'    => 'required|max:5000',
@@ -219,16 +232,16 @@ class UserController extends Controller
         =============================================*/
 
         $v = Validator::make($request->input(),$rules);
-        
+
         if ($v->fails()) {
             return redirect()->back()->withErrors($v->errors());
         }
-        
+
         /*===== Final de la validacion de inputs ======*/
-        
+
 
         /*----------  Creamos el modelo  ----------*/
-        
+
         Discapacidad::create([
             'user_id'       => $this->id_u,
             'discapacidad'  => $request->input('condition'),
@@ -243,5 +256,5 @@ class UserController extends Controller
           return redirect('user')->with('mensaje',$mensajeSalida);
 
     }
-    
+
 }

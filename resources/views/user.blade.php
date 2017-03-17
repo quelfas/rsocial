@@ -42,7 +42,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-      estado de la cuenta
+      {{$estado}}
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
   @endsection
 
 @endforelse
-  
+
   <script>
   	$(function () {
   	$('[data-toggle="tooltip"]').tooltip()
