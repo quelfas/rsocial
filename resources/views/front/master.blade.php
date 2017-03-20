@@ -21,7 +21,7 @@
   	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   	<link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://use.fontawesome.com/f4157ac849.js"></script><!-- CDN font-Awesome ty <3 -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{{asset('assets/js/jquery-2.1.4.min.js')}}"></script>
     <script src="//js.pusher.com/3.0/pusher.min.js"></script><!-- CDN PushServices-->
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/bootstrap-datepicker.min.js')}}"></script>

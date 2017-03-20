@@ -29,7 +29,7 @@
             <li>Acondicionamiento para Sala Sanitaria</li>
             <li>Rampa de Acceso</li>
           </ul>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="Infraestructura">Ayuda Infraestructura</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-req="infrastructure" data-whatever="Infraestructura">Ayuda Infraestructura</button>
     </div>
   </div>
 </div>
@@ -50,7 +50,7 @@
         <li>Kit de Conduccion</li>
         <li>Reparacion y Acondicionamiento</li>
       </ul>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="Equipo Especial">Ayuda Equipo Especial</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-req="equipment" data-whatever="Equipo Especial">Ayuda Equipo Especial</button>
     </div>
   </div>
 </div>
@@ -69,7 +69,7 @@
         <li>Tratamiento</li>
         <li>Rehabilitacion</li>
       </ul>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="Material Medico y Sanitario">Ayuda Material Medico y Sanitario</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-req="medical" data-whatever="Material Medico y Sanitario">Ayuda Material Medico y Sanitario</button>
     </div>
   </div>
 </div>
@@ -88,7 +88,7 @@
         <li>Derechos de Personas Discapacitadas</li>
         <li>Conapdis</li>
       </ul>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="Legal">Ayuda Legal</button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-req="legal" data-whatever="Legal">Ayuda Legal</button>
     </div>
   </div>
 </div>
@@ -113,34 +113,82 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">New message</h4>
       </div>
+      <form action="/request-help" method="post">
+        {!! csrf_field() !!}
+        <input type="hidden" name="req-type" id="req-type" value="">
       <div class="modal-body">
-        <form>
+        {{--hack--}}
           <div class="form-group">
-            <label for="recipient-name" class="control-label">Area:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label for="recipient" class="control-label">Area:</label>
+            <input type="text" name="recipient" class="form-control" id="recipient-name">
           </div>
           <div class="form-group">
-            <label for="message-text" class="control-label">Mensaje:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <select id="select" name="helprequest">
+
+            </select>
           </div>
-        </form>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
 <script>
   $('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('Nueva solicitud de Ayuda para ' + recipient)
-  modal.find('.modal-body input').val('Solicitud de Ayuda ' + recipient)
+    $('#select').empty()
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    var typeReq = button.data('req')
+    var infrastructure = [
+      "Acondicionamiento de Habitacion",
+      "Acondicionamiento para Sala Sanitaria",
+      "Rampa de Acceso"
+    ]
+    var equipment = [
+      "Silla de Ruedas",
+      "Andadera",
+      "Bastones / Muletas",
+      "Kit de Conduccion",
+      "Reparacion y Acondicionamiento"
+    ]
+    var medical = [
+      "Material Medico y Sanitario",
+      "Tratamiento",
+      "Rehabilitacion"
+    ]
+    var legal = [
+      "Derechos Humanos",
+      "Derechos de Personas Discapacitadas",
+      "Conapdis"
+    ]
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('Nueva solicitud de Ayuda para ' + recipient)
+    modal.find('#recipient-name').val('Solicitud de Ayuda ' + recipient)
+    modal.find('#req-type').val(typeReq)
+
+    if(typeReq == "infrastructure"){
+      $.each(infrastructure, function(i, p){
+        $('#select').append($('<option></option>').val(p).html(p))
+      })
+    }else if (typeReq == "equipment") {
+      $.each(equipment, function(i, p){
+        $('#select').append($('<option></option>').val(p).html(p))
+      })
+    }else if (typeReq == "medical") {
+      $.each(medical, function(i, p){
+        $('#select').append($('<option></option>').val(p).html(p))
+      })
+    }else if(typeReq == "legal") {
+      $.each(legal, function(i, p){
+        $('#select').append($('<option></option>').val(p).html(p))
+      })
+    }
   })
 
 </script>

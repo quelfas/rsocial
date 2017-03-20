@@ -30,7 +30,7 @@
         @foreach($amistades as $amistad)
         <tr>
           <td><img class="img-circle" width="20" height="20" src="{{ asset('assets/img/') }}/{{ $amistad->gender }}.png" alt="{{ $amistad->name }} {{ $amistad->last_name }}"></td>
-          <td><a href="/perfile/{{ $amistad->user_id }}">{{ $amistad->name }} {{ $amistad->last_name }}</a></td>
+          <td><a href="/profile/{{ $amistad->user_id }}">{{ $amistad->name }} {{ $amistad->last_name }}</a></td>
           <td>{{ $amistad->locale }}</td>
           <td>
             <form action="/terminate" method="POST">

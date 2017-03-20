@@ -148,6 +148,10 @@ Route::group(['middleware'=>'auth'], function($id){
   **/
   Route::get('/assistance','HelpController@assistance');
   Route::get('/help','HelpController@help');
+  Route::post('/request-help',[
+    'as'      =>'request-help',
+    'uses'    =>'HelpController@storeRequest'
+  ]);
 
 
   Route::get('user/{id}/condition', 'UserController@condition');

@@ -65,7 +65,7 @@
             <small><span>Caracteres Restantes: <span id="rem_post" title="1000"></span></span></small>
               <script>
               {{-- agradecimientos a Sk8erPeter [URL:stackexchange.com/users/244701/sk8erpeter] por desarrollar este fragmento de codigo --}}
-                $(".conteo").keyUp(function(){
+                $(".conteo").keyup(function(event){
                   var cmax = $("#rem_" + $(this).attr("id")).attr("title");
                   if($(this).val().length >= cmax){
                     $(this).val($(this).val().substr(0, cmax));
@@ -75,7 +75,7 @@
                 });
               </script>
             {{-- contador de caracteres --}}
-            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <script src="{{asset('assets/js/jquery-2.1.4.min.js')}}"></script>
           </div>
           <div class="form-group">
             {{-- espacio para recapcha --}}
