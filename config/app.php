@@ -148,6 +148,9 @@ return [
         App\Providers\ProfilesServiceProvider::class,
         App\Providers\NewContactServiceProvider::class,
         App\Providers\RelationServiceProvider::class,
+        App\Providers\FriendServiceProvider::class,
+        App\Providers\ActivityContentProvider::class,
+        Vinkla\Pusher\PusherServiceProvider::class,
 
     ],
 

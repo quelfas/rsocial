@@ -60,9 +60,9 @@ class AuthController extends Controller
     {
       //
       $rules = [
-          'name' => 'required|max:255',
-          'email' => 'required|email|max:255|unique:users',
-          'password' => 'required|confirmed|min:6',
+          'name'      => 'required|max:255',
+          'email'     => 'required|email|max:255|unique:users',
+          'password'  => 'required|confirmed|min:6',
       ];
 
       $v = Validator::make($request->all(),$rules);
@@ -73,9 +73,9 @@ class AuthController extends Controller
       }
 
         User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'name'      => $request->input('name'),
+            'email'     => $request->input('email'),
+            'password'  => bcrypt($request->input('password')),
         ]);
         $mensajeSalida = [
     				 		'mensaje'=>'Se ha creado con exito el usuario:
@@ -84,7 +84,7 @@ class AuthController extends Controller
                 luego Ingrese su usuario y su clave para acceder',
     				 		'class'=>'alert-success'
     		];
-        return view('users')->with('mensaje',$mensajeSalida);
+        return view('cautivo')->with('mensaje',$mensajeSalida);
     }
 
     protected function getLogin()
@@ -121,7 +121,7 @@ class AuthController extends Controller
     						'mensaje'=>'Credenciales correctas. Bienvenido '. $user['name'],
     						'class'=>'alert-success'
     				];
-        return view('user')->with('mensaje',$mensajeSalida);
+        return redirect('user')->with('mensaje',$mensajeSalida);
       }else {
         $mensajeSalida = [
                 'mensaje'=>'Usuario o Clave no coinciden, revise los datos ingresados. Verifique que activo su cuenta',

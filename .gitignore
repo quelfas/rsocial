@@ -1,4 +1,5 @@
 /public/assets/img/png/**/*
+/public/assets/upload/**/*
 /vendor
 /tests
 .env

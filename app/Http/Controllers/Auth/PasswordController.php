@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use Validator;
+use Auth;
+use DB;
+use Log;
 
 class PasswordController extends Controller
 {
@@ -29,4 +35,5 @@ class PasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
 }

@@ -32,4 +32,4 @@
 
 {{--FIN Form Login--}}
 
-@stop
+@endsection

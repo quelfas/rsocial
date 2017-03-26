@@ -73,6 +73,7 @@ return [
 		'timezone'             => 'El campo :attribute debe contener una zona v&aacute;lida.',
 		'unique'               => 'El elemento :attribute ya est&aacute; en uso.',
 		'url'                  => 'El formato de :attribute no corresponde con el de una URL v&aacute;lida.',
+		'hash'							 	 => 'El :attribute no corresponde con el campo clave',
 		/*
 		|--------------------------------------------------------------------------
 		| Custom Validation Language Lines

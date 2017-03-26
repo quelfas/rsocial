@@ -2,21 +2,33 @@
 
 use Illuminate\Contracts\View\View;
 use Auth;
-use App\Profile;
 
-/**
- *
- */
+//Models
+use App\Profile;
+use App\Discapacidad;
+
+
 class ProfileComposer
 {
 
   function compose(View $view)
   {
-    /*-------------------------------------------------
-    | consulta de la informacion del perfil de usuario
-    /*------------------------------------------------*/
-    $id = Auth::user()->id;
-    $perfile = Profile::where('id',$id)->get();
-    $view->with('UserProfiles',$perfile);
+
+    /**
+     * Consulta de la informacion del perfil de usuario
+     * Consulta de Condicion de Discapacidad del usuario
+     */
+
+    $idActive = Auth::user()->id;
+
+    $perfile = Profile::where('user_id',$idActive)->get();
+
+    $condition = Discapacidad::where('user_id',$idActive)->get();
+
+    $view->with([
+    	'UserProfiles'	=> $perfile,
+    	'conditions' 	  => $condition
+    	]);
+
   }
 }

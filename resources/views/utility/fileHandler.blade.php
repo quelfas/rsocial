@@ -58,38 +58,177 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 </script>
 
+    <div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Tu estado</a></li>
+    <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Videos</a></li>
+    <li role="presentation"><a href="#imagenes" aria-controls="imagenes" role="tab" data-toggle="tab">Imagenes</a></li>
+    <li role="presentation"><a href="#mensajes" aria-controls="mensajes" role="tab" data-toggle="tab">Mensajes</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane active" id="home">
+
+    <h3>Actualiza tu estado</h3>
+
+    <form class="form-inline" action="" method="post">
+      {!! csrf_field() !!}
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="fa fa-comment-o fa-1x" aria-hidden="true"></i>
+          </div>
+          <input type="text" v-model="status" name="status" class="form-control" placeholder="Que estas pensando?">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button v-on:click="limpiarFormStatus()" type="reset" class="btn btn-danger">Limpiar</button>
+      </div>
+      <h4 v-show="status">@{{ status | textoCapital }}</h4>
+    </form>
+
+    </div>
 
 
 
-<div id="drop_zone">Suelte los archivos aqui</div>
-<output id="list"></output>
+    <div role="tabpanel" class="tab-pane" id="videos">
 
-<script>
-  function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
+      <h3>Inserte un Video</h3>
 
-    var files = evt.dataTransfer.files; // FileList object.
+      <form class="form-inline" action="/videos" method="POST">
+        {!! csrf_field() !!}
+        <div class="form-group">
+          <div class="input-group">
 
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-                  f.size, ' bytes, last modified: ',
-                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-                  '</li>');
-    }
-    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
+            <div class="input-group-addon">
+              <i class="fa fa-youtube fa-1x" aria-hidden="true"></i>
+            </div>
 
-  function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
+            <input name="link" v-model="link" type="text" class="form-control" placeholder="Pega tu video">
+            <input type="hidden" v-bind:value="link | youtube" name="source">
 
-  // Setup the dnd listeners.
-  var dropZone = document.getElementById('drop_zone');
-  dropZone.addEventListener('dragover', handleDragOver, false);
-  dropZone.addEventListener('drop', handleFileSelect, false);
-</script>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button v-on:click="limpiarFormVideo()" type="reset" class="btn btn-danger">Limpiar</button>
+
+        </div>
+        <hr>
+
+          <label for="publico" data-toggle="tooltip" data-placement="top" title="(On) Solo sera visible para ti">Privado:&nbsp;</label>
+          <input type="checkbox" name="publico">
+
+          <label for="restringido" data-toggle="tooltip" data-placement="top" title="(On) No apto para menores o personas suceptibles">Control Parental:&nbsp;</label>
+          <input type="checkbox" name="restringido">
+          <br>
+          <br>
+          <input type="text" name="tags" placeholder="Titulo" class="form-control">
+
+        <hr>
+
+        <div v-show="link | youtube" class="embed-container">
+
+          <iframe width="560" height="315" v-bind:src="link | youtube" frameborder="0" allowfullscreen></iframe>
+
+        </div>
+          <hr>
+          <button v-show="link | youtube" type="button" class="btn btn-danger" name="button" data-toggle="popover" title="URL" v-bind:data-content="link"><i v-show="link | youtube" class="fa fa-code fa-fw fa-lg" aria-hidden="true"></i></button>
+      </form>
+
+
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="imagenes">
+      <script type="text/javascript" src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>
+      <link rel="stylesheet" href="{{asset('assets/css/dropzone.css')}}" />
+      <span data-dz-name></span>
+      <h3>Galeria de Imagenes</h3>
+          <!-- INICIO DROPZONE -->
+          <form action="/upload" method="POST" id="my-dropzone" class="dropzone" enctype="multipart/form-data">
+            {!! csrf_field() !!}
+            <input type="text" v-model="count" name="mascara" class="form-control" placeholder="Nombre de la Galeria">
+            <br>
+            <input type="text" name="tags" class="form-control" placeholder="Etiquetas">
+            <input name="galeria" type="hidden" :value="count">
+            <br>
+            <label for="privacy">Privacidad: </label> <input type="checkbox" name="privacy">
+            <hr>
+            <div class="dz-message">
+              Arrastra tus imagenes aqui
+            </div>
+            <div class="dropzone-preview"></div>
+             <button type="submit" :disabled="count == ''" class="btn btn-success" id="submit"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Subir</button>
+          </form>
+          <p class="text-right"><small id="count"></small></p>
+          <!--script -->
+          <script>
+          var archivos = 0;
+            Dropzone.options.myDropzone = {
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            maxFilezise: 3,
+            maxFiles: 15,
+            addRemoveLinks: true,
+
+            init: function() {
+                    var submitBtn = document.querySelector("#submit");
+                    myDropzone = this;
+
+                    submitBtn.addEventListener("click", function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                    });
+                    this.on("addedfile", function(file) {
+                        //alert("file uploaded");
+                        //cuenta de eventos addedfiles disparados
+
+                        if (archivos === 0) {
+                          archivos = 1;
+                        }else{
+                          archivos++;
+                        }
+
+                        $("#count").text('Cantidad de archivos: ' + archivos);
+
+                    });
+
+                    this.on("complete", function(file) {
+                        myDropzone.removeFile(file);
+                        $("#count").text('');
+                        $(".form-control").val('');
+
+                    });
+
+                    this.on("success", myDropzone.processQueue.bind(myDropzone));
+
+                    this.on("success", function(file, response){
+
+                      $.each(response, function(clave,valor){
+
+                        if(clave == 'message'){
+                          console.log(valor.relace("/[\"/",""));
+                        }
+
+                      });
+
+                    });
+
+                  }
+              };
+
+          </script>
+        <!--script -->
+          <!-- FIN DROPZONE -->
+    </div>
+
+
+    <div role="tabpanel" class="tab-pane" id="mensajes">...</div>
+  </div>
+
+</div>
+<script src="{{asset('assets/js/vue/yb.js')}}"></script>
