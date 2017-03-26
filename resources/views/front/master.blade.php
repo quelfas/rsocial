@@ -50,7 +50,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Vidas Sobre Ruedas</a>
+          <a class="navbar-brand" href="/">Una Vida Sobre Ruedas</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
 
