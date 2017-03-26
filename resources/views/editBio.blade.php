@@ -12,8 +12,42 @@
 
 @section('content')
 <div class="well">
-<h4>Edita tu perfil</h4>
+
   @foreach($UserProfiles as $UserProfile)
+  {{--imagen--}}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+
+      <h3 class="panel-title">Actuliza tu imagen</h3>
+
+    </div>
+    <div class="panel-body">
+      {{----}}
+      <div class="media">
+      <div class="media-left">
+
+        <a href="#">
+          @forelse($PhotoPerfil as $myPhoto)
+          <img class="img-circle" width="50" height="50" src="{{ asset('assets/upload/') }}/{{ $myPhoto->image_name }}" alt="...">
+          @empty
+          <img class="img-circle" width="50" height="50" src="{{ asset('assets/img/') }}/{{ $UserProfile->gender }}.png" alt="...">
+          @endforelse
+        </a>
+
+      </div>
+      <div class="media-body">
+        <form class="form-group" action="/photo" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <input class="form-control" type="file" name="file" value="">
+          <button type="submit" class="btn btn-default btn-sm">Cargar Perfil</button>
+        </form>
+      </div>
+    </div>
+      {{----}}
+    </div>
+  </div>
+  {{--imagen--}}
+  <h4>Edita tu perfil</h4>
     <form  action="/profile/{{$UserProfile->user_id}}" method="post">
       <input type="hidden" name="_method" value="PATCH">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">

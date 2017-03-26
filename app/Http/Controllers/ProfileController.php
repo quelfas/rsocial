@@ -15,6 +15,7 @@ use App\Profile;
 use App\UserRelation;
 use App\Videos;
 use App\Discapacidad;
+use App\Galery;
 
 class ProfileController extends Controller
 {
@@ -146,6 +147,7 @@ class ProfileController extends Controller
         $Discapacidad = Discapacidad::where('user_id',$id)
                                     ->get();
 
+
         if ($id == $this->id_u) {
 
           return view('myprofile')->with(
@@ -155,6 +157,10 @@ class ProfileController extends Controller
               ]);
 
         } else {
+
+          $photoPerfil = Galery::where('user_id',$id)
+                                      ->where('type','perfile-up')
+                                      ->get();
 
 
             //paso 2. Determinar si son amigos por medio de 2-way search
@@ -196,7 +202,8 @@ class ProfileController extends Controller
                     'UserRelations' => $RelationOn,
                     'InfoRelations' => $infoRelation,
                     'VideoContents' => $videos,
-                    'Discapacidad'  => $Discapacidad
+                    'Discapacidad'  => $Discapacidad,
+                    'PhotoPerfil'   => $photoPerfil
                 ]);
         }
 
@@ -219,9 +226,14 @@ class ProfileController extends Controller
           //para actualizar
           $perfile = Profile::where('user_id',$this->id_u)->get();
           //dd($perfile);
+
+          $photoPerfil = Galery::where('user_id',$this->id_u)
+                                      ->where('type','perfile-up')
+                                      ->get();
           return view('editBio')->with(
               [
                   'UserProfiles'  => $perfile,
+                  'PhotoPerfil'   => $photoPerfil,
               ]);
         } else {
           if (Auth::user()->role == "admin") {
@@ -248,6 +260,7 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $atencion = ".";
         $rules = [
           'name'      =>'required|min:3|max:80',
           'last_name' =>'required|min:3|max:80',
@@ -271,9 +284,27 @@ class ProfileController extends Controller
 
           $birthdate    = explode("/",$request->input('birthdate'));
           $birthdate    = $birthdate[2]."-".$birthdate[1]."-".$birthdate[0];
-          $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
-          $connections  = ($request->input('connections') == "on") ? "Si" : "No";
+
+          /**
+          * Comprobando si tiene solicitudes de ayuda cargadas
+          **/
           $this->id_u   = Auth::user()->id;
+          $helpRequests = DB::table('Help')
+              ->where('user_id',$this->id_u)
+              ->where('status',"Creado")
+              ->get();
+          if (count($helpRequests) == 0) {
+            # no posee abierto ningun caso podra actualizar su estado de privacidad
+            $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
+            $atencion = ". Tiene abierta solicitud(es) de ayuda en este momento su perfil es publico por defecto.";
+          } else {
+            # posee abierto al menos un caso y no podra actualizar su estado de privacidad
+            $privacy      = "publico";
+          }
+
+
+          $connections  = ($request->input('connections') == "on") ? "Si" : "No";
+
         //
           DB::table( 'profiles' )
             ->where('user_id', $this->id_u)
@@ -291,10 +322,10 @@ class ProfileController extends Controller
             ]);
 
             //retornamos una vista con mensaje
-            $mensajeSalida = array(
-          				'mensaje' => 'Perfil actualizado.',
-          				'class'   => 'alert-success'
-          		);
+            $mensajeSalida = [
+              'mensaje' => 'Perfil actualizado' . $atencion,
+              'class'   => 'alert-success'
+            ];
 
 
 

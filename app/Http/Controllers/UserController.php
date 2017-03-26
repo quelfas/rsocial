@@ -14,6 +14,7 @@ use App\Profile;
 use App\UserRelation;
 use App\Videos;
 use App\Discapacidad;
+use App\Galery;
 
 class UserController extends Controller
 {
@@ -34,6 +35,9 @@ class UserController extends Controller
         $user = Auth::user();
         Carbon::setLocale('es');
         $now = Carbon::now();
+        $photoPerfil = Galery::where('user_id',$user->id)
+                                    ->where('type','perfile-up')
+                                    ->get();
         if($user->created_at->eq($user->updated_at)){
           //la clave nunca se ha actualizado verificamos el tiempo de la misma
           $estadoCuenta ="Su cuenta se creo hace ". $user->created_at->diffForHumans($now);
@@ -41,7 +45,11 @@ class UserController extends Controller
           $diasAtras = $now->diffForHumans($user->updated_at);
           $estadoCuenta ="Su cuenta se Actualizo ". $user->updated_at->diffForHumans($user->created_at) ." <br> la ultima actualizacion fue " .$diasAtras;
         }
-        return view('user')->with('estado',$estadoCuenta);
+
+        return view('user')->with([
+        'estado'        => $estadoCuenta,
+        'PhotoPerfil'   => $photoPerfil
+        ]);
     }
 
     /**

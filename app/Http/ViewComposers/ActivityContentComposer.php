@@ -52,9 +52,11 @@ class ActivityContentComposer
 								->take(10)
 								->get();
 
+
 /**
  * Preparando la informacion para enviarla via injeccion de dependencias
  * a la vista "utility.activityContentBlade"
+ * update falta aumentar la vista para cargar las notificaciones de ayuda
  **/
 
 			$SubsSalida = [

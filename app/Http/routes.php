@@ -148,10 +148,17 @@ Route::group(['middleware'=>'auth'], function($id){
   **/
   Route::get('/assistance','HelpController@assistance');
   Route::get('/help','HelpController@help');
+  Route::get('/help-requested','HelpController@helpRequested');
   Route::post('/request-help',[
     'as'      =>'request-help',
     'uses'    =>'HelpController@storeRequest'
   ]);
+
+  /**
+  * Ruta para foto de perfil
+  **/
+
+
 
 
   Route::get('user/{id}/condition', 'UserController@condition');
@@ -163,5 +170,7 @@ Route::group(['middleware'=>'auth'], function($id){
   Route::resource('upload', 'FileController',
     ['only' => ['store']]);
   Route::resource('content', 'ContentController');
+  Route::resource('photo', 'PhotoController',
+    ['only' => ['store']]);
   Route::get('/salir', 'Auth\AuthController@getLogout');
 });

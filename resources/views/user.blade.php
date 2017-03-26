@@ -62,7 +62,11 @@
               <div class="media-left">
 
                 <a href="#">
-                  <img class="img-circle" width="50" height="50" src="{{ asset('assets/img/')}}/{{$UserProfile->gender }}.png" alt="...">
+                  @forelse($PhotoPerfil as $myPhoto)
+                  <img class="img-circle" width="50" height="50" src="{{ asset('assets/upload/') }}/{{ $myPhoto->image_name }}" alt="...">
+                  @empty
+                  <img class="img-circle" width="50" height="50" src="{{ asset('assets/img/') }}/{{ $UserProfile->gender }}.png" alt="Default">
+                  @endforelse
                 </a>
               </div>
               <div class="media-body">

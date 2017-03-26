@@ -10,7 +10,13 @@
     <ul>
 
       <li><a href="/relation">{{$UserRelation['Cabecera']}} <sup><span class="badge alert-warning">{{$UserRelation['Contenido']}}</span></sup></a></li>
-      
+
+    </ul>
+
+    <h4>Solicitudes de Ayuda</h4>
+
+    <ul>
+        <li><a href="@if($UserRelation['Ayuda'] === 0) /help @else /help-requested @endif">{{$UserRelation['Cabecera']}}<sup><span class="badge alert-warning">{{$UserRelation['Ayuda']}}</span></sup></a></li>
     </ul>
 
   </div>

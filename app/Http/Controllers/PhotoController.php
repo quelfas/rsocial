@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 //Models
 use App\Galery;
 
-class FileController extends Controller
+class PhotoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +21,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        //redireccionames a index
-        return redirect()->route('/home');
+        //
     }
 
     /**
@@ -42,42 +42,20 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //validation rules
-        $rules = [
-            'galeria'   =>'required|max:50'
-        ];
 
-        $message = [
-            'max'       =>'El tamaño maximo es de 50 caracteres'
-        ];
-
-        $v = Validator::make($request->all(),$rules,$message);
-          if ($v->fails()) {
-                // mis vacaciones en holanda 2015
-                //$errores    = $v->errors();
-                $message[]  = "El campo Galeria es obligatorio y el tamaño maximo es de 50 caracteres";
-                $errores    = json_encode($message);
-
-            return response()->json([
-                'success'       =>true,
-                'message'       =>$errores
-                ], 200);
-
-          }
-
-        $message    = array();
         $path       = public_path().'/assets/upload/';
-        $files      = $request->file('file');
-        $galeria    = $request->input('galeria');
+        $file      = $request->file('file');
+        $galeria    = "perfil";
         $user       = Auth::user()->id;
-        $privacy    = ($request->input('privacy') == "on") ? "privado" : "publico";
+        $privacy    = "off";
+        $mensajeSalida = [];
 
-        foreach($files as $file){
+        //foreach($files as $file){
             $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
             $fileRealName   = $file->getClientOriginalName();
             $fileSize       = $file->getSize();
             $fileMime       = $file->getMimeType();
-
+            //dd($fileName);
             /**
              * ToDo
              * Faltan las comprobaciones y validaciones (Validate)
@@ -119,7 +97,26 @@ class FileController extends Controller
             }
 
             if ($paso && $fileSize <= 3000000) {
-                $message[]    = $fileRealName . " cargado exitosamente!!!";
+                //$message[]    = $fileRealName . " cargado exitosamente!!!";
+
+                /**
+                * la imagen anterior que este up pasa a down
+                * falta adecuar el form
+                * falta crear la pieza de codigo que apaga la imagen de perfil activa
+                **/
+                //determinando si existe alguna imagen activa
+                $oldGalery = DB::table('Galery')
+                            ->where('user_id',$user)
+                            ->where('type','perfile-up')
+                            ->get();
+
+                if(count($oldGalery) == 1){
+                  $downGalery = DB::table('Galery')
+                              ->where('id',$oldGalery[0]->id)
+                              ->update([
+                                'type' =>'perfile-down'
+                              ]);
+                }
 
                 $galery = new Galery;
 
@@ -128,25 +125,36 @@ class FileController extends Controller
                 $galery->image_name     = $fileName;
                 $galery->image_real     = $fileRealName;
                 $galery->size           = $fileSize;
-                $galery->type           = "Galery";
+                $galery->type           = "perfile-up";
                 $galery->privacy        = $privacy;
-                $galery->tags           = $request->input('tags');
+                $galery->tags           = "perfil";
 
                 $galery->save();
 
                 $file->move($path, $fileName);
+
+                $mensajeSalida = [
+                  'mensaje' => 'Perfil actualizado',
+                  'class'   => 'alert-success'
+                ];
+
             }else{
-                $message[]    = $fileRealName . " no es un tipo de archivo valido o es mayor a 3MB";
+              $mensajeSalida = [
+                'mensaje' => 'no es un tipo de archivo valido o es mayor a 3MB',
+                'class'   => 'alert-info'
+              ];
+
             }
 
 
-        }
+        //}
 
-        $errores    = json_encode($message);
-        return response()->json([
-            'success'       =>true,
-            'message'       =>$errores
-            ],200);
+
+
+
+
+
+        return redirect('user')->with('mensaje',$mensajeSalida);
     }
 
     /**

@@ -126,6 +126,7 @@
             <select id="select" name="helprequest">
 
             </select>
+            <div class="nodo"></div>
           </div>
       </div>
 
@@ -140,30 +141,35 @@
 <script>
   $('#exampleModal').on('show.bs.modal', function (event) {
     $('#select').empty()
+    $('#otro').remove()
     var button = $(event.relatedTarget) // Button that triggered the modal
     var recipient = button.data('whatever') // Extract info from data-* attributes
     var typeReq = button.data('req')
     var infrastructure = [
       "Acondicionamiento de Habitacion",
       "Acondicionamiento para Sala Sanitaria",
-      "Rampa de Acceso"
+      "Rampa de Acceso",
+      "Otro"
     ]
     var equipment = [
       "Silla de Ruedas",
       "Andadera",
       "Bastones / Muletas",
       "Kit de Conduccion",
-      "Reparacion y Acondicionamiento"
+      "Reparacion y Acondicionamiento",
+      "Otro"
     ]
     var medical = [
       "Material Medico y Sanitario",
       "Tratamiento",
-      "Rehabilitacion"
+      "Rehabilitacion",
+      "Otro"
     ]
     var legal = [
       "Derechos Humanos",
       "Derechos de Personas Discapacitadas",
-      "Conapdis"
+      "Conapdis",
+      "Otro"
     ]
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
@@ -189,6 +195,15 @@
         $('#select').append($('<option></option>').val(p).html(p))
       })
     }
+
+    $('#select').change(function(){
+      $('#otro').remove()
+      if($(this).val()=='Otro'){
+        $('.nodo').append('<div id="otro" class="form-group"><label for="otro" class="control-label">Ingrese su Requerimiento:</label><input class="form-control" name="customHelp" type="text" /></div>')
+      }else{
+        $('#otro').remove()
+      }
+    })
   })
 
 </script>

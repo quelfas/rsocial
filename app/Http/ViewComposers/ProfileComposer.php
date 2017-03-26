@@ -20,15 +20,15 @@ class ProfileComposer
      */
 
     $idActive = Auth::user()->id;
-    
+
     $perfile = Profile::where('user_id',$idActive)->get();
 
     $condition = Discapacidad::where('user_id',$idActive)->get();
-    
+
     $view->with([
-    	'UserProfiles'	=> $perfile, 
-    	'conditions' 	      => $condition
-    	]);    
+    	'UserProfiles'	=> $perfile,
+    	'conditions' 	  => $condition
+    	]);
 
   }
 }

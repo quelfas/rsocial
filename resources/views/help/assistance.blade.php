@@ -48,3 +48,13 @@
   </form>
 </div>
 @endsection
+
+@section('sidebar')
+  @parent
+    @include('utility.perfilControl')
+    @include('utility.friendSideBar')
+    @include('utility.notifySideBar')
+    @include('utility.activityContent')
+    @include('utility.listUsers')
+    @include('utility.formCondition')
+@endsection

@@ -1,2 +1,2 @@
-<p>Crear una cuena</p>
+<p>Crear una cuenta</p>
 <p>Acceder</p>

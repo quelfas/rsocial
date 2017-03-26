@@ -34,6 +34,5 @@
   			<li><small>Acceso Correcto</small></li>
   		</ul>
   	</div>
-
   </div>
 </div>
