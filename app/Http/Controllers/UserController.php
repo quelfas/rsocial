@@ -46,9 +46,27 @@ class UserController extends Controller
           $estadoCuenta ="Su cuenta se Actualizo ". $user->updated_at->diffForHumans($user->created_at) ." <br> la ultima actualizacion fue " .$diasAtras;
         }
 
+        /**
+        * Payload Videos
+        **/
+        $videos   = Videos::where('user_id',$user->id)
+                            ->get();
+
+        /**
+        * PayLoad Galerias
+        **/
+        $galerias   = Galery::where('user_id',$user->id)
+                            ->get();
+
+        /**
+        * Salida a la vista user
+        **/
+
         return view('user')->with([
         'estado'        => $estadoCuenta,
-        'PhotoPerfil'   => $photoPerfil
+        'PhotoPerfil'   => $photoPerfil,
+        'videos'        => $videos,
+        'galerias'      => $galerias
         ]);
     }
 

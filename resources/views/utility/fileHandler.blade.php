@@ -96,6 +96,36 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
     <div role="tabpanel" class="tab-pane" id="videos">
 
+
+      <h3>Tus videos</h3>
+      @forelse($videos as $video)
+        <a href="#VideoModal" data-toggle="modal" data-whatever="{{$video->url_frame}}"><img src="https://img.youtube.com/vi/{{$video->url_link}}/3.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="{{$video->tags}}"></a>&nbsp;
+      @empty
+        Ningun video para mostrar.
+      @endforelse
+
+      {{--modal video--}}
+      <div class="modal fade" id="VideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+          <iframe id="youtubeId" src="" width="560" height="315"></iframe>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+      $('#VideoModal').on('show.bs.modal', function (event) {
+      var alias = $(event.relatedTarget) // Button that triggered the modal
+      var frameDir = alias.data('whatever') // Extract info from data-* attributes
+      // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+      // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        $('#youtubeId').attr('src',frameDir);
+      })
+
+      $('#VideoModal').on('hidden.bs.modal', function (event){
+        $('#youtubeId').attr('src',null);
+      })
+      </script>
+      {{--modal video--}}
+
       <h3>Inserte un Video</h3>
 
       <form class="form-inline" action="/videos" method="POST">
@@ -109,6 +139,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
             <input name="link" v-model="link" type="text" class="form-control" placeholder="Pega tu video">
             <input type="hidden" v-bind:value="link | youtube" name="source">
+            <input type="hidden" v-bind:value="link | youtubeName" name="nameId">
 
           </div>
 

@@ -23,7 +23,7 @@ class VideoController extends Controller
 {
   var $id_u;
 
-  
+
     /**
      * Display a listing of the resource.
      *
@@ -67,7 +67,7 @@ class VideoController extends Controller
 
         $video->user_id   = $this->id_u;
         $video->url_frame = $request->source;
-        $video->url_link  = $request->link;
+        $video->url_link  = $request->nameId;
         $video->privacy   = $privacy;
         $video->parental  = $restringido;
         $video->tags      = $tags;
@@ -148,7 +148,7 @@ class VideoController extends Controller
         $infoRelation = $relaciones;
 
       }
-      
+
 
        return view('video_view')->with(
            [
