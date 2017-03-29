@@ -1,4 +1,5 @@
 <style>
+
 .example {
   padding: 10px;
   border: 1px solid #ccc;
@@ -177,7 +178,29 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
       <script type="text/javascript" src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>
       <link rel="stylesheet" href="{{asset('assets/css/dropzone.css')}}" />
       <span data-dz-name></span>
+      <h3>Imagenes de Perfil</h3>
+
+      {{--galeria perfil--}}
+        @forelse($galeriasPerfil as $galeriaPerfil)
+
+
+          <img class="img-circle" width="70" height="70" src="{{asset('assets/upload/')}}/{{$galeriaPerfil->image_name}}" alt="">
+
+        @empty
+          No hay imagenes de perfil aun
+        @endforelse
+      {{--galeria perfil--}}
+      <hr>
       <h3>Galeria de Imagenes</h3>
+      {{--galerias--}}
+        @forelse($galerias as $galeria)
+          <img class="img-rounded" width="70" height="70" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="">
+        @empty
+          No existen Galerias creadas
+        @endforelse
+      {{--galerias--}}
+
+      <h3>Crea una Nueva Galeria</h3>
           <!-- INICIO DROPZONE -->
           <form action="/upload" method="POST" id="my-dropzone" class="dropzone" enctype="multipart/form-data">
             {!! csrf_field() !!}

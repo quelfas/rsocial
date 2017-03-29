@@ -55,7 +55,11 @@ class UserController extends Controller
         /**
         * PayLoad Galerias
         **/
-        $galerias   = Galery::where('user_id',$user->id)
+        $galerias         = Galery::where('user_id',$user->id)
+                            ->where('type','galery')
+                            ->get();
+        $galeriasPerfil   = Galery::where('user_id',$user->id)
+                            ->where('tags','perfil')
                             ->get();
 
         /**
@@ -66,7 +70,8 @@ class UserController extends Controller
         'estado'        => $estadoCuenta,
         'PhotoPerfil'   => $photoPerfil,
         'videos'        => $videos,
-        'galerias'      => $galerias
+        'galerias'      => $galerias,
+        'galeriasPerfil'=> $galeriasPerfil
         ]);
     }
 

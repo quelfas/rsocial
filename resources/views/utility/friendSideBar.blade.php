@@ -17,7 +17,7 @@
         class="img-circle"
         width="30"
         height="30"
-        src="{{ $detail[3] }}"
+        src="{{asset('assets/')}}/{{ $detail[3] }}"
         alt="{{ $detail[1] }} {{ $detail[2] }}"
         data-toggle="tooltip"
         data-placement="top"

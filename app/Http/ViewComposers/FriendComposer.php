@@ -99,9 +99,9 @@ class FriendComposer
                         ->get();
 
           if (count($photoPerfil) == 0) {
-            $perfilImage = "../assets/img/". $PerfiAmigo[$key][0]['gender'] .".png";
+            $perfilImage = "img/". $PerfiAmigo[$key][0]['gender'] .".png";
           } else {
-            $perfilImage = "../assets/upload/". $photoPerfil[0]->image_name;
+            $perfilImage = "upload/". $photoPerfil[0]->image_name;
           }
 
           $detalle[] = $PerfiAmigo[$key][0]['user_id']."*".$PerfiAmigo[$key][0]['name']."*".$PerfiAmigo[$key][0]['last_name']."*".$perfilImage;
