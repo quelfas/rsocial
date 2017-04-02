@@ -193,11 +193,32 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
       <hr>
       <h3>Galeria de Imagenes</h3>
       {{--galerias--}}
-        @forelse($galerias as $galeria)
-          <img class="img-rounded" width="70" height="70" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="">
+        <div class="row">
+        @forelse($contenidos as $contenido)
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img src="{{asset('assets/upload/')}}/<?php
+                  $imagen_idGalery = explode("-",$contenido->content_id);
+                  foreach($galerias as $galeria){
+                    if($galeria->id == $imagen_idGalery[0]){
+                      $imagenSalida = $galeria->image_name;
+                      echo $imagenSalida;
+                    }
+                  }
+                ?>" alt="{{$contenido->tags}}">
+              <div class="caption">
+                <h3>{{$contenido->tags}}</h3>
+                <p><small>Creado el {{$contenido->created_at->toDayDateTimeString()}}</small></p>
+                <p><a href="#" class="btn btn-primary" role="button">Ver</a></p>
+              </div>
+            </div>
+          </div>
+          {{--falta cargar las imagenes en modal--}}
+          {{--imagen en thumbnail--}}
         @empty
           No existen Galerias creadas
         @endforelse
+       </div>
       {{--galerias--}}
 
       <h3>Crea una Nueva Galeria</h3>
@@ -247,7 +268,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                           archivos++;
                         }
 
-                        $("#count").text('Cantidad de archivos: ' + archivos);
+                        $("#count").text('Cantidad de archivos: ' + archivos + '/20');
 
                     });
 

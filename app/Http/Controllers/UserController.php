@@ -15,6 +15,7 @@ use App\UserRelation;
 use App\Videos;
 use App\Discapacidad;
 use App\Galery;
+use App\Contents;
 
 class UserController extends Controller
 {
@@ -35,6 +36,8 @@ class UserController extends Controller
         $user = Auth::user();
         Carbon::setLocale('es');
         $now = Carbon::now();
+        $galerias = null;
+
         $photoPerfil = Galery::where('user_id',$user->id)
                                     ->where('type','perfile-up')
                                     ->get();
@@ -55,9 +58,27 @@ class UserController extends Controller
         /**
         * PayLoad Galerias
         **/
-        $galerias         = Galery::where('user_id',$user->id)
+        /**$galerias         = Galery::where('user_id',$user->id)
                             ->where('type','galery')
+                            ->get();**/
+        /**
+        * consultando los contenidos para cargar la galerias
+        **/
+        $contenidos      = Contents::where('user_id',$user->id)
+                            ->where('content_type','Galery')
+                            ->where('active','Si')
                             ->get();
+        /**
+        * leyendo la coleccion de contenidos para consultar las imagenes
+        **/
+        if (count($contenidos)) {
+          foreach ($contenidos as $contenido) {
+            $imagenesID = explode("-",$contenido->content_id);
+            $galerias         = Galery::whereIn('id',$imagenesID)
+                                ->get();
+          }
+        }
+
         $galeriasPerfil   = Galery::where('user_id',$user->id)
                             ->where('tags','perfil')
                             ->get();
@@ -71,7 +92,8 @@ class UserController extends Controller
         'PhotoPerfil'   => $photoPerfil,
         'videos'        => $videos,
         'galerias'      => $galerias,
-        'galeriasPerfil'=> $galeriasPerfil
+        'galeriasPerfil'=> $galeriasPerfil,
+        'contenidos'    => $contenidos
         ]);
     }
 
@@ -156,6 +178,8 @@ class UserController extends Controller
     {
         //dd($id);
 
+        $arregloSalida = [];
+
         $this->id_u = Auth::user()->id;
 
         switch ($ord) {
@@ -216,13 +240,21 @@ class UserController extends Controller
             if ($relacion->user_id1 == $id && $relacion->user_id2 == $this->id_u) {
 
                 if($relacion->are_friends == 'Si'){
-                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
+                    $arregloSalida  = [
+                      'videos'        =>$video,
+                      'UserProfiles'  =>$user,
+                      'orden'         =>$orden
+                    ];
                 }
 
             } elseif($relacion->user_id2 == $id && $relacion->user_id1 == $this->id_u) {
 
                 if($relacion->are_friends == 'Si'){
-                    $arregloSalida  = ['videos'=>$video,'UserProfiles'=>$user,'orden'=>$orden];
+                    $arregloSalida  = [
+                      'videos'        =>$video,
+                      'UserProfiles'  =>$user,
+                      'orden'         =>$orden
+                    ];
                 }
 
             }
@@ -232,7 +264,7 @@ class UserController extends Controller
 
 
 
-        return view('videos_views')->with($arregloSalida);
+        return view('videos_views')->with('arregloSalida',$arregloSalida);
 
     }
 

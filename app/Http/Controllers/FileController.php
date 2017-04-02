@@ -7,6 +7,8 @@ use Auth;
 use Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
+use Carbon\Carbon;
 
 //Models
 use App\Galery;
@@ -47,6 +49,9 @@ class FileController extends Controller
             'galeria'   =>'required|max:50'
         ];
 
+        Carbon::setLocale('es');
+        $now = Carbon::now();
+
         $message = [
             'max'       =>'El tamaño maximo es de 50 caracteres'
         ];
@@ -71,6 +76,9 @@ class FileController extends Controller
         $galeria    = $request->input('galeria');
         $user       = Auth::user()->id;
         $privacy    = ($request->input('privacy') == "on") ? "privado" : "publico";
+        $id_content = [];
+
+
 
         foreach($files as $file){
             $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
@@ -86,7 +94,7 @@ class FileController extends Controller
              * tipo de archivo imagen
              * tamanio no mayor a 3mb
              * validacion en el bucle foreach tamanio y mime antes de guardar y mover
-             */
+             **/
 
             switch ($fileMime) {
                 case 'image/jpeg':
@@ -119,27 +127,72 @@ class FileController extends Controller
             }
 
             if ($paso && $fileSize <= 3000000) {
+              /**
+              * Por cada proceso acertado el id es capturado en un arreglo para
+              * la creacion del nuevo registro en la tabla contenidos
+              **/
                 $message[]    = $fileRealName . " cargado exitosamente!!!";
+                /**
+                * $galery = new Galery;
 
-                $galery = new Galery;
+                * $galery->user_id        = $user;
+                * $galery->galery_name    = $galeria;
+                * $galery->image_name     = $fileName;
+                * $galery->image_real     = $fileRealName;
+                * $galery->size           = $fileSize;
+                * $galery->type           = "Galery";
+                * $galery->privacy        = $privacy;
+                * $galery->tags           = $request->input('tags');
 
-                $galery->user_id        = $user;
-                $galery->galery_name    = $galeria;
-                $galery->image_name     = $fileName;
-                $galery->image_real     = $fileRealName;
-                $galery->size           = $fileSize;
-                $galery->type           = "Galery";
-                $galery->privacy        = $privacy;
-                $galery->tags           = $request->input('tags');
+                * $galery->save();
+                **/
 
-                $galery->save();
+                $idGalery = DB::table('Galery')->insertGetId(
+                          [
+                          'user_id'        => $user,
+                          'galery_name'    => $galeria,
+                          'image_name'     => $fileName,
+                          'image_real'     => $fileRealName,
+                          'size'           => $fileSize,
+                          'type'           => "Galery",
+                          'privacy'        => $privacy,
+                          'tags'           => $request->input('tags'),
+                          'created_at'     => $now,
+                          'updated_at'     => $now
+                        ]
+                      );
+
 
                 $file->move($path, $fileName);
+                array_push($id_content, $idGalery);
             }else{
                 $message[]    = $fileRealName . " no es un tipo de archivo valido o es mayor a 3MB";
             }
 
 
+        }
+        /**
+        * Verificamos si el arrego esta vacio para poder crear el contenido
+        * Creamos el nuevo contenido en la tabla Contents
+        **/
+        if (count($id_content) == 0) {
+          # el array esta vacio no metemos nada
+        } else {
+
+          $id_content = implode("-",$id_content);
+          DB::table('Contents')->insert(
+              [
+                'user_id'        => $user,
+              	'content_type'   => 'Galery',
+              	'content_id'     => $id_content,
+              	'privacy'        => $privacy,
+              	'message'        => 'Nueva galeria|Haz creado una nueva galeria|Ha creado una nueva galeria',
+              	'tags'           => $galeria, //nombre de la galeria, no los tags
+              	'active'         => '1',
+                'created_at'     => $now,
+                'updated_at'     => $now
+              ]
+          );
         }
 
         $errores    = json_encode($message);

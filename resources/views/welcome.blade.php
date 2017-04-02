@@ -6,7 +6,12 @@
 @section('content')
 
   <div class="row">
-  <h1>Bienvenidos a Vidas Sobre Ruedas</h1>
+
+  <div class="col-xs-12">
+      <img src="http://placehold.it/970x350" class="img-responsive">
+      <br>
+  </div>
+
   <div class="col-xs-6 col-sm-4">
 
     <div class="panel panel-default">

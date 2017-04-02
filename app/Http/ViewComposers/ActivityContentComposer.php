@@ -16,8 +16,8 @@ class ActivityContentComposer
 
 	function compose(View $view){
 
-		$id = Auth::user()->id;
-		$subscripciones = Subscription::where('user_id', $id)
+		$user = Auth::user();
+		$subscripciones = Subscription::where('user_id', $user->id)
 									->where('active',"Si")
 									->get();
 
@@ -49,8 +49,10 @@ class ActivityContentComposer
 			$contenido = Contents::whereIn('user_id',$subscribe_id)
 								->where('privacy','publico')
 								->orderBy('created_at','desc')
-								->take(10)
+								->take(5)
 								->get();
+
+								//dd($contenido);
 
 
 /**
