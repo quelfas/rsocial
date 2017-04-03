@@ -192,23 +192,22 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
       {{--galeria perfil--}}
       <hr>
       <h3>Galeria de Imagenes</h3>
-      {{--galerias--}}
+      {{--galerias col-sm-6 col-md-4--}}
         <div class="row">
         @forelse($contenidos as $contenido)
-          <div class="col-sm-6 col-md-4">
+        <?php   $imagen_idGalery = explode("-",$contenido->content_id); ?>
+          <div class="col-xs-6 col-md-3">
             <div class="thumbnail">
-              <img src="{{asset('assets/upload/')}}/<?php
-                  $imagen_idGalery = explode("-",$contenido->content_id);
-                  foreach($galerias as $galeria){
-                    if($galeria->id == $imagen_idGalery[0]){
-                      $imagenSalida = $galeria->image_name;
-                      echo $imagenSalida;
-                    }
-                  }
-                ?>" alt="{{$contenido->tags}}">
+
+              @foreach($galerias as $galeria)
+                @if($imagen_idGalery[0] == $galeria->id)
+                  <img class="img-responsive" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="{{$contenido->tags}}">
+                @endif
+              @endforeach
+
               <div class="caption">
-                <h3>{{$contenido->tags}}</h3>
-                <p><small>Creado el {{$contenido->created_at->toDayDateTimeString()}}</small></p>
+                <h4>{{$contenido->tags}}</h4>
+                <p><small>{{$contenido->created_at->toDayDateTimeString()}}</small></p>
                 <p><a href="#" class="btn btn-primary" role="button">Ver</a></p>
               </div>
             </div>

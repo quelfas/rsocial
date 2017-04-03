@@ -72,11 +72,10 @@ class UserController extends Controller
         * leyendo la coleccion de contenidos para consultar las imagenes
         **/
         if (count($contenidos)) {
-          foreach ($contenidos as $contenido) {
-            $imagenesID = explode("-",$contenido->content_id);
-            $galerias         = Galery::whereIn('id',$imagenesID)
+            $galerias    = Galery::where('user_id',$user->id)
+                                ->where('type','Galery')
                                 ->get();
-          }
+
         }
 
         $galeriasPerfil   = Galery::where('user_id',$user->id)
