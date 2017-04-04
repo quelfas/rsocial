@@ -194,22 +194,35 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
       <h3>Galeria de Imagenes</h3>
       {{--galerias col-sm-6 col-md-4--}}
         <div class="row">
+
+
         @forelse($contenidos as $contenido)
         <?php   $imagen_idGalery = explode("-",$contenido->content_id); ?>
           <div class="col-xs-6 col-md-3">
             <div class="thumbnail">
-
               @foreach($galerias as $galeria)
                 @if($imagen_idGalery[0] == $galeria->id)
-                  <img class="img-responsive" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="{{$contenido->tags}}">
+                  <img
+                  class="img-responsive"
+                  src="{{asset('assets/upload/')}}/{{$galeria->image_name}}"
+                  alt="{{$contenido->tags}}"
+                  data-galery="{{md5($contenido->content_id)}}"
+                  data-galeryName="{{$contenido->tags}}"
+                  data-galeryTime="{{$contenido->created_at->toDayDateTimeString()}}">
+
+                  <script type="text/javascript">
+                  var <?php echo md5($contenido->content_id);?>  = new Array(<?php
+                        //print_r($imagen_idGalery);
+                        foreach($galerias as $galeria){
+                          if(in_array($galeria->id, $imagen_idGalery)){
+                              echo $galeria->image_name."," ;
+                          }
+                        }
+                    ?>);
+                  </script>
+
                 @endif
               @endforeach
-
-              <div class="caption">
-                <h4>{{$contenido->tags}}</h4>
-                <p><small>{{$contenido->created_at->toDayDateTimeString()}}</small></p>
-                <p><a href="#" class="btn btn-primary" role="button">Ver</a></p>
-              </div>
             </div>
           </div>
           {{--falta cargar las imagenes en modal--}}
@@ -217,6 +230,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
         @empty
           No existen Galerias creadas
         @endforelse
+
+
        </div>
       {{--galerias--}}
 
