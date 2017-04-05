@@ -202,6 +202,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
             <div class="thumbnail">
               @foreach($galerias as $galeria)
                 @if($imagen_idGalery[0] == $galeria->id)
+                <a href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal">
                   <img
                   class="img-responsive"
                   src="{{asset('assets/upload/')}}/{{$galeria->image_name}}"
@@ -209,17 +210,63 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                   data-galery="{{md5($contenido->content_id)}}"
                   data-galeryName="{{$contenido->tags}}"
                   data-galeryTime="{{$contenido->created_at->toDayDateTimeString()}}">
+                </a>
 
-                  <script type="text/javascript">
-                  var <?php echo md5($contenido->content_id);?>  = new Array(<?php
-                        //print_r($imagen_idGalery);
+
+                  {{--modal--}}
+                  <div class="modal fade" id="M<?php echo md5($contenido->content_id);?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                    {{--carrusel--}}
+                    <div id="<?php echo md5($contenido->content_id);?>" class="carousel slide" data-ride="carousel">
+                      <!-- Indicators -->
+                      <ol class="carousel-indicators">
+                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="0" class="active"></li>
+                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="1"></li>
+                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="2"></li>
+                      </ol>
+                      <!-- Wrapper for slides -->
+                      <div class="carousel-inner" role="listbox">
+                      <?php
+                        $trigger = 0;
                         foreach($galerias as $galeria){
                           if(in_array($galeria->id, $imagen_idGalery)){
-                              echo $galeria->image_name."," ;
+                            ?>
+
+
+                              <div class="<?php if($trigger == 0){ echo "item active"; }else{ echo "item"; } ?>">
+                                <img src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="...">
+                                <div class="carousel-caption">
+                                  {{$contenido->created_at->toDayDateTimeString()}}
+                                </div>
+                              </div>
+
+                            <?php
+                            $trigger ++;
                           }
                         }
-                    ?>);
-                  </script>
+
+                       ?>
+
+                       {{$contenido->tags}}
+                     </div>
+                      <!-- Controls -->
+                      <a class="left carousel-control" href="#<?php echo md5($contenido->content_id);?>" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="right carousel-control" href="#<?php echo md5($contenido->content_id);?>" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </div>
+                    {{--carrusel--}}
+
+                    </div>
+                  </div>
+                  </div>
+                  {{--modal--}}
 
                 @endif
               @endforeach
