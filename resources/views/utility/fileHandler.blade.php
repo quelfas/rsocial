@@ -222,9 +222,24 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                     <div id="<?php echo md5($contenido->content_id);?>" class="carousel slide" data-ride="carousel">
                       <!-- Indicators -->
                       <ol class="carousel-indicators">
-                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="0" class="active"></li>
-                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="1"></li>
-                        <li data-target="#<?php echo md5($contenido->content_id);?>" data-slide-to="2"></li>
+                      {{--Indicador de imagenes--}}
+                       <?php
+                            $dataSlide = 0;
+                            foreach($galerias as $galeria){
+                                if(in_array($galeria->id, $imagen_idGalery)){
+                                    ?>
+                                        <li 
+                                            data-target="#<?php echo md5($contenido->content_id);?>" 
+                                            data-slide-to="{{$dataSlide}}"
+                                            <?php if($dataSlide == 0){ echo "class='active'"; }?>>        
+                                        </li>
+                                    <?php
+                                    $dataSlide ++;
+                                }
+                            }  
+                        ?> 
+                        
+                        {{--Indicador de imagenes--}}
                       </ol>
                       <!-- Wrapper for slides -->
                       <div class="carousel-inner" role="listbox">
