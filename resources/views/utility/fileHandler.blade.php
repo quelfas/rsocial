@@ -58,6 +58,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   alert('Tu navegador no soporta ciertas funcionalidades');
 }
 </script>
+  
 
     <div>
 
@@ -251,9 +252,10 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 
                               <div class="<?php if($trigger == 0){ echo "item active"; }else{ echo "item"; } ?>">
-                                <img src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="...">
+                                <img class="img-responsive" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="Creado el {{$contenido->created_at->toDayDateTimeString()}}">
                                 <div class="carousel-caption">
-                                  {{$contenido->created_at->toDayDateTimeString()}}
+                                  <h3>{{$contenido->tags}}</h3>
+                                  <p>{{$contenido->created_at->toDayDateTimeString()}}</p>
                                 </div>
                               </div>
 
@@ -263,8 +265,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                         }
 
                        ?>
-
-                       {{$contenido->tags}}
                      </div>
                       <!-- Controls -->
                       <a class="left carousel-control" href="#<?php echo md5($contenido->content_id);?>" role="button" data-slide="prev">
