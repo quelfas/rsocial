@@ -21,7 +21,8 @@ class HelpController extends Controller
   /**
   *
   **/
-  public function assistance(){
+  public function assistance()
+  {
     $user = Auth::user();
     return view('help.assistance')
       ->with([
@@ -32,7 +33,8 @@ class HelpController extends Controller
   /**
   *
   **/
-  public function help(){
+  public function help()
+  {
     return view('help.help');
   }
 
@@ -41,7 +43,8 @@ class HelpController extends Controller
   * consultas de solicitudes procesadas
   * consultas de solicitudes finalizadas
   **/
-  public function helpRequested(){
+  public function helpRequested()
+  {
 
     $user = Auth::user();
     /**
@@ -77,22 +80,15 @@ class HelpController extends Controller
               ]);
   }
 
-  /**
-  *array:5 [
-  *"_token" => "EmNT83qgYjsepsgueMHuTw2FkdcqjHaeCzJ13jpT"
-  *"req-type" => "infrastructure"
-  *"recipient" => "Solicitud de Ayuda Infraestructura"
-  *"helprequest" => "Otro"
-  *"otro" => "1"
-  *]
-  **/
-  public function storeRequest(Request $request){
+  
+  public function storeRequest(Request $request)
+  {
     //
     //cargando info del usuario solicitante
     //dd($request->input('recipient'));
 
 
-    if($request->input('helprequest') == "Otro"){
+    if($request->input('helprequest') == "Otro") {
       $requestHelp = $request->input('customHelp');
       $rules = [
           'customHelp'  => 'required|min:5|max:55',
@@ -104,7 +100,7 @@ class HelpController extends Controller
           ->back()
           ->withErrors($v->errors());
       }
-    }else{
+    } else {
       $requestHelp = $request->input('helprequest');
     }
 
@@ -137,6 +133,5 @@ class HelpController extends Controller
             'class'     =>  'alert-info'
     ];
     return redirect('user')->with('mensaje',$mensajeSalida);
-    //dd($request->all());
   }
 }

@@ -41,22 +41,6 @@ class ProfileController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * 'user_id',
-     * 'name',
-     * 'last_name',
-     * 'birthdate',
-     * 'gender',
-     * 'country',
-     * 'locale',
-     * 'phone',
-     * 'privacy',
-     * 'bio'
-     */
     public function store(Request $request)
     {
         //
@@ -178,12 +162,12 @@ class ProfileController extends Controller
              $b          = $Recibidos->count();
              $ResultSum  = $a + $b;
 
-            if($ResultSum == 0){
+            if($ResultSum == 0) {
 
                 $RelationOn = 'No';
 
                 $infoRelation = '';
-            }else{
+            } else {
 
                 $RelationOn = 'Si';
 
@@ -269,8 +253,6 @@ class ProfileController extends Controller
           'country'   =>'required',
           'locale'    =>'required|max:100',
           'phone'     =>'required|max:12',
-          //'privacy'   =>'required', //Comentado por efectos del control
-          //'connections'   =>'required', //Comentado por efectos del control
           'bio'       =>'required|max:1000'
         ];
 

@@ -49,13 +49,11 @@ class PhotoController extends Controller
         $user       = Auth::user()->id;
         $privacy    = "off";
         $mensajeSalida = [];
-
-        //foreach($files as $file){
-            $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
-            $fileRealName   = $file->getClientOriginalName();
-            $fileSize       = $file->getSize();
-            $fileMime       = $file->getMimeType();
-            //dd($fileName);
+        $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
+        $fileRealName   = $file->getClientOriginalName();
+        $fileSize       = $file->getSize();
+        $fileMime       = $file->getMimeType();
+        
             /**
              * ToDo
              * Faltan las comprobaciones y validaciones (Validate)
@@ -97,20 +95,20 @@ class PhotoController extends Controller
             }
 
             if ($paso && $fileSize <= 3000000) {
-                //$message[]    = $fileRealName . " cargado exitosamente!!!";
 
                 /**
                 * la imagen anterior que este up pasa a down
                 * falta adecuar el form
                 * falta crear la pieza de codigo que apaga la imagen de perfil activa
                 **/
+
                 //determinando si existe alguna imagen activa
                 $oldGalery = DB::table('Galery')
                             ->where('user_id',$user)
                             ->where('type','perfile-up')
                             ->get();
 
-                if(count($oldGalery) == 1){
+                if(count($oldGalery) == 1) {
                   $downGalery = DB::table('Galery')
                               ->where('id',$oldGalery[0]->id)
                               ->update([
@@ -138,23 +136,14 @@ class PhotoController extends Controller
                   'class'   => 'alert-success'
                 ];
 
-            }else{
+            } else {
               $mensajeSalida = [
                 'mensaje' => 'no es un tipo de archivo valido o es mayor a 3MB',
                 'class'   => 'alert-info'
               ];
 
             }
-
-
-        //}
-
-
-
-
-
-
-        return redirect('user')->with('mensaje',$mensajeSalida);
+      return redirect('user')->with('mensaje',$mensajeSalida);
     }
 
     /**

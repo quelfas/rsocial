@@ -39,11 +39,11 @@ class RelationController extends Controller
 
         /*----------  excluyendose asi mismo  ----------*/
 
-        if($relacion->user_id1 == $this->id_u && $relacion->are_friends == 'Si'){
+        if($relacion->user_id1 == $this->id_u && $relacion->are_friends == 'Si') {
 
           $id_perfiles[] = $relacion->user_id2;
 
-        }elseif($relacion->user_id2 == $this->id_u && $relacion->are_friends == 'Si'){
+        } elseif($relacion->user_id2 == $this->id_u && $relacion->are_friends == 'Si') {
 
           $id_perfiles[] = $relacion->user_id1;
 
@@ -130,9 +130,7 @@ class RelationController extends Controller
               'mensaje' => 'Solicitud de Amistad enviada a '.$user,
               'class'   => 'alert-success'
           );
-
-
-
+          
         return view('user')->with('mensaje',$mensajeSalida);
     }
 

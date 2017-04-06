@@ -45,21 +45,16 @@ class FileController extends Controller
     public function store(Request $request)
     {
         //validation rules
-        $rules = [
-            'galeria'   =>'required|max:50'
-        ];
+        $rules = ['galeria'=>'required|max:50'];
 
         Carbon::setLocale('es');
         $now = Carbon::now();
 
-        $message = [
-            'max'       =>'El tamaño maximo es de 50 caracteres'
-        ];
+        $message = ['max'       =>'El tamaño maximo es de 50 caracteres'];
 
         $v = Validator::make($request->all(),$rules,$message);
+
           if ($v->fails()) {
-                // mis vacaciones en holanda 2015
-                //$errores    = $v->errors();
                 $message[]  = "El campo Galeria es obligatorio y el tamaño maximo es de 50 caracteres";
                 $errores    = json_encode($message);
 
@@ -80,7 +75,7 @@ class FileController extends Controller
 
 
 
-        foreach($files as $file){
+        foreach($files as $file) {
             $fileName       = md5($file->getClientOriginalName()."*".time())."-".$file->getClientOriginalName();
             $fileRealName   = $file->getClientOriginalName();
             $fileSize       = $file->getSize();
@@ -165,7 +160,7 @@ class FileController extends Controller
 
                 $file->move($path, $fileName);
                 array_push($id_content, $idGalery);
-            }else{
+            } else {
                 $message[]    = $fileRealName . " no es un tipo de archivo valido o es mayor a 3MB";
             }
 

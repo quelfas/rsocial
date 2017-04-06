@@ -94,8 +94,7 @@ class VideoController extends Controller
         }
 
 
-        return redirect('user')->with(
-        [
+        return redirect('user')->with([
           'mensaje'=>$mensajeSalida,
           'VideoContents' => $videoSalida
         ]

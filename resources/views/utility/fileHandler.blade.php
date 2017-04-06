@@ -246,8 +246,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                       <div class="carousel-inner" role="listbox">
                       <?php
                         $trigger = 0;
-                        foreach($galerias as $galeria){
-                          if(in_array($galeria->id, $imagen_idGalery)){
+                        foreach($galerias as $galeria) {
+                          if(in_array($galeria->id, $imagen_idGalery)) {
                             ?>
 
 
@@ -340,7 +340,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
                         if (archivos === 0) {
                           archivos = 1;
-                        }else{
+                        } else {
                           archivos++;
                         }
 
