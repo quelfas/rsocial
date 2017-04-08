@@ -38,8 +38,13 @@
       <div class="media-body">
         <form class="form-group" action="/photo" method="post" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
-          <input class="form-control" type="file" name="file" value="">
-          <button type="submit" class="btn btn-default btn-sm">Cargar Perfil</button>
+
+          <label class="btn btn-info" for="file">
+              <input id="file" type="file" style="display:none;">
+              Seleciona de tus Archivos
+          </label>
+          
+          <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>
       </div>
     </div>
