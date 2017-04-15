@@ -317,6 +317,11 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           <p class="text-right"><small id="count"></small></p>
           <!--script -->
           <script>
+           $('#submit').click(function () {
+                  $('div.dz-success').remove();
+            });
+
+
           var archivos = 0;
             Dropzone.options.myDropzone = {
             autoProcessQueue: false,
@@ -334,6 +339,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                         e.stopPropagation();
                         myDropzone.processQueue();
                     });
+
                     this.on("addedfile", function(file) {
                         //alert("file uploaded");
                         //cuenta de eventos addedfiles disparados
@@ -348,8 +354,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
                     });
 
-                    this.on("complete", function(file) {
-                        myDropzone.removeFile(file);
+                    myDropzone.on("complete", function(file) {
+                        this.removeFile(file);
                         $("#count").text('');
                         $(".form-control").val('');
 

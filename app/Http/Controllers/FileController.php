@@ -191,10 +191,13 @@ class FileController extends Controller
         }
 
         $errores    = json_encode($message);
-        return response()->json([
+        /*return response()->json([
             'success'       =>true,
             'message'       =>$errores
-            ],200);
+            ],200);*/
+        
+        //prueba de retorno a vista
+        return redirect()->route('profile',[$user]);
     }
 
     /**
