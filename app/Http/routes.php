@@ -158,10 +158,12 @@ Route::group(['middleware'=>'auth'], function($id){
   * Ruta para foto de perfil
   **/
 
-
-
-
   Route::get('user/{id}/condition', 'UserController@condition');
+
+  /**
+  * ruta para hacer publico o privado un contenido
+  **/
+  Route::get('content/{id}','ContentController@switchPrivacy');
 
   Route::resource('user', 'UserController');
   Route::resource('profile', 'ProfileController');

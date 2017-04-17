@@ -199,20 +199,42 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
         @forelse($contenidos as $contenido)
         <?php   $imagen_idGalery = explode("-",$contenido->content_id); ?>
-          <div class="col-xs-6 col-md-3">
-            <div class="thumbnail">
               @foreach($galerias as $galeria)
                 @if($imagen_idGalery[0] == $galeria->id)
-                <a href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal">
-                  <img
-                  class="img-responsive"
-                  src="{{asset('assets/upload/')}}/{{$galeria->image_name}}"
-                  alt="{{$contenido->tags}}"
-                  data-galery="{{md5($contenido->content_id)}}"
-                  data-galeryName="{{$contenido->tags}}"
-                  data-galeryTime="{{$contenido->created_at->toDayDateTimeString()}}">
-                </a>
 
+                <div class="col-md-6">
+                {{--MediaObjetc--}}
+                <div class="media">
+                  <div class="media-left">
+                    <a href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal">
+                      <img width="64" class="media-object" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="...">
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">{{$contenido->tags}}</h4>
+                    Galeria Creada el: {{$contenido->created_at->toDayDateTimeString()}}
+                    <br>
+                    
+
+                    <form class="form-inline" action="/content/{{$contenido->id}}" method="POST">
+                    <a class="btn btn-info btn-xs" href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal" role="button">Ver</a>
+                      {!! csrf_field() !!}
+                      <input type="hidden" name="_method" value="delete">
+                      <input class="btn btn-danger btn-xs" type="submit" value="Eliminar">
+                      <a href="content/{{$contenido->id}}">
+                       @if($contenido->privacy == 'publico')
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="color:blue" data-toggle="tooltip" data-placement="right" title="Galeria Publica"></span>
+                       @else
+                          <span class="glyphicon glyphicon-eye-close" aria-hidden="true" style="color:red" data-toggle="tooltip" data-placement="right" title="Galeria Privada"></span>
+                       @endif
+                       </a>
+                    </form>
+                     
+                  </div>
+                </div>
+                {{--MediaObjetc--}}
+                <hr>
+                </div>
 
                   {{--modal--}}
                   <div class="modal fade" id="M<?php echo md5($contenido->content_id);?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -285,8 +307,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
                 @endif
               @endforeach
-            </div>
-          </div>
           {{--falta cargar las imagenes en modal--}}
           {{--imagen en thumbnail--}}
         @empty
@@ -316,12 +336,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
           </form>
           <p class="text-right"><small id="count"></small></p>
           <!--script -->
-          <script>
-           $('#submit').click(function () {
-                  $('div.dz-success').remove();
-            });
-
-
+          <script type="text/javascript">
           var archivos = 0;
             Dropzone.options.myDropzone = {
             autoProcessQueue: false,
@@ -341,7 +356,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                     });
 
                     this.on("addedfile", function(file) {
-                        //alert("file uploaded");
                         //cuenta de eventos addedfiles disparados
 
                         if (archivos === 0) {
@@ -354,24 +368,23 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
                     });
 
-                    myDropzone.on("complete", function(file) {
+                    this.on("success", function(file) {
+                      //limpieza
                         this.removeFile(file);
-                        $("#count").text('');
+                        archivos = 0;
+                        $("#count").text('Cantidad de archivos: ' + archivos + '/20');
                         $(".form-control").val('');
 
                     });
 
                     this.on("success", myDropzone.processQueue.bind(myDropzone));
-
                     this.on("success", function(file, response){
-
-                      $.each(response, function(clave,valor){
-
-                        if(clave == 'message'){
-                          console.log(valor.relace("/[\"/",""));
-                        }
-
-                      });
+                      
+                      var newHTML = [];
+                      for (var i = 0; i <response.length; i++) {
+                          newHTML.push('<span>' + response[i] + '</span><br>');
+                      }
+                      $(".dz-message").html(newHTML.join(""));
 
                     });
 
