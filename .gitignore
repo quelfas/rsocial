@@ -3,4 +3,3 @@
 /vendor
 /tests
 .env
-.env.example
