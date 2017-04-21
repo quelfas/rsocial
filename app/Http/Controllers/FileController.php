@@ -82,7 +82,7 @@ class FileController extends Controller
             $fileMime       = $file->getMimeType();
 
             /**
-             * ToDo
+             * ToDo.
              * Faltan las comprobaciones y validaciones (Validate)
              * Done!!!
              * validando las imagenes (via mime)
