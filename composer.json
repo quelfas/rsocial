@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "vinkla/pusher": "^2.3",
-        "doctrine/dbal": "v2.5.12"
+        "doctrine/dbal": "v2.5.12",
+        "clarification/sparkpost-laravel-driver": "^1.2"
 
     },
     "require-dev": {

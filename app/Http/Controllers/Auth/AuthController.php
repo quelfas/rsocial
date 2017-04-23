@@ -6,6 +6,7 @@ use Auth;
 use App\User;
 use Log;
 use Validator;
+use Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -115,6 +116,18 @@ class AuthController extends Controller
 
       if ($acceso) {
         $user = Auth::user();
+        /**
+        * envio de aviso de acceso de user
+        **/
+        
+       /** 
+       *    Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
+       *      $message->from('noreply@example.com', 'Una Vida Sobre Ruedas');
+       *
+       *      $message->to($user->email, $user->name)->subject('Nuevo Acceso');
+       *    });
+       **/
+
 
         Log::info('Nuevo acceso de: '.$user['email']);
         $mensajeSalida = [
