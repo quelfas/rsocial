@@ -16,7 +16,7 @@
 
 {{--INICIO Form Login--}}
 <div class="well">
-  <h4>Acceso</h4>
+  <h4><strong>Acceso</strong></h4>
   <form action="/accesar" method="post">
     {!! csrf_field() !!}
     <div class="form-group">
@@ -31,5 +31,11 @@
 </div>
 
 {{--FIN Form Login--}}
+
+@endsection
+
+@section('sidebar')
+  
+  @include('utility.reg')
 
 @endsection

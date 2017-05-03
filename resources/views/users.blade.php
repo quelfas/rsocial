@@ -13,7 +13,7 @@
 
 <div class="well">
 
-<h4>Crea una Cuenta</h4>
+<h4><strong>Crea una Cuenta</strong></h4>
 <form action="/user-create" method="post">
   {!! csrf_field() !!}
   <div class="form-group">
@@ -52,3 +52,9 @@
     </script>
 </div>
 @stop
+
+@section('sidebar')
+  
+  @include('utility.access')
+
+@endsection
