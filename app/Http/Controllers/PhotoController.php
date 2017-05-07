@@ -106,6 +106,20 @@ class PhotoController extends Controller
                 **/
 
                 //determinando si existe alguna imagen activa
+
+                //determinando si se puede mover el archivo
+
+                if(!$file->move($path, $fileName)){
+
+                    $mensajeSalida = [
+                        'mensaje' => 'No es posible acceder a la carpeta publica de imagenes',
+                        'class'   => 'alert-danger'
+                      ];
+
+                    return redirect('user')->with('mensaje',$mensajeSalida);
+
+                }
+
                 $oldGalery = DB::table('Galery')
                             ->where('user_id',$user)
                             ->where('type','perfile-up')
@@ -137,7 +151,7 @@ class PhotoController extends Controller
                     'updated_at'     => $now
                     ]);
 
-                $file->move($path, $fileName);
+                //$file->move($path, $fileName);
 
 
                 DB::table('Contents')->insert(
