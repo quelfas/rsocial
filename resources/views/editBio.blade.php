@@ -36,13 +36,10 @@
 
       </div>
       <div class="media-body">
-        <form class="form-group" action="/photo" method="post" enctype="multipart/form-data">
+        <form class="form-inline" action="/photo" method="post" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-          <label class="btn btn-info" for="file">
-              <input id="file" type="file" style="display:none;">
-              Seleciona de tus Archivos
-          </label>
+          <input class="form-control" id="file" type="file" name="file">
           
           <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>

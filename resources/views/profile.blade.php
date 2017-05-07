@@ -55,7 +55,7 @@
         @endif
     {{-- modificando la plantilla para verificar si son amigos o no --}}
 
-            @if($UserRelations == 'Si')
+            @if($UserRelations === 'Si')
             {{-- Son Amigos --}}
               @foreach($InfoRelations as $InfoRelation)
                 <strong>Amigos desde</strong>
@@ -63,7 +63,7 @@
                 {{$InfoRelation->created_at->day}}/{{$InfoRelation->created_at->month}}/{{$InfoRelation->created_at->year}}
 
                 @if($InfoRelation->created_at->age > 1)
-                  {{$InfoRelation->created_at->age}} años.
+                  {{ $InfoRelation->created_at->age }} años.
                 @else
 
                 @endif
@@ -76,7 +76,7 @@
             {{--boton para solicitar amistad--}}
 
 
-                @if($UserProfile->connections==='Si')
+                @if($UserProfile->connections === 'Si')
                   <form action="/relation" method="post">
                     {!! csrf_field() !!}
                     <input type="hidden" name="user_id2" value="{{ $UserProfile->user_id }}">
@@ -102,6 +102,89 @@
       </div>
     </div>
   </div>
+  {{--Cargando contenidos publicos si solo son amigos--}}
+
+  @if($UserRelations === 'Si')
+
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+               
+            </th>
+            <th>
+              Evento
+            </th>
+            <th>
+              Titulo
+            </th>
+            <th>
+              Fecha
+            </th>
+          </tr>
+        </thead>
+          
+        <tbody>
+          @forelse($Contenidos as $contenido)
+          <tr>
+
+            {{--Icono de Recurso--}}
+            <td>
+              <i class="fa 
+              <?php 
+                switch ($contenido->content_type) {
+                  case "Galery":
+                      echo " fa-picture-o";
+                      break;
+                  case "videos":
+                      echo " fa-file-video-o";
+                      break;
+                  default;
+                  echo " fa-ravelry";
+              }
+              ?>" aria-hidden="true"></i>
+            </td>
+
+            {{--Mensaje de recurso--}}
+            <td>
+              <?php
+                $ImpTabla = explode("|", $contenido->message);
+                echo $ImpTabla[0]; 
+              ?>
+            </td>
+
+            {{--Titulo de recurso--}}
+            <td>
+              {{ $contenido->tags }}
+            </td>
+
+            {{--Fecha de recurso--}}
+            <td>
+              {{ $contenido->created_at->day }}/{{ $contenido->created_at->month }}/{{ $contenido->created_at->year }}
+            </td>
+
+          </tr>
+          @empty
+          <tr>
+            <td>
+              No existen eventos
+            </td>
+          </tr>
+          @endforelse
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <?php 
+    echo $Contenidos->render(); 
+  ?>
+  @else
+  Para ver contenidos deben ser relacionados
+  @endif
+
   @endforeach
 @endsection
 

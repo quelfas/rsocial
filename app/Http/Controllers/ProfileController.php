@@ -16,6 +16,7 @@ use App\UserRelation;
 use App\Videos;
 use App\Discapacidad;
 use App\Galery;
+use App\Contents;
 
 class ProfileController extends Controller
 {
@@ -132,7 +133,7 @@ class ProfileController extends Controller
                                     ->get();
 
 
-        if ($id == $this->id_u) {
+        if ($id == $this->id_u) {  //verificando si es la misma persona
 
           return view('myprofile')->with(
               [
@@ -140,7 +141,8 @@ class ProfileController extends Controller
                   'VideoContents' => $videos
               ]);
 
-        } else {
+        } else { //verificando si no es la misma persona
+
 
           $photoPerfil = Galery::where('user_id',$id)
                                       ->where('type','perfile-up')
@@ -167,7 +169,13 @@ class ProfileController extends Controller
                 $RelationOn = 'No';
 
                 $infoRelation = '';
+                $miContenido = '';
             } else {
+
+              $miContenido = Contents::where('user_id',$id)
+                                 ->where('privacy','publico')
+                                 ->where('active','Si')
+                                 ->paginate(10);
 
                 $RelationOn = 'Si';
 
@@ -185,7 +193,8 @@ class ProfileController extends Controller
                     'UserProfiles'  => $perfile,
                     'UserRelations' => $RelationOn,
                     'InfoRelations' => $infoRelation,
-                    'VideoContents' => $videos,
+                    //'VideoContents' => $videos,
+                    'Contenidos'    => $miContenido,
                     'Discapacidad'  => $Discapacidad,
                     'PhotoPerfil'   => $photoPerfil
                 ]);

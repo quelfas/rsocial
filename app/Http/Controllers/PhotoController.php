@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use DB;
+use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 //Models
 use App\Galery;
+use App\Contents;
 
 class PhotoController extends Controller
 {
@@ -42,9 +44,10 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
+        
 
         $path       = public_path().'/assets/upload/';
-        $file      = $request->file('file');
+        $file       = $request->file;
         $galeria    = "perfil";
         $user       = Auth::user()->id;
         $privacy    = "off";
@@ -116,20 +119,40 @@ class PhotoController extends Controller
                               ]);
                 }
 
-                $galery = new Galery;
+                Carbon::setLocale('es');
+                $now = Carbon::now();
 
-                $galery->user_id        = $user;
-                $galery->galery_name    = $galeria;
-                $galery->image_name     = $fileName;
-                $galery->image_real     = $fileRealName;
-                $galery->size           = $fileSize;
-                $galery->type           = "perfile-up";
-                $galery->privacy        = $privacy;
-                $galery->tags           = "perfil";
-
-                $galery->save();
+                $id_content = DB::table('Galery')
+                ->insertGetId(
+                    [
+                    'user_id'        => $user,
+                    'galery_name'    => $galeria,
+                    'image_name'     => $fileName,
+                    'image_real'     => $fileRealName,
+                    'size'           => $fileSize,
+                    'type'           => "perfile-up",
+                    'privacy'        => $privacy,
+                    'tags'           => "perfil",
+                    'created_at'     => $now,
+                    'updated_at'     => $now
+                    ]);
 
                 $file->move($path, $fileName);
+
+
+                DB::table('Contents')->insert(
+                      [
+                        'user_id'        => $user,
+                        'content_type'   => "Photo",
+                        'content_id'     => $id_content,
+                        'privacy'        => "publico",
+                        'message'        => "Nueva Imagen de Perfil|Haz creado una nueva Imagen de Perfil|Ha creado una nueva Imagen de Perfil",
+                        'tags'           => "Imagen Perfil",
+                        'active'         => "Si",
+                        'created_at'     => $now,
+                        'updated_at'     => $now
+                      ]
+                );
 
                 $mensajeSalida = [
                   'mensaje' => 'Perfil actualizado',
