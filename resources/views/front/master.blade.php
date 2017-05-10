@@ -132,5 +132,6 @@
         $('[data-toggle="popover"]').popover();
     });
 		</script>
+    <script src="{{asset('assets/js/vue/yb.js')}}"></script>
   </body>
 </html>

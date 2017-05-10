@@ -223,6 +223,7 @@ class ProfileController extends Controller
           $photoPerfil = Galery::where('user_id',$this->id_u)
                                       ->where('type','perfile-up')
                                       ->get();
+                                      
           return view('editBio')->with(
               [
                   'UserProfiles'  => $perfile,

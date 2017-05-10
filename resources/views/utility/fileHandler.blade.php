@@ -401,4 +401,3 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   </div>
 
 </div>
-<script src="{{asset('assets/js/vue/yb.js')}}"></script>

@@ -6,7 +6,7 @@
   </div>
   <div class="panel-body">
 
-    <a href="/crear"><img class="responsive" src="{{ asset('assets/img/uvsr-reg.jpg') }}" alt=""></a>
+    <a href="/crear"><img class="img-responsive" src="{{ asset('assets/img/uvsr-reg.jpg') }}" alt=""></a>
 
   </div>
 </div>

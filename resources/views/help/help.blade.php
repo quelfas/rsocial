@@ -113,6 +113,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">New message</h4>
       </div>
+
       <form action="/request-help" method="post">
         {!! csrf_field() !!}
         <input type="hidden" name="req-type" id="req-type" value="">
@@ -123,15 +124,34 @@
             <input type="text" name="recipient" class="form-control" id="recipient-name">
           </div>
           <div class="form-group">
-            <select id="select" name="helprequest">
+            <select class="form-control" id="select" name="helprequest">
 
             </select>
+            <br>
+            <div>
+              {{--caja para video youtube--}}
+              <label for="link" class="control-label">Agrega un Video a tu Solicitud:</label>
+              <div class="input-group">
+
+                <div class="input-group-addon">
+                  <i class="fa fa-youtube fa-1x" aria-hidden="true"></i>
+                </div>
+
+                <input name="link" v-model="link" type="text" class="form-control" placeholder="Pega tu video">
+                <input type="hidden" v-bind:value="link | youtube" name="source">
+                <input type="hidden" v-bind:value="link | youtubeName" name="nameId">
+
+              </div>
+              <small>Esto ayudara a explicar mejor tu requerimiento</small>
+              {{--caja para video youtube--}}
+            </div>
+            <br>
             <div class="nodo"></div>
           </div>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button v-on:click="limpiarFormVideo()" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button type="submit" class="btn btn-primary">Enviar</button>
       </div>
       </form>

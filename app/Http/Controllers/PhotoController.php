@@ -136,8 +136,8 @@ class PhotoController extends Controller
                 Carbon::setLocale('es');
                 $now = Carbon::now();
 
-                $id_content = DB::table('Galery')
-                ->insertGetId(
+                $id_content = DB::table('Galery')->insertGetId(
+
                     [
                     'user_id'        => $user,
                     'galery_name'    => $galeria,
@@ -149,9 +149,8 @@ class PhotoController extends Controller
                     'tags'           => "perfil",
                     'created_at'     => $now,
                     'updated_at'     => $now
-                    ]);
-
-                //$file->move($path, $fileName);
+                    ]
+                );
 
 
                 DB::table('Contents')->insert(
