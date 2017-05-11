@@ -38,9 +38,15 @@ class UserController extends Controller
         $now = Carbon::now();
         $galerias = null;
 
+        /**
+         * @Galery - Foto de perfil
+         **/
+
         $photoPerfil = Galery::where('user_id',$user->id)
                                     ->where('type','perfile-up')
                                     ->get();
+
+
         if($user->created_at->eq($user->updated_at)) {
           //la clave nunca se ha actualizado verificamos el tiempo de la misma
           $estadoCuenta ="Su cuenta se creo hace ". $user->created_at->diffForHumans($now);
@@ -50,10 +56,10 @@ class UserController extends Controller
         }
 
         /**
-        * Payload Videos
+        * @Videos - Videos
         **/
-        $videos   = Videos::where('user_id',$user->id)
-                            ->get();
+            $videos         = Videos::where('user_id',$user->id)
+                              ->get();
 
         /**
         * PayLoad Galerias
@@ -64,23 +70,19 @@ class UserController extends Controller
         /**
         * consultando los contenidos para cargar la galerias
         **/
-        $contenidos      = Contents::where('user_id',$user->id)
-                            ->where('content_type','Galery')
-                            ->where('active','Si')
-                            ->get();
+            $contenidos       = Contents::where('user_id',$user->id)
+                                ->where('active','Si')
+                                ->get();
         /**
-        * leyendo la coleccion de contenidos para consultar las imagenes
+        * @Galery
         **/
-        if (count($contenidos)) {
-            $galerias    = Galery::where('user_id',$user->id)
+            $galerias         = Galery::where('user_id',$user->id)
                                 ->where('type','Galery')
                                 ->get();
 
-        }
-
-        $galeriasPerfil   = Galery::where('user_id',$user->id)
-                            ->where('tags','perfil')
-                            ->get();
+            $galeriasPerfil   = Galery::where('user_id',$user->id)
+                                ->where('tags','perfil')
+                                ->get();
 
         /**
         * Salida a la vista user

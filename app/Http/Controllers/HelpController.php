@@ -155,9 +155,8 @@ class HelpController extends Controller
      **/
 
 
-    if(!$request->input('nameId')){
+    if($request->input('nameId')){
 
-    } else {
       $videoId = DB::table('Videos')->insertGetId(
         [
           'user_id'   => $user->id,

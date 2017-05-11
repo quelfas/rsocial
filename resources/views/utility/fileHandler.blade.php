@@ -75,22 +75,21 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
     <div role="tabpanel" class="tab-pane active" id="home">
 
-    <h3>Actualiza tu estado</h3>
+    <h3>Actividad</h3>
 
-    <form class="form-inline" action="" method="post">
-      {!! csrf_field() !!}
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="fa fa-comment-o fa-1x" aria-hidden="true"></i>
-          </div>
-          <input type="text" v-model="status" name="status" class="form-control" placeholder="Que estas pensando?">
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <button v-on:click="limpiarFormStatus()" type="reset" class="btn btn-danger">Limpiar</button>
-      </div>
-      <h4 v-show="status">@{{ status | textoCapital }}</h4>
-    </form>
+    @forelse($contenidos as $contenido)
+
+      <p <?php if($contenido->content_type == "Help"){ echo"class = 'text-success'";} ?>>
+        El {{$contenido->created_at->day}}/{{$contenido->created_at->month}}/{{$contenido->created_at->year}}
+        <?php
+          $mensaje = explode("|",$contenido->message);
+          echo $mensaje[1] . " ";
+        ?>
+      </p>
+
+    @empty
+      <small>No hay Actividad</small>
+    @endforelse
 
     </div>
 
