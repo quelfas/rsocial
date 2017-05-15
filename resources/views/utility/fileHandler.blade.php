@@ -67,7 +67,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Tu estado</a></li>
     <li role="presentation"><a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">Videos</a></li>
     <li role="presentation"><a href="#imagenes" aria-controls="imagenes" role="tab" data-toggle="tab">Imagenes</a></li>
-    <li role="presentation"><a href="#mensajes" aria-controls="mensajes" role="tab" data-toggle="tab">Mensajes</a></li>
+    {{--<li role="presentation"><a href="#mensajes" aria-controls="mensajes" role="tab" data-toggle="tab">Mensajes</a></li>--}}
   </ul>
 
   <!-- Tab panes -->
@@ -78,13 +78,28 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     <h3>Actividad</h3>
 
     @forelse($contenidos as $contenido)
-
-      <p <?php if($contenido->content_type == "Help"){ echo"class = 'text-success'";} ?>>
-        El {{$contenido->created_at->day}}/{{$contenido->created_at->month}}/{{$contenido->created_at->year}}
-        <?php
-          $mensaje = explode("|",$contenido->message);
-          echo $mensaje[1] . " ";
-        ?>
+      <p @if($contenido->content_type === "Help")
+          class = 'text-success'
+         @else
+          class = 'text-primary'
+         @endif
+        >
+        {{ $contenido->created_at->day }}/{{ $contenido->created_at->month }}/{{ $contenido->created_at->year }}
+        
+        @if($contenido->content_type === "Help")
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Generada 
+        @elseif($contenido->content_type === "Video")
+            <i class="fa fa-video-camera" aria-hidden="true"></i> Nuevo 
+        @elseif($contenido->content_type === "videos")
+            <i class="fa fa-video-camera" aria-hidden="true"></i> Video 
+        @elseif($contenido->content_type === "Galery")
+            <i class="fa fa-picture-o" aria-hidden="true"></i> Galeria 
+        @elseif($contenido->content_type === "Photo")
+            <i class="fa fa-picture-o" aria-hidden="true"></i> Foto 
+        @else
+            Contenido agregado
+        @endif
+        &nbsp;{{$contenido->tags}}
       </p>
 
     @empty
@@ -100,7 +115,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
       <h3>Tus videos</h3>
       @forelse($videos as $video)
-        <a href="#VideoModal" data-toggle="modal" data-whatever="{{$video->url_frame}}"><img src="https://img.youtube.com/vi/{{$video->url_link}}/3.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="{{$video->tags}}"></a>&nbsp;
+        <a href="#VideoModal" data-toggle="modal" data-whatever="{{ $video->url_frame}} "><img src="https://img.youtube.com/vi/{{ $video->url_link }}/3.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="{{$video->tags}}"></a>&nbsp;
       @empty
         Ningun video para mostrar.
       @endforelse
@@ -175,8 +190,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
 
     <div role="tabpanel" class="tab-pane" id="imagenes">
-      <script type="text/javascript" src="{{asset('assets/js/dropzone/dropzone.js')}}"></script>
-      <link rel="stylesheet" href="{{asset('assets/css/dropzone.css')}}" />
+      <script type="text/javascript" src="{{ asset('assets/js/dropzone/dropzone.js') }}"></script>
+      <link rel="stylesheet" href="{{ asset('assets/css/dropzone.css') }}" />
       <span data-dz-name></span>
       <h3>Imagenes de Perfil</h3>
 
@@ -184,7 +199,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
         @forelse($galeriasPerfil as $galeriaPerfil)
 
 
-          <img class="img-circle" width="70" height="70" src="{{asset('assets/upload/')}}/{{$galeriaPerfil->image_name}}" alt="">
+          <img class="img-circle" width="70" height="70" src="{{ asset('assets/upload/') }}/{{ $galeriaPerfil->image_name }}" alt="">
 
         @empty
           No hay imagenes de perfil aun
@@ -206,21 +221,21 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                 <div class="media">
                   <div class="media-left">
                     <a href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal">
-                      <img width="64" class="media-object" src="{{asset('assets/upload/')}}/{{$galeria->image_name}}" alt="...">
+                      <img width="64" class="media-object" src="{{ asset('assets/upload/') }}/{{ $galeria->image_name }}" alt="...">
                     </a>
                   </div>
                   <div class="media-body">
-                    <h4 class="media-heading">{{$contenido->tags}}</h4>
-                    Galeria Creada el: {{$contenido->created_at->toDayDateTimeString()}}
+                    <h4 class="media-heading">{{ $contenido->tags }}</h4>
+                    Galeria Creada el: {{ $contenido->created_at->toDayDateTimeString() }}
                     <br>
                     
 
-                    <form class="form-inline" action="/content/{{$contenido->id}}" method="POST">
+                    <form class="form-inline" action="/content/{{ $contenido->id }}" method="POST">
                     <a class="btn btn-info btn-xs" href="#M<?php echo md5($contenido->content_id);?>" data-toggle="modal" role="button">Ver</a>
                       {!! csrf_field() !!}
                       <input type="hidden" name="_method" value="delete">
                       <input class="btn btn-danger btn-xs" type="submit" value="Eliminar">
-                      <a href="content/{{$contenido->id}}">
+                      <a href="content/{{ $contenido->id }}">
                        @if($contenido->privacy == 'publico')
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true" style="color:blue" data-toggle="tooltip" data-placement="right" title="Galeria Publica"></span>
                        @else
@@ -252,7 +267,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
                                     ?>
                                         <li 
                                             data-target="#<?php echo md5($contenido->content_id);?>" 
-                                            data-slide-to="{{$dataSlide}}"
+                                            data-slide-to="{{ $dataSlide }}"
                                             <?php if($dataSlide == 0){ echo "class='active'"; }?>>        
                                         </li>
                                     <?php
