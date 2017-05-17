@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth;
+use DB;
+use Carbon\Carbon;
 
 //Facades
 use Event;
@@ -21,8 +23,6 @@ use App\UserRelation;
 
 class VideoController extends Controller
 {
-  var $id_u;
-
 
     /**
      * Display a listing of the resource.
@@ -54,35 +54,71 @@ class VideoController extends Controller
     {
 
 
-        //Falta validar Request
+        //Utilitarios
+        Carbon::setLocale('es');
+         $now = Carbon::now();
+        /**
+         * Validaciones
+         */
+        $pattern = '#((?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9-]*))#i';
+        $valid = preg_match($pattern, $request->source);
+        if (!$valid) {
+            abort(406,"Contenido no aceptable");
+        }
 
-        $this->id_u = Auth::user()->id;
+        $user = Auth::user()->id;
 
         $privacy      = ($request->input('privacy') == "on") ? "privado" : "publico";
         $restringido  = ($request->input('restringido') == "on") ? "Si" : "No";
         //ToDo diccionario de palabras reservadas para evitar abusos
         $tags         = $request->tags;
 
-        $video = new Videos;
-
-        $video->user_id   = $this->id_u;
-        $video->url_frame = $request->source;
-        $video->url_link  = $request->nameId;
-        $video->privacy   = $privacy;
-        $video->parental  = $restringido;
-        $video->tags      = $tags;
-
-        $video->save();
-
-        //Fire event
-        Event::fire(new NewVideo($video));
+        /**
+         * @Video
+         */
+        $id_content = DB::table('Videos')->insertGetId(
+                    [
+                        'user_id'    => $user,
+                        'url_frame'  => $request->source,
+                        'url_link'   => $request->nameId,
+                        'privacy'    => $privacy,
+                        'parental'   => $restringido,
+                        'tags'       => $tags,
+                        'created_at' => $now,
+                        'updated_at' => $now
+                    ]
+                );
+        
+        /**
+         * @Contents
+         */
+        if($id_content){
+        
+        DB::table('Contents')->insert(
+                    [
+                      'user_id'        => $user,
+                      'content_type'   => "videos",
+                      'content_id'     => $id_content,
+                      'privacy'        => $privacy,
+                      'message'        => "Nuevo Video|Haz cargado un Nuevo Video|Ha cargado nuevo Video",
+                      'tags'           => $tags,
+                      'active'         => "Si",
+                      'created_at'     => $now,
+                      'updated_at'     => $now
+                    ]
+              );
+         }
+        /**
+         * @Event
+         */
+       // Event::fire(new NewVideo($video));
 
         $mensajeSalida = array(
               'mensaje' => 'Nuevo contenido guardado',
               'class'   => 'alert-success'
           );
 
-        $videos = Videos::where('user_id', $this->id_u)
+        $videos = Videos::where('user_id', $user)
                               ->where('active','Si')
                               ->take(2)
                               ->get();
@@ -111,7 +147,7 @@ class VideoController extends Controller
     {
 
 
-      $this->id_u = Auth::user()->id;
+      $user = Auth::user()->id;
 
       $videos = Videos::where('id',$id)->get();
 
@@ -131,8 +167,8 @@ class VideoController extends Controller
       /**
        * Uso de busqueda en base a orWhere
        */
-      $relaciones = UserRelation::where('user_id1', $this->id_u)
-                                  ->orWhere('user_id2', $this->id_u)
+      $relaciones = UserRelation::where('user_id1', $user)
+                                  ->orWhere('user_id2', $user)
                                   ->where('are_friends', 'Si')
                                   ->get();
 

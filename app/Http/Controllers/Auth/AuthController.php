@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Auth;
 
 use Auth;
-use App\User;
 use Log;
 use Validator;
 use Mail;
+use DB;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+
+//Models
+use App\User;
+use App\Contents;
+
 
 class AuthController extends Controller
 {
@@ -73,17 +79,50 @@ class AuthController extends Controller
           ->withErrors($v->errors());
       }
 
-        User::create([
-            'name'      => $request->input('name'),
-            'email'     => $request->input('email'),
-            'password'  => bcrypt($request->input('password')),
-        ]);
+        /**
+         * User::create([
+         *   'name'      => $request->input('name'),
+         *   'email'     => $request->input('email'),
+         *   'password'  => bcrypt($request->input('password')),
+         * ]);
+         **/
+         Carbon::setLocale('es');
+         $now = Carbon::now();
+         $id_content = DB::table('users')->insertGetId(
+                    [
+                    'name'          => $request->input('name'),
+                    'email'         => $request->input('email'),
+                    'password'      => bcrypt($request->input('password')),
+                    'created_at'    => $now,
+                    'updated_at'    => $now
+                    ]
+                );
+        
+        /**
+         * Evento de Nueva Cuenta
+         */
+        if($id_content){
+        
+        DB::table('Contents')->insert(
+                    [
+                      'user_id'        => $id_content,
+                      'content_type'   => "Account",
+                      'content_id'     => $id_content,
+                      'privacy'        => "publico",
+                      'message'        => "Nueva Cuenta|Haz creado una nueva Cuenta|Ha creado una nueva Cuenta",
+                      'tags'           => "Cuenta Nueva",
+                      'active'         => "Si",
+                      'created_at'     => $now,
+                      'updated_at'     => $now
+                    ]
+              );
+         }
         $mensajeSalida = [
-    				 		'mensaje'=>'Se ha creado con exito el usuario:
+    		'mensaje'=>'Se ha creado con exito el usuario:
                 '.$request->input('email').'. Por defecto la cuenta se
                 encuentra inactiva revise su email y siga las instrucciones
                 luego Ingrese su usuario y su clave para acceder',
-    				 		'class'=>'alert-success'
+    		'class'=>'alert-success'
     		];
         return view('cautivo')->with('mensaje',$mensajeSalida);
     }
