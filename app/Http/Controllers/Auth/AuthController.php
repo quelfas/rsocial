@@ -159,13 +159,12 @@ class AuthController extends Controller
         * envio de aviso de acceso de user
         **/
         
-       /** 
-       *    Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
-       *      $message->from('noreply@example.com', 'Una Vida Sobre Ruedas');
-       *
-       *      $message->to($user->email, $user->name)->subject('Nuevo Acceso');
-       *    });
-       **/
+        
+           Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
+             $message->from('webmaster@fundaruedas.org', 'Una Vida Sobre Ruedas');
+       
+             $message->to($user->email, $user->name)->subject('Nuevo Acceso');
+           });
 
 
         Log::info('Nuevo acceso de: '.$user['email']);
