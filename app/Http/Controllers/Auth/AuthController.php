@@ -158,8 +158,6 @@ class AuthController extends Controller
         /**
         * envio de aviso de acceso de user
         **/
-        
-        
            Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
              $message->from('webmaster@fundaruedas.org', 'Una Vida Sobre Ruedas');
        
