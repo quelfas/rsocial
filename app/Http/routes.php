@@ -58,11 +58,12 @@ Route::get('/joinUs',function(){
 });
 
 /**
- * Rutas para acceso
+ * Rutas para acceso y confirmacion
  **/
 Route::get('/crear','Auth\AuthController@create');
 Route::get('/accesar','Auth\AuthController@getlogin');
 Route::get('/auth/login','Auth\AuthController@getlogin');
+Route::get('/confirmar/{email}/cod/{token}','Auth\AuthController@confirmAccount');
 Route::post('/user-create',[
     'as'    => 'user-create',
     'uses'  => 'Auth\AuthController@store'

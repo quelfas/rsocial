@@ -88,6 +88,7 @@ class AuthController extends Controller
          **/
          Carbon::setLocale('es');
          $now = Carbon::now();
+         
          $id_content = DB::table('users')->insertGetId(
                     [
                     'name'          => $request->input('name'),
@@ -116,6 +117,27 @@ class AuthController extends Controller
                       'updated_at'     => $now
                     ]
               );
+         /**
+          * Si se creo el un usuario, enviamos un mail para confirmar
+          */
+        
+        $data = [
+            'email'             => $request->input('email'),
+            'confirmation_code' => md5($id_content),
+            'name'              => $request->input('name')
+            ];
+        
+        $dataMail = $data['email'];
+        $dataName = $data['name'];
+        
+        Mail::send('emails.confirm', $data, function ($message) use ($dataMail,$dataName) {
+             $message->from('webmaster@fundaruedas.org', 'Una Vida Sobre Ruedas');
+       
+             $message->to($dataMail, $dataName)->subject('Confirma tu correo');
+           });
+           /*
+            * @endif($id_content)
+            */
          }
         $mensajeSalida = [
     		'mensaje'=>'Se ha creado con exito el usuario:
@@ -123,7 +145,7 @@ class AuthController extends Controller
                 encuentra inactiva revise su email y siga las instrucciones
                 luego Ingrese su usuario y su clave para acceder',
     		'class'=>'alert-success'
-    		];
+    	];
         return view('cautivo')->with('mensaje',$mensajeSalida);
     }
 
@@ -167,26 +189,77 @@ class AuthController extends Controller
 
         Log::info('Nuevo acceso de: '.$user['email']);
         $mensajeSalida = [
-    						'mensaje'=>'Credenciales correctas. Bienvenido '. $user['name'],
-    						'class'=>'alert-success'
-    				];
+    		'mensaje'   => 'Credenciales correctas. Bienvenido '. $user['name'],
+    		'class'     => 'alert-success'
+    	];
         return redirect('user')->with('mensaje',$mensajeSalida);
       }else {
         $mensajeSalida = [
-                'mensaje'=>'Usuario o Clave no coinciden, revise los datos ingresados. Verifique que activo su cuenta',
-                'class'=>'alert-danger'
-            ];
+                'mensaje'   =>'Usuario o Clave no coinciden, revise los datos ingresados. Verifique que activo su cuenta',
+                'class'     =>'alert-danger'
+        ];
         return view('login')->with('mensaje',$mensajeSalida);
       }
     }
 
     protected function getLogout()
     {
-    	$mensajeSalida = array(
-    			'mensaje'=>'Desconectado del Sistema',
-    			'class'=>'alert-success'
-    	);
+    	$mensajeSalida = [
+                'mensaje'   =>'Desconectado del Sistema',
+                'class'     =>'alert-success'
+        ];
+    			
     	Auth::logout();
     	return view('login')->with('mensaje',$mensajeSalida);
+    }
+    
+    /*
+     * Confirm Account
+     * verificamos si la cuenta ya esta confirmada
+     * confirm = true redirect to login
+     */
+    
+    public function confirmAccount($email, $token) {
+        /*
+         * Colicionando email con FILTER_SANITIZE_EMAIL
+         */
+        $emailSanitize = filter_var($email, FILTER_SANITIZE_EMAIL);
+        
+        if(filter_var($emailSanitize, FILTER_VALIDATE_EMAIL)=== false || $email != $emailSanitize){
+            abort(406, "Contenido no aceptable");
+        }
+        
+        /**
+         * el email es valido buscamos su modelo
+         */
+        $userForCheck = User::where('email', $email)
+                ->where('active', 'N')
+                ->get();
+        
+        /*
+         * el modelo no existe
+         */
+        if(!$userForCheck){
+            abort(406, "Contenido no aceptable");
+        }
+        
+        /*
+         * colicionando $userCheck
+         */
+        foreach ($userForCheck as $userCheck){
+            if (md5($userCheck->id) == $token) {
+                DB::table('users')
+                        ->where('id', $userCheck->id)
+                        ->update(['active'=>'Y']);
+
+                $mensajeSalida = [
+                    'mensaje'   =>'Cuenta Verificada y Activada',
+                    'class'     =>'alert-success'
+                ];
+                return view('login')->with('mensaje',$mensajeSalida);
+            }else{
+                abort(406, "Contenido no aceptable");
+            }
+        }
     }
 }

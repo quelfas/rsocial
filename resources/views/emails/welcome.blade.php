@@ -1,0 +1,1 @@
+Bienvenido nuevamente <?php echo $user->name;?> te haz conectado a Una Vida Sobre Ruedas.
