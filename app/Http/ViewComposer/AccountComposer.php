@@ -32,7 +32,7 @@ class AccountComposer
       $userRole   = null;
     }
 
-    //contando los usurios registrados en la plataforma
+    //contando los usurios registrados en la plataforma.
 
     $contados     = DB::table('users')->where('active','Y')->count();
     $solicitudes  = DB::table('Help')->where('status','Creado')->count();
