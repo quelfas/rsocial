@@ -34,6 +34,11 @@
 	body {
 	  margin-bottom: 40px;
 	}
+
+	.shadowText{
+    	color: rgba(255,255,255,0.5);
+
+	}
     
     .bannerFront{
 		background:url("{{ asset('assets/img/front/discapacidad.jpg') }}");
@@ -56,13 +61,13 @@
     	margin-bottom: 18px;
     }
     .mainContent{
-    	margin-bottom: 200px;
+    	margin-bottom: 230px;
     }
 
     .myfoot{
     	background-color: #222c34;
     	width: 100%;
-    	height: 200px;
+    	height: 230px;
     	padding: 10px 10px 10px 10px;
     	color: rgba(255,255,255,0.5);
     	left: 0;
@@ -156,6 +161,7 @@
         <li><a href="/contact">Contactanos</a></li>
         {{--<li><a href="{{isset($useActivo) ? '/user':'/crear'}}">{{isset($useActivo)?'Bienvenido '.$userName : 'Crear una Cuenta'}}</a></li>--}}
         {{--<li><a href="{{isset($useActivo) ? '/salir':'/accesar'}}">{{isset($useActivo)?'Salir':'Acceder'}}</a></li>--}}
+        
       </ul>
     </div><!--/.nav-collapse <a href="/registro">Registro</a>-->
   </div>
@@ -170,7 +176,7 @@
 		  <div class="col-md-6">
 		  	<div class="alpha60">
 				<h3>Bienvenidos</h3>
-				Gracias a la Fundación Amigos en Ruedas damos inicio a este proyecto con el objetivo de ayudar a las personas con discapacidad en Venezuela.
+				Al crear un perfil en Una Vida Sobre Ruedas podras solicitar asistencia<sup>(*)</sup> viable y alcanzable como persona con discapacidad y la Fundacion Amigos en Ruedas canalizara mediante padrinos tu requerimiento y asi mejorar tu nivel de vida. <br> <small class="shadowText"><sup>(*)</sup>Ciertas condiciones aplican</small>
 				<hr>
 
 				@unless(Auth::check())
@@ -291,6 +297,14 @@
 	{{--main footer--}}
 	<div class="container">
 		<div class="row">
+		<p class="text-center">
+			<a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="#"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a>
+		</p>
+		</div>
+		<div class="row">
 		  <div class="col-md-4">
 		  	<h4>Una Vida Sobre Ruedas</h4>
 		  	<p>Es una aplicacion web para recolectar informacion sobre necesidades de personas con discapacidad para canalizar ayudas puntuales y alcanzables en Venezuela.</p>
@@ -312,9 +326,9 @@
             <p><a href="mailto:proyecto.uvsr@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> proyecto.uvsr[at]gmail.com</a></p>
 		  </div>
 		</div>
-	</div>
-	<div class="container">
-		<p class="text-center">Una Vida Sobre Ruedas. It is a development by <a href="https://pushingcode.github.io/">PushingCode</a> - Proudly Developed in Laravel </p>
+		<div class="row">
+			<p class="text-center">Una Vida Sobre Ruedas. It is a development by <a href="https://pushingcode.github.io/">PushingCode</a> - Proudly Developed in Laravel </p>
+		</div>
 	</div>
 	{{--main footer--}}
 </footer>
