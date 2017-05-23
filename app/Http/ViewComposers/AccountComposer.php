@@ -1,10 +1,12 @@
 <?php namespace App\Http\ViewComposer;
 
 use Illuminate\Contracts\View\View;
-use Auth;
+
 /**
- *
+ * models
  */
+use Auth;
+use DB;
 class AccountComposer
 {
 
@@ -30,12 +32,21 @@ class AccountComposer
       $userRole   = null;
     }
 
+    //contando los usurios registrados en la plataforma
+
+    $contados     = DB::table('users')->where('active','Y')->count();
+    $solicitudes  = DB::table('Help')->where('status','Creado')->count();
+    $entregadas   = DB::table('Help')->where('status','Procesado')->count();
+
     $view->with([
       'userId'      => $userId,
       'userName'    => $userName,
       'userEmail'   => $userEmail,
       'useActivo'   => $useActivo,
-      'userRole'    => $userRole
+      'userRole'    => $userRole,
+      'contados'    => $contados,
+      'solicitudes' => $solicitudes,
+      'entregadas'  => $entregadas
     ]);
 
   }

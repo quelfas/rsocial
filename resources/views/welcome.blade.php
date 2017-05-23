@@ -2,7 +2,13 @@
 
 @section('title','Bienvenido')
 
-
+<section class="banner-front">
+    
+    <div class="row">
+        texto
+    </div>
+    
+</section>
 @section('content')
 
   <div class="row">

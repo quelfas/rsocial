@@ -14,7 +14,8 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        View::composer(['front.master','user'],'App\Http\ViewComposer\AccountComposer');
+        //View::composer(['front.master','user'],'App\Http\ViewComposer\AccountComposer');
+        View::composer(['front.front-master','user'],'App\Http\ViewComposer\AccountComposer');
     }
 
     /**

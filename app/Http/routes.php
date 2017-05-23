@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\App;
  * Rutas al Front
  **/
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.front-master');
 });
 
 Route::get('/home', function () {
