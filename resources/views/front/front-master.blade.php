@@ -61,7 +61,7 @@
     	margin-bottom: 18px;
     }
     .mainContent{
-    	margin-bottom: 230px;
+    	margin-bottom: 220px;
     }
 
     .myfoot{
@@ -103,7 +103,7 @@
 		}
 
 		.mainContent{
-	    	margin-bottom: 1136px;
+	    	margin-bottom: 336px;
 	    }
 		.myfoot{
 			height: auto;
@@ -181,21 +181,23 @@
 
 				@unless(Auth::check())
 
-				<a class="btn btn-success btn-lg btn-block" href="/crear" role="button">Crea una Cuenta</a>
-				<br>
-				<br>
-				Si ya tienes credenciales ingresa!!!
+				<a class="btn btn-success btn-block" href="/crear" role="button">Crea una Cuenta</a>
+				<h3>Ingresa</h3>
 				<form action="/accesar" method="post">
 				{!! csrf_field() !!}
 				  <div class="form-group">
-				    <label for="InputEmail1">Email</label>
-				    <input type="email" name="EmailLog" class="form-control" id="InputEmail1" placeholder="Email">
+				  	<div class="input-group">
+      					<div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+				    		<input type="email" name="EmailLog" class="form-control" id="InputEmail1" placeholder="Email">
+				    </div>
 				  </div>
 				  <div class="form-group">
-				    <label for="InputPassword1">Password</label>
-				    <input type="password" name="PasswordLog" class="form-control" id="InputPassword1" placeholder="Password">
+				  	<div class="input-group">
+      					<div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
+				    		<input type="password" name="PasswordLog" class="form-control" id="InputPassword1" placeholder="Password">
+				    </div>
 				  </div>
-				  <button type="submit" class="btn btn-warning btn-lg btn-block">Ingresa</button>
+				  <button type="submit" class="btn btn-warning btn-block">Ingresa</button>
 				</form>
 
 				@else
@@ -298,8 +300,8 @@
 	<div class="container">
 		<div class="row">
 		<p class="text-center">
-			<a href="#"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-			<a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="https://www.facebook.com/Fundaruedas-1098316513645547/"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="https://www.instagram.com/fundaruedas/"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
 			<a href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
 			<a href="#"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a>
 		</p>
@@ -324,10 +326,8 @@
             <p><i class="fa fa-home" aria-hidden="true"></i> Av 29 sector amparo Maracaibo, ZU 4001 - VE</li></p>
             <p><i class="fa fa-phone" aria-hidden="true"></i> [58] 261 7563134</li></p>
             <p><a href="mailto:proyecto.uvsr@gmail.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> proyecto.uvsr[at]gmail.com</a></p>
+            <p>&copy; <?php echo date('Y');?> Fundación Amigos en Ruedas J-40937333-9</p>
 		  </div>
-		</div>
-		<div class="row">
-			<p class="text-center">Una Vida Sobre Ruedas. It is a development by <a href="https://pushingcode.github.io/">PushingCode</a> - Proudly Developed in Laravel </p>
 		</div>
 	</div>
 	{{--main footer--}}
