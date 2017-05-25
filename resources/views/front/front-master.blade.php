@@ -32,12 +32,32 @@
 	  min-height: 100%;
 	}
 	body {
-	  margin-bottom: 40px;
+	  margin-bottom: 0px;
+	  padding-bottom: 0px;
 	}
 
 	.shadowText{
     	color: rgba(255,255,255,0.5);
+	}
 
+	/* shadowText unvisited link */
+	.shadowText a:link {
+	    color: rgba(255,255,255,0.5);
+	}
+
+	/* shadowText visited link */
+	.shadowText a:visited {
+	    color: rgba(255,255,255,0.5);
+	}
+
+	/* shadowText mouse over link */
+	.shadowText a:hover {
+	    color: hotpink;
+	}
+
+	/* shadowText selected link */
+	.shadowText a:active {
+	    color: rgba(255,255,255,0.5);
 	}
     
     .bannerFront{
@@ -61,18 +81,19 @@
     	margin-bottom: 18px;
     }
     .mainContent{
-    	margin-bottom: 220px;
+    	margin-bottom: 20px;
+    	position: relative;
     }
 
     .myfoot{
     	background-color: #222c34;
     	width: 100%;
-    	height: 230px;
+    	height: auto;
     	padding: 10px 10px 10px 10px;
     	color: rgba(255,255,255,0.5);
     	left: 0;
         bottom: 0;
-        position: absolute;
+        position: relative;
     }
 
 	.alpha60 {
@@ -90,7 +111,7 @@
 	    margin: 70px 0px 80px 0px;
 	}
 
-	@media only screen and (max-device-width: 480px) {
+	@media only screen and (max-device-width: 430px) {
     	
     	.alpha60 {
 		    max-width: 100%;
@@ -103,17 +124,17 @@
 		}
 
 		.mainContent{
-	    	margin-bottom: 336px;
+	    	margin-bottom: 30px;
 	    }
 		.myfoot{
 			height: auto;
 		}
     }
 
-	@media only screen and (max-device-width: 580px) {
+	@media only screen and (max-device-width: 640px) {
     	
     	.mainContent{
-	    	margin-bottom: 400px;
+	    	margin-bottom: 30px;
 	    }
 	}
 
@@ -176,7 +197,7 @@
 		  <div class="col-md-6">
 		  	<div class="alpha60">
 				<h3>Bienvenidos</h3>
-				Al crear un perfil en Una Vida Sobre Ruedas podras solicitar asistencia<sup>(*)</sup> viable y alcanzable como persona con discapacidad y la Fundacion Amigos en Ruedas canalizara mediante padrinos tu requerimiento y asi mejorar tu nivel de vida. <br> <small class="shadowText"><sup>(*)</sup>Ciertas condiciones aplican</small>
+				Al crear un perfil en Una Vida Sobre Ruedas podras solicitar asistencia viable y alcanzable como persona con discapacidad y la Fundación Amigos en Ruedas canalizará mediante padrinos tu requerimiento y así ayudar a mejorar tú nivel de vida. <br> <small class="shadowText">Ciertas condiciones aplican <a id="condiciones" role="button" data-toggle="popover" title="CONDICIÓN ESENCIAL" data-content="Debes disponer de toda la documentación médica que avalen tu condición, así como tu registro CONAPDIS."><i class="fa fa-question-circle" aria-hidden="true"></i></a></small>
 				<hr>
 
 				@unless(Auth::check())
@@ -278,7 +299,7 @@
 			<div class="list-group">
 			  <a href="#" class="list-group-item active">
 			    <h4 class="list-group-item-heading">16 de mayo de 2017</h4>
-			    <p class="list-group-item-text">La empresa venezolana CaracasHosting hace posible que este proyecto inicie su labor al donar un año de servicio de VPS para la aplicacion Una Vida Sobre Ruedas.</p>
+			    <p class="list-group-item-text">La empresa venezolana CaracasHosting hace posible que este proyecto inicie su labor al donar un año de servicio de VPS para la aplicación Una Vida Sobre Ruedas.</p>
 			  </a>
 
 			  <a href="#" class="list-group-item">
@@ -302,19 +323,19 @@
 		<p class="text-center">
 			<a href="https://www.facebook.com/Fundaruedas-1098316513645547/"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
 			<a href="https://www.instagram.com/fundaruedas/"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
-			<a href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
+			<a href="https://twitter.com/fundaruedas"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>&nbsp;&nbsp;
 			<a href="#"><i class="fa fa-youtube fa-2x" aria-hidden="true"></i></a>
 		</p>
 		</div>
 		<div class="row">
 		  <div class="col-md-4">
 		  	<h4>Una Vida Sobre Ruedas</h4>
-		  	<p>Es una aplicacion web para recolectar informacion sobre necesidades de personas con discapacidad para canalizar ayudas puntuales y alcanzables en Venezuela.</p>
+		  	<p>Es una aplicación web para recolectar información sobre necesidades de personas con discapacidad para canalizar ayudas puntuales y alcanzables en Venezuela.</p>
 		  </div>
 		  <div class="col-md-4">
 			<h4>Nuestro Proyecto</h4>
-		  	<ul>
-		  		<li>El equipo</li>
+		  	<ul class="list-unstyled">
+		  		<li>El Equipo</li>
 		  		<li>Los Objetivos</li>
 		  		<li>Nuestra Acción</li>
 			  	<li>Nos Apoyan</li>
@@ -332,5 +353,15 @@
 	</div>
 	{{--main footer--}}
 </footer>
+ <script>
+	$(function () {
+	  $('[data-toggle="tooltip"]').tooltip()
+	})
+
+	$(document).ready(function(){
+	    $('[data-toggle="popover"]').popover();
+	});
+</script>
+<script src="{{asset('assets/js/vue/yb.js')}}"></script>
 </body>
 </html>

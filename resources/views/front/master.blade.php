@@ -125,14 +125,14 @@
     {{--FIN Footer--}}
 
     <script>
-		$(function () {
-			$('[data-toggle="tooltip"]').tooltip()
-		})
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
 
     $(document).ready(function(){
         $('[data-toggle="popover"]').popover();
     });
-		</script>
+    </script>
     <script src="{{asset('assets/js/vue/yb.js')}}"></script>
   </body>
 </html>
