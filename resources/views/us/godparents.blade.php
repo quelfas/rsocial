@@ -1,4 +1,4 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Padrinos')
 
@@ -10,31 +10,35 @@
 @endsection
 
 @section('content')
-
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h3 class="panle-title">Padrinos</h3>
+  <h3>Padrinos Honorarios</h3>
+  <div class="media">
+    <div class="media-left media-middle">
+      <a href="http://www.caracashosting.com/">
+        <img class="media-object" src="{{ asset('assets/img/award-first.png') }}" alt="..." style="width: 64px; height: 64px;">
+      </a>
     </div>
-
-    <div class="panel-body">
-      <div class="media">
-
-        <div class="media-left">
-          <a href="#">
-            <img class="media-object" src="{{asset('assets/img/front/hdcp.jpg')}}" alt="Asistencia a Discapacitados" width="64px" />
-          </a>
-        </div>
-
-        <div class="media-body">
-          Somos un equipo de jóvenes emprendedores que integra diversidad de
-           esfuerzos y trabaja con empeño por un fin común:  Ofrecer un espacio
-           de encuentro para personas con <span class="text-primary">discapacidad</span> y asi canalizar ayudas
-           puntuales para los que mas necesitan.
-        </div>
-
-      </div>
-
+    <div class="media-body">
+      <h4 class="media-heading">CaracasHosting, C.A.</h4>
+      El primer Gran Padrino de este proyecto. Gracias a CaracasHosting por su incalculable donacion de un año de servicio de VPS para la Aplicacion Web Una Vida Sobre Ruedas y darle un espacio a esta labor.
     </div>
   </div>
 
+  <div class="media">
+    <div class="media-left media-middle">
+      <a href="https://pushingcode.github.io/">
+        <img class="media-object" src="{{ asset('assets/img/award-second.png') }}" alt="..." style="width: 64px; height: 64px;">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">PushingCode</h4>
+      El segundo Gran Padrino de este proyecto. Gracias por darle vida y presencia con el desarrollo despliegue y mantenimiento de esta aplicación.
+    </div>
+  </div>
+
+  <hr>
+  <div class="panel panel-default">
+  <div class="panel-body">
+    <p class="lead">Quieres ayudarnos en esta labor? envianos un mensaje por las <a href="#redes">redes sociales</a> o usa nuestro formulario de contacto.</p>
+  </div>
+</div>
 @stop

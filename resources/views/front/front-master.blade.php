@@ -1,3 +1,7 @@
+<?php if(!isset($mensaje)){
+  $mensaje = null;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
