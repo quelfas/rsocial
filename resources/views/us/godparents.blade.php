@@ -2,12 +2,6 @@
 
 @section('title','Padrinos')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Padrinos</li>
-</ol>
-@endsection
 
 @section('content')
   <h3>Padrinos Honorarios</h3>
@@ -19,7 +13,7 @@
     </div>
     <div class="media-body">
       <h4 class="media-heading">CaracasHosting, C.A.</h4>
-      El primer Gran Padrino de este proyecto. Gracias a CaracasHosting por su incalculable donacion de un año de servicio de VPS para la Aplicacion Web Una Vida Sobre Ruedas y darle un espacio a esta labor.
+      El primer Gran Padrino de este proyecto. Gracias a CaracasHosting por su incalculable donacion de un año de servicio de VPS para la Aplicación Web Una Vida Sobre Ruedas y darle un espacio a esta labor.
     </div>
   </div>
 
