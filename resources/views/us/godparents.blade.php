@@ -14,7 +14,7 @@
   <div class="media">
     <div class="media-left media-middle">
       <a href="http://www.caracashosting.com/">
-        <img class="media-object" src="{{ asset('assets/img/award-first.png') }}" alt="..." style="width: 64px; height: 64px;">
+        <img class="media-object" src="{{ asset('assets/img/award-first.png') }}" alt="Primer Padrino" style="width: 64px; height: 64px;">
       </a>
     </div>
     <div class="media-body">
@@ -26,7 +26,7 @@
   <div class="media">
     <div class="media-left media-middle">
       <a href="https://pushingcode.github.io/">
-        <img class="media-object" src="{{ asset('assets/img/award-second.png') }}" alt="..." style="width: 64px; height: 64px;">
+        <img class="media-object" src="{{ asset('assets/img/award-second.png') }}" alt="Segundo Padrino" style="width: 64px; height: 64px;">
       </a>
     </div>
     <div class="media-body">
