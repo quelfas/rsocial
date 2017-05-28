@@ -219,10 +219,13 @@
 				  <div class="form-group">
 				  	<div class="input-group">
       					<div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-				    		<input type="password" name="PasswordLog" class="form-control" id="InputPassword1" placeholder="Password">
+                                            <input type="password" name="PasswordLog" class="form-control" id="InputPassword1" placeholder="Password">
 				    </div>
 				  </div>
 				  <button type="submit" class="btn btn-warning btn-block">Ingresa</button>
+				  <p class="text-right">
+                                    <a href="/password/email">Recuperar Password</a>
+				  </p>
 				</form>
 
 				@else
