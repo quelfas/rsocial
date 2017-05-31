@@ -24,9 +24,13 @@ $imageFront = "imagenBanner";
 @section('content')
 
   @forelse($apadrinados as $apadrinado)
-
+  <div class="page-header">
+    <h2>Apadrinados <small>Estamos ayudando</small></h2>
+  </div>
   @empty
-  <h3>En este momento no hay Apadrinados</h3>
+  <div class="page-header">
+    <h2>Apadrinados <small>En este momento no tenemos apadrinados</small></h2>
+  </div>
   <p>
     Para recibir asistencia y ser un apadrinado primeramente debes <a href="/crear">crear una cuenta</a> en la aplicación Una Vida Sobre Ruedas, luego crear un perfil con tus datos personales y de contacto indicando tu condición de discapacidad la cual debe estar sustentada con toda la documentación medica que avale tu condición, todo esto es obligatorio para solicitar asistencia ya que nuestro equipo de trabajo social verificara toda esta información.
     <br><br>

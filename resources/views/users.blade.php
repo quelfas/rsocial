@@ -1,12 +1,5 @@
-@extends('front.master')
+@extends('front.scaffold')
 @section('title','Gestion de Cuentas')
-
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Crear Cuenta</li>
-</ol>
-@endsection
 
 @section('content')
 

@@ -1,26 +1,17 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Contactanos')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Contacto</li>
-</ol>
-@endsection
-
 @section('content')
-
-{{-- inicio de seccion de contato --}}
-{{-- secciones agrupadas en tabs [direccion] [formulario] [redes sociales] --}}
-  {{-- inicio de tabs --}}
-    <div>
-
+<div class="page-header">
+    <h2>Contactanos <small>Ubicación y Contacto</small></h2>
+</div>
+<div>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#ubicanos" aria-controls="ubicanos" role="tab" data-toggle="tab">Estamos Ubicados</a></li>
     <li role="presentation"><a href="#contactanos" aria-controls="contactanos" role="tab" data-toggle="tab">Formulario de Contacto</a></li>
-    <li role="presentation"><a href="#social" aria-controls="social" role="tab" data-toggle="tab">Redes Sociales</a></li>
+    {{--<li role="presentation"><a href="#social" aria-controls="social" role="tab" data-toggle="tab">Redes Sociales</a></li>--}}
   </ul>
 
   <!-- Tab panes -->
@@ -33,16 +24,11 @@
         </iframe>
         <br>
         <address>
-          <strong>Una Vida Sobre Ruedas.</strong><br>
+          <strong>Fundación Amigos en Ruedas (Fundaruedas).</strong><br>
           Sector Amparo, Avenida 29, 57B-382, Diagonal a la Iglesia Divino Niño<br>
           Edificio Venezuela Import Piso 1 Oficina 1 <br>
           Maracaibo, ZU. 4001<br>
           <abbr title="Telefono">TLF:</abbr> +58 (0261) 7325662
-        </address>
-
-        <address>
-          <strong>UVSR</strong><br>
-          <a href="mailto:#">first.last@example.com</a>
         </address>
       </div>
     </div>
@@ -50,10 +36,13 @@
       <br>
       <div class="well">
         <h4>Deja tu mensaje</h4>
-        <form action="">
+        <form action="/contact" method="POST">
           {!! csrf_field() !!}
           <div class="form-group">
             <input class="form-control" type="text" name="email" placeholder="Tu Email">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="nombre" placeholder="Nombre">
           </div>
           <div class="form-group">
             <input class="form-control" type="text" name="asunto" placeholder="Asunto">
@@ -93,13 +82,18 @@
 
 </div>
 {{-- fin de seccion de contacto --}}
-
+ <hr>
+ <div class="panel panel-default">
+  <div class="panel-body">
+    <p class="lead">Quieres ayudarnos en esta labor? envianos un mensaje por las <a href="#redes">redes sociales</a> o usa nuestro formulario de contacto.</p>
+  </div>
+</div>
 @stop
 
 @section('sidebar')
   @parent
   @unless(Auth::check())
-    No conectado <br>
+    @include('utility.reg')
   @else
     @include('utility.notifySideBar')
     @include('utility.listUsers')

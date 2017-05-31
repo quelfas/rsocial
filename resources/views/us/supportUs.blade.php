@@ -1,40 +1,41 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Nos Apoyan')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Nos Apoyan</li>
-</ol>
-@endsection
-
 @section('content')
-
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h3 class="panle-title">Nos Apoyan</h3>
+    <div class="page-header">
+     <h2>Nos Apoyan <small>Empresas y Servicios</small></h2>
+    </div>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="{{ asset('assets/img/sparkpost.jpg') }}" alt="SparkPost">
+          <div class="caption">
+            <h3>SparkPost</h3>
+            <p>Nuestros mensajes de correo son entregados por SparkPost.</p>
+            <p><a href="https://www.sparkpost.com/" class="btn btn-primary" role="button">Visitar</a></p>
+          </div>
+        </div>
     </div>
 
-    <div class="panel-body">
-      <div class="media">
-
-        <div class="media-left">
-          <a href="#">
-            <img class="media-object" src="{{asset('assets/img/front/hdcp.jpg')}}" alt="Asistencia a Discapacitados" width="64px" />
-          </a>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="{{ asset('assets/img/caracashosting.jpg') }}" alt="CaracasHosting">
+          <div class="caption">
+            <h3>CaracasHosting</h3>
+            <p>Nuestro servicio de alojamiento es provisto por CaracasHosting CA.</p>
+            <p><a href="http://www.caracashosting.com/" class="btn btn-primary" role="button">Visitar</a></p>
+          </div>
         </div>
-
-        <div class="media-body">
-          Somos un equipo de jóvenes emprendedores que integra diversidad de
-           esfuerzos y trabaja con empeño por un fin común:  Ofrecer un espacio
-           de encuentro para personas con <span class="text-primary">discapacidad</span> y asi canalizar ayudas
-           puntuales para los que mas necesitan.
-        </div>
-
-      </div>
-
-    </div>
   </div>
 
+<div class="col-sm-6 col-md-4">   
+        <div class="thumbnail">
+          <img src="{{ asset('assets/img/font-awesome.png') }}" alt="CaracasHosting">
+          <div class="caption">
+            <h3>CaracasHosting</h3>
+            <p>Nuestra Iconografia es gracias al servicio de Font Awesome</p>
+            <p><a href="http://fontawesome.io/" class="btn btn-primary" role="button">Visitar</a></p>
+          </div>
+        </div>
+  </div>
 @stop

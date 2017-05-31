@@ -10,6 +10,7 @@ use Hash;
 use Auth;
 use Log;
 use DB;
+use Mail;
 
 //models
 use App\Profile;
@@ -29,7 +30,48 @@ class HelpController extends Controller
         'users'=>$user
       ]);
   }
-
+  
+  /**
+   * 
+   */
+  public function sendContact(Request $request) {
+      //
+      $rules = [
+          'email'     => 'required|email|max:150',
+          'nombre'    => 'required|min:3|max:50',
+          'asunto'    => 'required|min:3|max:150',
+          'mensaje'   => 'required|max:1000',
+      ];
+      
+      $v = Validator::make($request->all(),$rules);
+      if ($v->fails()) {
+        return redirect()
+          ->back()
+          ->withErrors($v->errors());
+      }
+      
+      $data = [
+            'email'             => $request->input('email'),
+            'nombre'            => $request->input('nombre'),
+            'asunto'            => $request->input('asunto'),
+            'mensaje'           => $request->input('mensaje')
+            ];
+        
+        $dataMail = $data['email'];
+        $dataName = $data['nombre'];
+        $dataAsunto = $data['asunto'];
+        
+        Mail::send('emails.contact', $data, function ($message) use ($dataMail, $dataAsunto, $dataName) {
+             $message->from('webmaster@fundaruedas.org', 'Fundaruedas');
+             $message->to('fundaruedas@hotmail.com', 'Fundaruedas')->subject($dataAsunto);
+           });
+           
+           $mensajeSalida = [
+    		'mensaje'=>'Se ha enviado con exito el mensaje con asunto '. $dataAsunto,
+    		'class'=>'alert-success'
+    	];
+        return view('cautivo')->with('mensaje',$mensajeSalida);
+  }
   /**
   *
   **/

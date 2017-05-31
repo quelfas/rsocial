@@ -1,15 +1,6 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Bienvenido')
-
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="crear">Crear Cuenta</a></li>
-  <li class="active">Acceso</li>
-</ol>
-@endsection
-
 
 
 @section('content')
@@ -26,7 +17,11 @@
     <div class="form-group">
       <input class="form-control" type="password" name="PasswordLog" placeholder="Password">
     </div>
-    <button type="submit" class="btn btn-default btn-sm" value="submit">Sign in</button>
+    <button type="submit" class="btn btn-default btn-sm" value="submit">Ingresar</button>
+    <p class="text-right">
+       <a href="/password/email">Recuperar Password</a>
+    </p>
+   </form>
   </form>
 </div>
 

@@ -1,6 +1,7 @@
-<?php if(!isset($mensaje)){
-  $mensaje = null;
-}
+<?php 
+    if(!isset($mensaje)){
+      $mensaje = null;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -196,6 +197,7 @@
 	<div class="container">
 		<div class="row">
 		  <div class="col-md-6">
+                      @include('errors.mensajes')
 		  	<br>
 		  </div>
 		  <div class="col-md-6">

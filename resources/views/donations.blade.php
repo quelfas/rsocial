@@ -1,17 +1,28 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Donaciones')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="/">Contacto</a></li>
-  <li><a href="/">Galeria</a></li>
-  <li><a href="/">Eventos</a></li>
-  <li class="active">Donaciones</li>
-</ol>
-@endsection
 
 @section('content')
-<h4>Para efectuar sus donativo</h4>
+<div class="page-header">
+    <h2>Donativos <small>Informacion de Donaciones</small></h2>
+</div>
+<p>Estamos trabajando en ello.</p>
+<hr>
+ <div class="panel panel-default">
+  <div class="panel-body">
+    <p class="lead">Quieres ayudarnos en esta labor? envianos un mensaje por las <a href="#redes">redes sociales</a> o usa nuestro formulario de contacto.</p>
+  </div>
+</div>
+@endsection
+
+@section('sidebar')
+  @parent
+  @unless(Auth::check())
+    @include('utility.reg')
+  @else
+    @include('utility.notifySideBar')
+    @include('utility.listUsers')
+  @endunless
+
 @endsection

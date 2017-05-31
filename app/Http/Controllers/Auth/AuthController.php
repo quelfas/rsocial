@@ -142,7 +142,7 @@ class AuthController extends Controller
         $mensajeSalida = [
     		'mensaje'=>'Se ha creado con exito el usuario:
                 '.$request->input('email').'. Por defecto la cuenta se
-                encuentra inactiva revise su email y siga las instrucciones
+                encuentra inactiva revise su email y siga las instrucciones,
                 luego Ingrese su usuario y su clave para acceder',
     		'class'=>'alert-success'
     	];

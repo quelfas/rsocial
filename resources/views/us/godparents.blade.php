@@ -4,7 +4,9 @@
 
 
 @section('content')
-  <h3>Padrinos Honorarios</h3>
+  <div class="page-header">
+    <h2>Padrinos <small>Quienes hacen posible esta labor</small></h2>
+  </div>
   <div class="media">
     <div class="media-left media-middle">
       <a href="http://www.caracashosting.com/">
@@ -36,3 +38,14 @@
   </div>
 </div>
 @stop
+
+@section('sidebar')
+  @parent
+  @unless(Auth::check())
+    @include('utility.reg')
+  @else
+    @include('utility.notifySideBar')
+    @include('utility.listUsers')
+  @endunless
+
+@endsection

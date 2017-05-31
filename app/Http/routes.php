@@ -10,7 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return view('welcome');
+    return view('front.front-master');
 });
 
 Route::get('/somos',function(){
@@ -32,6 +32,7 @@ Route::get('/events',function(){
 Route::get('/contact',function(){
   return view('contact');
 });
+Route::post('/contact', 'HelpController@sendContact');
 
 /**
  * Rutas para quienes somos -front
