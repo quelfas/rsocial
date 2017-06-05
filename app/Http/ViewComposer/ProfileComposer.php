@@ -27,7 +27,7 @@ class ProfileComposer
 
     $view->with([
     	'UserProfiles'	=> $perfile,
-    	'conditions' 	  => $condition
+    	'conditions' 	=> $condition
     	]);
 
   }

@@ -1,14 +1,7 @@
-@extends('front.master')
+@extends('front.scaffold')
 @foreach ($UserProfiles as $UserProfile)
   @section('title','Videos de '.$UserProfile->name.' '.$UserProfile->last_name)
-  @section('breadcrumbs')
-  <ol class="breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li><a href="/user">tu Perfil</a></li>
-    <li><a href="/profile/{{ $UserProfile->user_id }}">Perfil de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</a></li>
-    <li class="active">Videos de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</li>
-  </ol>
-  @endsection
+ 
   @section('content')
   
   <div class="row">

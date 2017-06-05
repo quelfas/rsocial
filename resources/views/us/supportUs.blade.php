@@ -30,12 +30,24 @@
 
 <div class="col-sm-6 col-md-4">   
         <div class="thumbnail">
-          <img src="{{ asset('assets/img/font-awesome.png') }}" alt="CaracasHosting">
+          <img src="{{ asset('assets/img/font-awesome.png') }}" alt="Font Awesome">
           <div class="caption">
-            <h3>CaracasHosting</h3>
+            <h3>Font Awesome</h3>
             <p>Nuestra Iconografia es gracias al servicio de Font Awesome</p>
             <p><a href="http://fontawesome.io/" class="btn btn-primary" role="button">Visitar</a></p>
           </div>
         </div>
   </div>
 @stop
+
+@section('sidebar')
+  @parent
+  @unless(Auth::check())
+    @include('utility.reg')
+  @else
+    @include('utility.perfilControl')
+    @include('utility.notifySideBar')
+    @include('utility.listUsers')
+  @endunless
+
+@endsection

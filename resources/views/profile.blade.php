@@ -1,14 +1,8 @@
-@extends('front.master')
+@extends('front.scaffold')
 @foreach ($UserProfiles as $UserProfile)
 @section('title','Perfil de '.$UserProfile->name.' '.$UserProfile->last_name)
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="/user">tu Perfil</a></li>
-  <li class="active">Perfil de {{ $UserProfile->name }} {{ $UserProfile->last_name }}</li>
-</ol>
-@endsection
+
 
 @section('content')
 <div class="well">

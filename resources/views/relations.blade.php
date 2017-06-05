@@ -1,14 +1,5 @@
-@extends('front.master')
+@extends('front.scaffold')
 @section('title','Solicitudes de Amistad')
-
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="/salir">Desconectar</a></li>
-  <li><a href="/user">Perfil</a></li>
-  <li class="active">Solicitudes de Amistad</li>
-</ol>
-@endsection
 
 @section('content')
 

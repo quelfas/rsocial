@@ -1,13 +1,6 @@
-@extends('front.master')
+@extends('front.scaffold')
 @section('title','Bienvenido '.$userName)
 @forelse ($UserProfiles as $UserProfile)
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="/salir">Desconectar</a></li>
-  <li><a href="/profile/{{ $UserProfile->user_id }}">Perfil</a></li>
-</ol>
-@endsection
 
 @section('content')
 
@@ -51,6 +44,10 @@
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           Perfil <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          @forelse($conditions as $condition)
+          @empty
+          <a style="color: red" id="condiciones" role="button" data-toggle="popover" title="CONDICIÓN ESENCIAL" data-content="Debes Ingresar tu Discapacidad."><i class="fa fa-wheelchair-alt" aria-hidden="true"></i></a>
+          @endforelse
 
         </a>
       </h4>

@@ -38,9 +38,11 @@ class AuthController extends Controller
      *
      * @return void
      */
+    private $ownerNotify;
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
+        $this->ownerNotify = config('app.email');
     }
 
 
@@ -131,7 +133,7 @@ class AuthController extends Controller
         $dataName = $data['name'];
         
         Mail::send('emails.confirm', $data, function ($message) use ($dataMail,$dataName) {
-             $message->from('webmaster@fundaruedas.org', 'Una Vida Sobre Ruedas');
+             $message->from($this->ownerNotify, 'Una Vida Sobre Ruedas');
        
              $message->to($dataMail, $dataName)->subject('Confirma tu correo');
            });
@@ -181,7 +183,7 @@ class AuthController extends Controller
         * envio de aviso de acceso de user
         **/
            Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
-             $message->from('webmaster@fundaruedas.org', 'Una Vida Sobre Ruedas');
+             $message->from($this->ownerNotify, 'Una Vida Sobre Ruedas');
        
              $message->to($user->email, $user->name)->subject('Nuevo Acceso');
            });

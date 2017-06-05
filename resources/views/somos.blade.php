@@ -1,13 +1,7 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Quienes Somos')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li class="active">Quienes Somos</li>
-</ol>
-@endsection
 
 @section('content')
 

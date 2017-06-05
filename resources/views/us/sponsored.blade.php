@@ -64,6 +64,7 @@ $imageFront = "imagenBanner";
       </div>
 
   @else
+    @include('utility.perfilControl')
     @include('utility.notifySideBar')
     @include('utility.listUsers')
   @endunless

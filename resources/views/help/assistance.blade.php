@@ -1,4 +1,4 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Accion requiere su confirmacion!!!')
 

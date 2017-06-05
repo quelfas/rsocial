@@ -182,7 +182,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Una Vida Sobre Ruedas</a>
+          <a class="navbar-brand" href="{{url('/')}}">Una Vida Sobre Ruedas</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
 
@@ -190,21 +190,24 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quienes Somos <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/sponsored">Apadrinados</a></li>
-                <li><a href="/godparents">Padrinos</a></li>
-                <li><a href="/supportUs">Nos Apoyan</a></li>
+                <li><a href="{{url('/sponsored')}}">Apadrinados</a></li>
+                <li><a href="{{url('/godparents')}}">Padrinos</a></li>
+                <li><a href="{{url('/supportUs')}}">Nos Apoyan</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/staff">El Staff</a></li>
+                <li><a href="{{url('/staff')}}">El Staff</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="/joinUs">Unete</a></li>
+                <li><a href="{{url('/joinUs')}}">Unete</a></li>
               </ul>
             </li>
-            <li><a href="/donations">Donaciones</a></li>
-            <li><a href="/gallery">Galerias</a></li>
-            <li><a href="events">Eventos</a></li>
-            <li><a href="/contact">Contactanos</a></li>
-            <li><a href="{{isset($useActivo) ? '/user':'/crear'}}">{{isset($useActivo)?'Bienvenido '.$userName : 'Crear una Cuenta'}}</a></li>
-            <li><a href="{{isset($useActivo) ? '/salir':'/accesar'}}">{{isset($useActivo)?'Salir':'Acceder'}}</a></li>
+            <li><a href="{{url('/donations')}}">Donaciones</a></li>
+            <li><a href="{{url('/gallery')}}">Galerias</a></li>
+            <li><a href="{{url('/events')}}">Eventos</a></li>
+            <li><a href="{{url('/contact')}}">Contactanos</a></li>
+            @unless (Auth::check())
+            
+            @else
+            <li><a href="{{url('/user')}}">Ir a tú perfil</a></li>
+            @endunless
           </ul>
         </div><!--/.nav-collapse <a href="/registro">Registro</a>-->
       </div>

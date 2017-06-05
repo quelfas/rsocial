@@ -14,11 +14,29 @@ class ProfilesServiceProvider extends ServiceProvider
     public function boot()
     {
         //Using class based  Composer...
-        view()->composer('user','App\Http\ViewComposer\ProfileComposer');
+        $callbackPerfileComposer = 'App\Http\ViewComposer\ProfileComposer';
+        view()->composer('user',$callbackPerfileComposer);
+        view()->composer('editBio',$callbackPerfileComposer);
+        view()->composer('relations',$callbackPerfileComposer);
+        view()->composer('profile',$callbackPerfileComposer);
+        view()->composer('myprofile',$callbackPerfileComposer);
+        
+        view()->composer('help.assistance',$callbackPerfileComposer);
+        view()->composer('help.help',$callbackPerfileComposer);
+        view()->composer('help.helplist',$callbackPerfileComposer);
 
-        view()->composer('relations','App\Http\ViewComposer\ProfileComposer');
-
-        view()->composer('utility.prefilControl','App\Http\ViewComposer\ProfileComposer');
+        view()->composer('pswUpdate',$callbackPerfileComposer);
+        
+        view()->composer('us.godparents',$callbackPerfileComposer);
+        view()->composer('us.joinUs',$callbackPerfileComposer);
+        view()->composer('us.sponsored',$callbackPerfileComposer);
+        view()->composer('us.staff',$callbackPerfileComposer);
+        view()->composer('us.supportUs',$callbackPerfileComposer);
+        
+        view()->composer('contact', $callbackPerfileComposer);
+        view()->composer('donations', $callbackPerfileComposer);
+        view()->composer('event', $callbackPerfileComposer);
+        view()->composer('gallery', $callbackPerfileComposer);
 
         //Using Closure based Composer...
         //view()->composer('utility.prefilControl', function($view){

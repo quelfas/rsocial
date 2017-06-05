@@ -43,6 +43,7 @@
   @unless(Auth::check())
     @include('utility.reg')
   @else
+    @include('utility.perfilControl')
     @include('utility.notifySideBar')
     @include('utility.listUsers')
   @endunless

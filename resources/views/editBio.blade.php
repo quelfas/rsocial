@@ -1,14 +1,8 @@
-@extends('front.master')
+@extends('front.scaffold')
 
 @section('title','Edita tu perfil')
 
-@section('breadcrumbs')
-<ol class="breadcrumb">
-  <li><a href="/">Home</a></li>
-  <li><a href="/user">Perfil</a></li>
-  <li class="active">Edita tu perfil</li>
-</ol>
-@endsection
+
 
 @section('content')
 <div class="well">

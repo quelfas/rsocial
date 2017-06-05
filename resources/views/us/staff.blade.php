@@ -7,7 +7,7 @@
 <div class="page-header">
     <h2>Fundación Amigos en Ruedas <small>Fundaruedas</small></h2>
 </div>
-<p>Inicialmente estamos constituidos en una fundación sin fines de lucros de formación reciente, enfocados en dar prioridad a las personas con condicion de discapacidad</p>
+<p>Inicialmente estamos constituidos en una fundación sin fines de lucros de formación reciente, enfocados en dar prioridad a las personas con condición de discapacidad</p>
 <h4>Organización</h4>
 <p>
     <strong>Sr. Omer Luzardo</strong> - Presidente<br>
@@ -38,6 +38,7 @@
   @unless(Auth::check())
     @include('utility.reg')
   @else
+    @include('utility.perfilControl')
     @include('utility.notifySideBar')
     @include('utility.listUsers')
   @endunless

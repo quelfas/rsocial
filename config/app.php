@@ -27,6 +27,18 @@ return [
     */
 
     'url' => 'http://fundaruedas.org',
+    
+    /*
+     |-------------------------------------------------------------------------
+     | Aplication EMAIL
+     |-------------------------------------------------------------------------
+     |
+     | This EMAIL is used by the Controllers who need to send action
+     | notifications.
+     |
+     */
+    
+     'email' => env('OWNER_NOTIFY', 'abuse@fundaruedas.org'),
 
     /*
     |--------------------------------------------------------------------------

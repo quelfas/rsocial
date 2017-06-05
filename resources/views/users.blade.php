@@ -3,7 +3,6 @@
 
 @section('content')
 
-
 <div class="well">
 
 <h4><strong>Crea una Cuenta</strong></h4>
