@@ -130,7 +130,8 @@ class HelpController extends Controller
     //dd($request->input('recipient'));
 
     
-
+    $reqType = $request->input('req-type');
+    
     if($request->input('helprequest') == "Otro") {
       $requestHelp = $request->input('customHelp');
       $rules = [
@@ -149,14 +150,27 @@ class HelpController extends Controller
 
     $now = Carbon::now();
     $user = Auth::user();
-
+    /*
+     * creando nueva solicitud
+     * usando codigo de requerimiento con la id de usuario
+     * posterior se actualiza con el codigo correcto
+     */
     $helpId = DB::table('Help')->insertGetID([
       'user_id'     =>  $user->id,
-      'solicitud'   =>  $request->input('recipient'),
-      'cod_req'     =>  $requestHelp,
+      'solicitud'   =>  $requestHelp." - ".$request->input('recipient'),
+      'cod_req'     =>  $user->id,
       'created_at'  => $now,
       'updated_at'  => $now
     ]);
+    
+    //$this->codRequest($id,$type);
+    
+    DB::table( 'Help' )
+            ->where('id',$helpId)
+            ->update([
+              'cod_req' => $this->codRequest($helpId,$reqType)
+            ]);
+    
     /**
      * @Contents
      * Creando el contenido
@@ -169,7 +183,7 @@ class HelpController extends Controller
         'content_id'     => $helpId,
         'privacy'        => "publico",
         'message'        => "Nueva Solicitud de Ayuda|Haz Solicitado Ayuda|Ha creado una nueva Solicitud de Ayuda",
-        'tags'           => "Solicitud de Ayuda - ".$request->input('recipient'),
+        'tags'           => "Solicitud: ".$this->codRequest($helpId,$reqType)." - ".$request->input('recipient'),
         'active'         => "Si",
         'created_at'     => $now,
         'updated_at'     => $now
@@ -201,12 +215,14 @@ class HelpController extends Controller
 
       $videoId = DB::table('Videos')->insertGetId(
         [
-          'user_id'   => $user->id,
-          'url_frame' => $request->input('source'),
-          'url_link'  => $request->input('nameId'),
-          'privacy'   => "publico",
-          'parental'  => "No",
-          'tags'      => "Solicitud de Ayuda - ".$request->input('recipient')
+          'user_id'         => $user->id,
+          'url_frame'       => $request->input('source'),
+          'url_link'        => $request->input('nameId'),
+          'privacy'         => "publico",
+          'parental'        => "No",
+          'tags'            => $this->codRequest($helpId,$reqType)." ".$request->input('recipient'),
+          'created_at'      => $now,
+          'updated_at'      => $now
         ]
       );
 
@@ -232,5 +248,48 @@ class HelpController extends Controller
             'class'     =>  'alert-info'
     ];
     return redirect('user')->with('mensaje',$mensajeSalida);
+  }
+  /*
+   * $$id int
+   * @$tag string
+   */
+  public function codRequest($id, $type) {
+      
+      $now = Carbon::now();
+      
+    /*
+     * estructura de codigo de asistencia
+     * [tipo solicitud][mes/año][cod_req]
+     *
+     * tipo de solicitud
+     * 
+     */
+      $type = strtoupper(substr($type, 0, 1));
+      $date = "{$now->month}/{$now->year}";
+      
+     /*
+     * Zerofill 
+     */
+    $zeroFills = [
+        1 =>'000000',
+        2 =>'00000',
+        3 =>'0000',
+        4 =>'000',
+        5 =>'00',
+        6 =>'0',
+        7 =>'',
+    ];
+    
+    /*
+     * estructura de codigo de asistencia
+     * [tipo solicitud][año][cod_req]
+     */
+    
+    foreach ($zeroFills as $long => $zeros){
+        if(strlen($id) === $long){
+            $cod_req = "{$type}-{$date}-{$zeros}{$id}";
+        }
+    }
+      return $cod_req;
   }
 }

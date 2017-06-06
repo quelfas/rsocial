@@ -84,9 +84,7 @@
 
                 <hr>
                 @forelse ($conditions as $condition)
-
-                    <p>Condicion: {{ $condition->discapacidad }}</p>
-
+                <h4>Condicion: {{ $condition->discapacidad }}</h4>
                     <p>Reseña:</p>
                     <p>{{ $condition->resena }}</p>
 

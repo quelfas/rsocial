@@ -15,17 +15,15 @@
 
   <table class="table table-striped">
     <tr>
-      <th>Solicitud No.</th>
-      <th>Area</th>
+      <th>Código</th>
       <th>Solicitud</th>
       <th>Fecha</th>
       <th></th>
     </tr>
     @foreach($creadas as $creada)
     <tr>
-      <td>{{ $creada->id }}</td>
-      <td>{{ $creada->solicitud }}</td>
       <td>{{ $creada->cod_req }}</td>
+      <td>{{ $creada->solicitud }}</td>
       <td>{{ $creada->created_at }}</td>
       <td>
         <form action="#" method="POST">
